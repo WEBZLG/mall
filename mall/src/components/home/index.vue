@@ -54,11 +54,10 @@
       <h3 class="caption">每日爆品</h3>
       <div class="vip"><img src="../../assets/daily_banner1.png" alt="" /></div>
       <div class="goods-list">
-        <div class="goods-item">
+        <div class="goods-item"  @click="getDetail()">
           <div class="goods-pic"><img src="../../assets/item_large1.png" alt="" /></div>
           <div class="goods-desc">
             <p class="goods-title">袖卫衣 8NN</p>
-            <p class="good-type">海外|自营</p>
             <div class="good-price flex">
               <p class="old-price">￥1200</p>
               <p class="brokerage">
@@ -84,12 +83,11 @@
        <div class="super-hot">
       <h3 class="caption">超级爆品</h3>
       <div class="vip"><img src="../../assets/daily_banner1.png" alt="" /></div>
-      <div class="goods-list">
-        <div class="goods-item">
+      <div class="goods-list" >
+        <div class="goods-item"  @click="getDetail()">
           <div class="goods-pic"><img src="../../assets/item_large1.png" alt="" /></div>
           <div class="goods-desc">
-            <p class="goods-title">袖卫衣 8NN</p>
-            <p class="good-type">海外|自营</p>
+            <p class="goods-title" >袖卫衣 8NN00000</p>
             <div class="good-price flex">
               <p class="old-price">￥1200</p>
               <p class="brokerage">
@@ -125,6 +123,12 @@ export default {
     return {
       images: ['https://img.yzcdn.cn/vant/apple-1.jpg', 'https://img.yzcdn.cn/vant/apple-2.jpg']
     };
+  },
+  methods:{
+    getDetail(){
+      console.log(123)
+      this.$router.replace({ name: "detail" });
+    }
   },
   watch: {
     clientDetails(newVal) {

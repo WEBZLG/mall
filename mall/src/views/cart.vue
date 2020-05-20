@@ -2,132 +2,59 @@
   <div class="cart">
     <header class="flex">
       <div class="check" @click="toggleAll()">全选</div>
-      <div class="edit">编辑</div>
+      <div class="edit" @click="handle()" ref ='edit'>{{editeText}}</div>
     </header>
     <div class="mid-view">
-      <div class="check-box">
-        <van-checkbox-group v-model="result" ref="checkboxGroup" @change="change()">
-          <div class="flex cart-item">
-            <van-checkbox name="a" checked-color="#FF9900"></van-checkbox>
-            <div class="cart-pic"><img src="../assets/item1.png" alt=""></div>
-            <div class="descript">
-              <p class="title">ARMANI EXCHANGE 男士AX字 母标识ICON系列圆领长袖卫衣...</p>
-              <div class="flex price-num">
-                <div class="price">
-                  <p class="old-price">￥1,200</p>
-                  <p class="new-price"><span class="size">￥</span>599</p>
-                </div>
-                <van-stepper v-model="number" />
-              </div>
-            </div>
-          </div>
-          <div class="flex cart-item">
-            <van-checkbox name="b" checked-color="#FF9900"></van-checkbox>
-            <div class="cart-pic"><img src="../assets/item1.png" alt=""></div>
-            <div class="descript">
-              <p class="title">ARMANI EXCHANGE 男士AX字 母标识ICON系列圆领长袖卫衣...</p>
-              <div class="flex price-num">
-                <div class="price">
-                  <p class="old-price">￥1,200</p>
-                  <p class="new-price"><span class="size">￥</span>599</p>
-                </div>
-                <van-stepper v-model="number" />
-              </div>
-            </div>
-          </div>
-          <div class="flex cart-item">
-            <van-checkbox name="c" checked-color="#FF9900"></van-checkbox>
-            <div class="cart-pic"><img src="../assets/item1.png" alt=""></div>
-            <div class="descript">
-              <p class="title">ARMANI EXCHANGE 男士AX字 母标识ICON系列圆领长袖卫衣...</p>
-              <div class="flex price-num">
-                <div class="price">
-                  <p class="old-price">￥1,200</p>
-                  <p class="new-price"><span class="size">￥</span>599</p>
-                </div>
-                <van-stepper v-model="number" />
-              </div>
-            </div>
-          </div>
-        </van-checkbox-group>
+      <Checked ref='checked' :on-update="checkedData"></Checked>
+      <Recommend></Recommend>
+    </div>
+   <div class="total-box flex" v-if="editeText=='编辑' ">
+      <div class="price">
+        <p class="new-price"><span class="size">￥</span>1699</p>
+        <p class="old-price">已优惠:￥2,601</p>
       </div>
-      <div class="recommend">
-        <van-divider :style="{ color: '#333333', borderColor: '#333333', padding: '0 16px' }">
-          为你推荐
-        </van-divider>
-        <div class="flex content">
-          <div class="recommend-item">
-            <div class="recommend-pic">
-              <img src="../assets/item_large1.png" alt="">
-            </div>
-            <p class="title">男款 2019年春秋款 N EO 休闲 运动服 飞行...</p>
-            <div>
-              <p class="old-price">￥699</p>
-              <p class="new-price"><span class="size">￥</span>1,699</p>
-            </div>
-          </div>
-          <div class="recommend-item">
-            <div class="recommend-pic">
-              <img src="../assets/item_large1.png" alt="">
-            </div>
-            <p class="title">男款 2019年春秋款 N EO 休闲 运动服 飞行...</p>
-            <div>
-              <p class="old-price">￥699</p>
-              <p class="new-price"><span class="size">￥</span>1,699</p>
-            </div>
-          </div>
-          <div class="recommend-item">
-            <div class="recommend-pic">
-              <img src="../assets/item_large1.png" alt="">
-            </div>
-            <p class="title">男款 2019年春秋款 N EO 休闲 运动服 飞行...</p>
-            <div>
-              <p class="old-price">￥699</p>
-              <p class="new-price"><span class="size">￥</span>1,699</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <button class="orange-btn">去结算</button>
+    </div>
+    <div class="total-box flex" v-else>
+      <button class="orange-btn">移入收藏夹</button>
+      <button class="red-btn">删除</button>
     </div>
   </div>
 </template>
 
 <script>
-  import Vue from 'vue';
-  import {
-    Checkbox,
-    CheckboxGroup
-  } from 'vant';
-  import {
-    Stepper
-  } from 'vant';
-  import {
-    Divider
-  } from 'vant';
-  Vue.use(Divider);
-  Vue.use(Stepper);
-  Vue.use(Checkbox);
-  Vue.use(CheckboxGroup);
+  import Checked from '../components/cart/checked.vue'
+  import Recommend from '../components/cart/recommend.vue'
   export default {
     name: '',
     data() {
       return {
-        result: [],
-        number: '1'
+        editeText:'编辑'
       }
     },
     methods: {
-      toggleAll() {
-        if (this.result.length == 0) {
-          this.$refs.checkboxGroup.toggleAll(true)
-        } else {
-          this.$refs.checkboxGroup.toggleAll(false)
-        }
+      // 全选反选
+      toggleAll(){
+        this.$refs.checked.toggleAll()
       },
-      change() {
-        console.log(this.result)
+      // 获取全选数据
+      checkedData(data){
+        console.log(data)
+      },
+      // 编辑完成
+      handle(){
+        const edit = this.$refs.edit.innerText;
+        if(edit=='编辑'){
+          this.editeText = '完成'
+        }else{
+          this.editeText = '编辑'
+        }
       }
     },
+    components:{
+      Checked,
+      Recommend
+    }
   }
 </script>
 
@@ -162,10 +89,27 @@
       top: 128px;
       left: 0;
       right: 0;
-      bottom: 0;
+      bottom: 108px;
       overflow: auto;
     }
+    .total-box{
+      position: fixed;
+      bottom: 100px;
+      left: 0;
+      right: 0;
+      padding:15px 30px;
+      background-color: #ffffff;
+      .new-price{
+        font-size: 40px;
+        .size{
+          font-size: 28px;
+        }
+      }
+      .old-price{
+        margin-bottom: 0;
+      }
 
+    }
     .title {
       height: 80px;
       font-size: 28px;
@@ -192,74 +136,6 @@
 
       .size {
         font-size: 20px;
-      }
-    }
-
-    .check-box {
-      padding: 30px;
-      background-color: #ffffff;
-
-      .cart-item {
-        margin-bottom: 30px;
-      }
-
-      .cart-pic {
-        height: 180px;
-        width: 180px;
-        border-radius: 10px;
-        overflow: hidden;
-        margin: 0 30px;
-      }
-
-      .descript {
-        flex: 1;
-
-        .price-num {
-          align-items: flex-end;
-        }
-      }
-
-      .van-stepper__input {
-        width: 50px;
-        height: 40px;
-        border-radius: 5px;
-      }
-
-      .van-stepper__minus,
-      .van-stepper__plus {
-        height: 40px;
-        width: 40px;
-        background-color: #FFFFFF;
-      }
-    }
-
-    .recommend {
-      .van-divider {
-        font-size: 32px;
-        font-weight: bold;
-        color: #333333;
-      }
-
-      // .van-divider:after,.van-divider:before {
-      //   width: 20px;
-      //   flex: none;
-      //   margin: 0 auto;
-      //   content:'';
-      // }
-      .content{
-        flex-wrap: wrap;
-      }
-      .recommend-item{
-        flex: 0 0 50%;
-        background-color: #ffffff;
-        border-radius:10px 10px 0px 0px;
-        overflow: hidden;
-        margin-bottom: 30px;
-      }
-      .recommend-pic {
-        height: 330px;
-        width: 330px;
-        margin: 0 auto 20px;
       }
     }
   }

@@ -1,13 +1,11 @@
 <template>
-  <div id="app">
-    <router-view/>
-  </div>
+  <div id="app"><router-view /></div>
 </template>
 
 <script>
 export default {
   name: 'App'
-}
+};
 </script>
 
 <style>
@@ -45,7 +43,7 @@ img {
   flex: 1;
   position: relative;
 }
-.van-search{
+.van-search {
   padding: 0 !important;
 }
 .flex {
@@ -104,15 +102,40 @@ img {
 .good-type {
   padding: 14px 0;
 }
-.ly-tab-item{
+.ly-tab-item {
   font-size: 32px !important;
 }
-.ly-tab-item:not(:first-child){
+.ly-tab-item:not(:first-child) {
   margin-left: 30px !important;
 }
 .vip {
   height: 200px;
   border-radius: 10px;
   overflow: hidden;
+}
+.orange-btn {
+  width: 193px;
+  height: 60px;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: bold;
+  background: rgba(255, 153, 0, 1);
+  border-radius: 30px;
+}
+.red-btn{
+  width: 193px;
+  height: 60px;
+  border: 1px solid #F34E81;
+  outline: none;
+  color: #F34E81;
+  font-size: 28px;
+  font-weight: bold;
+  border-radius: 30px;
+  background-color: #ffffff;
+}
+.none{
+  display: none;
 }
 </style>

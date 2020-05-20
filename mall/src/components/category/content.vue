@@ -5,7 +5,7 @@
       <div   ref="good">
         <ul class="type-list">
           <li v-for="(item, index) in categoriesDetailData" :key="index" class="list ">
-            <div class="type-pic" @click="getDetails(item)">
+            <div class="type-pic" @click="getDetail(item)">
               <!-- <img v-lazy="item.url" alt="" /> -->
               <img src="../../assets/item_large1.png" alt="" />
             </div>
@@ -61,6 +61,10 @@ export default {
         // 2.1 进入默认商品列表滚到顶部
         this.productScroll.scrollToElement(this.$refs.good[0], 10, 0, 0);
       }
+    },
+    getDetail(){
+      console.log(123)
+      this.$router.replace({ name: "detail" });
     }
   }
 };

@@ -6,7 +6,7 @@
         <div class="goods-pic"><img src="../../assets/item_large1.png" alt="" /></div>
         <div class="goods-desc">
           <p class="goods-title">袖卫衣 8NN({{clientDetails}})</p>
-          <p class="good-type">海外|自营</p>
+          <!-- <p class="good-type">海外|自营</p> -->
           <div class="good-price flex">
             <p class="old-price">￥1200</p>
             <p class="brokerage">

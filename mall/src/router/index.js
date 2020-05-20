@@ -9,6 +9,7 @@ const Category = () => import('../views/category.vue');
 const Member = () => import('../views/member.vue');
 const Cart = () => import('../views/cart.vue');
 const Mine = () => import('../views/mine.vue');
+const Detail = () => import('../components/goods/detail.vue');
 Vue.use(Router)
 
 export default new Router({
@@ -29,10 +30,12 @@ export default new Router({
             path: 'home',
             name: 'home',
             component: Home,
-            // 是否数据缓存
-            meta: {
-              keepAlive: true
-            }
+            children: [{
+                // 添加地址
+                path: '/',
+                name: 'detail',
+                component: Detail,
+            }]
           }, {
             // 分类
             path: 'category',
