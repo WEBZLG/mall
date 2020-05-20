@@ -9,10 +9,26 @@ const Category = () => import('../views/category.vue');
 const Member = () => import('../views/member.vue');
 const Cart = () => import('../views/cart.vue');
 const Mine = () => import('../views/mine.vue');
+// 解决多次点击重复路由报错
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err)
+}
 const Detail = () => import('../components/goods/detail.vue');
 Vue.use(Router)
 
 export default new Router({
+  // 解决路由跳转页面没有置顶
+  scrollBehavior(to, from, savedPosition) {
+      if (savedPosition) {
+          return savedPosition
+      } else {
+          return {
+              x: 0,
+              y: 0
+          }
+      }
+  },
       routes: [{
           path: '/',
           redirect: 'tabbar'
@@ -32,7 +48,7 @@ export default new Router({
             component: Home,
             children: [{
                 // 添加地址
-                path: '/',
+                path: 'detail',
                 name: 'detail',
                 component: Detail,
             }]

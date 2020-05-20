@@ -126,8 +126,7 @@ export default {
   },
   methods:{
     getDetail(){
-      console.log(123)
-      this.$router.replace({ name: "detail" });
+      this.$router.push('/tabbar/home/detail');
     }
   },
   watch: {
