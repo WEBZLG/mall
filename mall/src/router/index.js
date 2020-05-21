@@ -10,6 +10,7 @@ const Member = () => import('@/views/member/member.vue');
 const Cart = () => import('@/views/cart/cart.vue');
 const Mine = () => import('@/views/mine/mine.vue');
 const Detail = () => import('@/views/goods/detail.vue');
+const Book = () => import('@/views/mine/children/book.vue');
 // 解决多次点击重复路由报错
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
@@ -38,6 +39,11 @@ export default new Router({
       path: '/detail',
       name: 'detail',
       component: Detail
+    },
+    {
+      path: '/book',
+      name: 'book',
+      component: Book,
     },
     {
       // 根页面
@@ -86,7 +92,7 @@ export default new Router({
         // 我的
         path: 'mine',
         name: 'mine',
-        component: Mine,
+        component: Mine
       }]
     }
   ]

@@ -38,7 +38,7 @@
             <span class="custom-title">我的收藏</span>
           </template>
         </van-cell>
-        <van-cell value="" is-link>
+        <van-cell value="" is-link to="/book" >
           <template #title>
             <span class="icon"><img src="../../assets/txl.png" /></span>
             <span class="custom-title">通讯录</span>

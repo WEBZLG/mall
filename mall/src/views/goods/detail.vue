@@ -2,6 +2,7 @@
   <div class="detail">
     <van-nav-bar title="商品详情" left-arrow @click-left="onClickLeft" />
     <div class="mid-view">
+		<div class="go-vip">成为会员再省20% <span class="right-icon"><img src="../../assets/next_w.png" alt=""></span></div>
       <!-- 轮播图 -->
       <van-swipe :autoplay="0">
         <van-swipe-item v-for="(image, index) in images" :key="index"><img v-lazy="image" /></van-swipe-item>
@@ -43,11 +44,15 @@
         <van-sku v-model="showSku" :sku="sku" :goods="goods" :goods-id="goodsId" :hide-stock="sku.hide_stock" @buy-clicked="onBuyClicked" @add-cart="onAddCartClicked" />
         <van-action-sheet v-model="showMall" :actions="actions" @select="onSelect" />
       </div>
+      <div class="detail-pic"><img src="../../assets/spxq.png" alt=""></div>
+      <div class="detail-pics">
+        <img src="../../assets/daily_banner1.png" alt="">
+      </div>
     </div>
     <van-goods-action>
-      <van-goods-action-icon icon="chat-o" text="客服" color="#07c160" />
-      <van-goods-action-icon icon="cart-o" text="购物车" />
-      <van-goods-action-icon icon="star" text="已收藏" color="#ff5000" />
+      <van-goods-action-icon icon="star" text="收藏" color="#ff5000" />
+      <van-goods-action-icon icon="share" text="分享" color="#07c160" />
+      <van-goods-action-icon icon="cart" text="购物车" />
       <van-goods-action-button type="warning" text="加入购物车" />
       <van-goods-action-button type="danger" text="立即购买" />
     </van-goods-action>
@@ -168,8 +173,65 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  .van-sku-actions .van-button--danger{
+    background:#F34E81 !important;
+  }
+  .van-goods-action-button--danger{
+    background:#F34E81;
+  }
+  .van-sku-actions .van-button--warning{
+    background: #FF9900 !important;
+  }
+  .van-goods-action-button--warning{
+    background: #FF9900;
+  }
 .detail {
   background-color: #f8f8f8;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  .mid-view{
+    position: fixed;
+    top: 92px;
+    left: 0;
+    right: 0;
+    bottom: 100px;
+    overflow: auto;
+    .go-vip{
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 999;
+      width:276px;
+      height:60px;
+      line-height: 60px;
+      color: #FFFFFF;
+      text-align: center;
+      background:rgba(238,79,120,1);
+      opacity:0.8;
+      border-radius:30px 0px 0px 30px;
+      .right-icon{
+        display: inline-block;
+        width: 15px;
+        height: 26px;
+        vertical-align: middle;
+      }
+    }
+    .detail-pic{
+      height: 120px;
+    }
+    .detail-pics img{
+      height: inherit;
+    }
+  }
+  .parameter{
+    margin: 20px 0;
+    .van-cell{
+      padding: 8px 32px;
+    }
+  }
 }
 .van-swipe {
   height: 600px;
