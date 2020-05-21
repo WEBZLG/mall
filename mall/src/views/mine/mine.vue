@@ -1,25 +1,25 @@
 <template>
   <div class="mine">
     <div class="top-bg">
-      <img src="../assets/my_bg.png" alt="" />
+      <img src="../../assets/my_bg.png" alt="" />
       <div class="message">
-        <div class="head"><img src="../assets/sort1.png" alt="" /></div>
+        <div class="head"><img src="../../assets/sort1.png" alt="" /></div>
         <div class="name-type">
           <div class="flex">
             <p class="name">ada_wang</p>
             <div class="flex">
               <div class="vip-icon">
-                <img src="../assets/visitor.png" alt="" />
-                <!--  <img src="../assets/little_chief.png" alt="" />
-                <img src="../assets/large_chief.png" alt="">
-                <img src="../assets/member.png" alt=""> -->
+                <img src="../../assets/visitor.png" alt="" />
+                <!--  <img src="../../assets/little_chief.png" alt="" />
+                <img src="../../assets/large_chief.png" alt="">
+                <img src="../../assets/member.png" alt=""> -->
               </div>
               <span class="type">注册用户</span>
             </div>
           </div>
           <div class="copy-code flex">
             <p class="code">188****9909</p>
-            <div class="copy-icon"><img src="../assets/edit.png" alt="" /></div>
+            <div class="copy-icon"><img src="../../assets/edit.png" alt="" /></div>
           </div>
         </div>
       </div>
@@ -28,42 +28,42 @@
       <van-cell-group>
         <van-cell value="" is-link>
           <template #title>
-            <span class="icon"><img src="../assets/wddd.png" /></span>
+            <span class="icon"><img src="../../assets/wddd.png" /></span>
             <span class="custom-title">我的订单</span>
           </template>
         </van-cell>
         <van-cell value="" is-link>
           <template #title>
-            <span class="icon"><img src="../assets/wdsc.png" /></span>
+            <span class="icon"><img src="../../assets/wdsc.png" /></span>
             <span class="custom-title">我的收藏</span>
           </template>
         </van-cell>
         <van-cell value="" is-link>
           <template #title>
-            <span class="icon"><img src="../assets/txl.png" /></span>
+            <span class="icon"><img src="../../assets/txl.png" /></span>
             <span class="custom-title">通讯录</span>
           </template>
         </van-cell>
         <van-cell value="" is-link>
           <template #title>
-            <span class="icon"><img src="../assets/dzgl.png" /></span>
+            <span class="icon"><img src="../../assets/dzgl.png" /></span>
             <span class="custom-title">地址管理</span>
           </template>
         </van-cell>
         <van-cell value="" is-link>
           <template #title>
-            <span class="icon"><img src="../assets/gywm.png" /></span>
+            <span class="icon"><img src="../../assets/gywm.png" /></span>
             <span class="custom-title">关于我们</span>
           </template>
         </van-cell>
         <van-cell value="" is-link>
           <template #title>
-            <span class="icon"><img src="../assets/lxwm.png" /></span>
+            <span class="icon"><img src="../../assets/lxwm.png" /></span>
             <span class="custom-title">联系我们</span>
           </template>
         </van-cell>
       </van-cell-group>
-      <div class="vip"><img src="../assets/ad1.png" alt="" /></div>
+      <div class="vip"><img src="../../assets/ad1.png" alt="" /></div>
       <van-button type="default" round plain size="large">退出登录</van-button>
     </div>
   </div>

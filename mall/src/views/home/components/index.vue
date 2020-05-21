@@ -1,67 +1,67 @@
 <template>
   <div class="content">
     <!-- 轮播图 -->
-    <van-swipe :autoplay="0">
+    <van-swipe :autoplay="3000">
       <van-swipe-item v-for="(image, index) in images" :key="index"><img v-lazy="image" /></van-swipe-item>
     </van-swipe>
     <!-- 按钮导航 -->
     <div class="nav-btn-list flex">
       <div class="nav-btn">
-        <div class="nav-icon"><img src="../../assets/button1.png" alt="" /></div>
+        <div class="nav-icon"><img src="../../../assets/button1.png" alt="" /></div>
         <p>拼图活动</p>
       </div>
       <div class="nav-btn">
-        <div class="nav-icon"><img src="../../assets/button2.png" alt="" /></div>
+        <div class="nav-icon"><img src="../../../assets/button2.png" alt="" /></div>
         <p>秒杀专区</p>
       </div>
       <div class="nav-btn">
-        <div class="nav-icon"><img src="../../assets/button3.png" alt="" /></div>
+        <div class="nav-icon"><img src="../../../assets/button3.png" alt="" /></div>
         <p>优惠折扣</p>
       </div>
       <div class="nav-btn">
-        <div class="nav-icon"><img src="../../assets/button4.png" alt="" /></div>
+        <div class="nav-icon"><img src="../../../assets/button4.png" alt="" /></div>
         <p>优惠券</p>
       </div>
       <div class="nav-btn">
-        <div class="nav-icon"><img src="../../assets/button5.png" alt="" /></div>
+        <div class="nav-icon"><img src="../../../assets/button5.png" alt="" /></div>
         <p>满减活动</p>
       </div>
       <div class="nav-btn">
-        <div class="nav-icon"><img src="../../assets/button6.png" alt="" /></div>
+        <div class="nav-icon"><img src="../../../assets/button6.png" alt="" /></div>
         <p>热销排行</p>
       </div>
       <div class="nav-btn">
-        <div class="nav-icon"><img src="../../assets/button7.png" alt="" /></div>
+        <div class="nav-icon"><img src="../../../assets/button7.png" alt="" /></div>
         <p>家具日用</p>
       </div>
       <div class="nav-btn">
-        <div class="nav-icon"><img src="../../assets/button8.png" alt="" /></div>
+        <div class="nav-icon"><img src="../../../assets/button8.png" alt="" /></div>
         <p>品牌专区</p>
       </div>
       <div class="nav-btn">
-        <div class="nav-icon"><img src="../../assets/button9.png" alt="" /></div>
+        <div class="nav-icon"><img src="../../../assets/button9.png" alt="" /></div>
         <p>时尚生活</p>
       </div>
       <div class="nav-btn">
-        <div class="nav-icon"><img src="../../assets/button10.png" alt="" /></div>
+        <div class="nav-icon"><img src="../../../assets/button10.png" alt="" /></div>
         <p>大牌好货</p>
       </div>
     </div>
     <!-- 会员 -->
-    <div class="vip"><img src="../../assets/ad1.png" alt="" /></div>
+    <div class="vip"><img src="../../../assets/ad1.png" alt="" /></div>
     <!-- 每日爆品 -->
     <div class="day-hot">
       <h3 class="caption">每日爆品</h3>
-      <div class="vip"><img src="../../assets/daily_banner1.png" alt="" /></div>
+      <div class="vip"><img src="../../../assets/daily_banner1.png" alt="" /></div>
       <div class="goods-list">
         <div class="goods-item"  @click="getDetail()">
-          <div class="goods-pic"><img src="../../assets/item_large1.png" alt="" /></div>
+          <div class="goods-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
           <div class="goods-desc">
             <p class="goods-title">袖卫衣 8NN</p>
             <div class="good-price flex">
               <p class="old-price">￥1200</p>
               <p class="brokerage">
-                <span class="good-icon"></span>
+                <span class="good-icon"><img src="../../../assets/money.png" alt=""></span>
                 佣金￥9.99
               </p>
             </div>
@@ -82,16 +82,16 @@
     <!-- 超级爆款 -->
        <div class="super-hot">
       <h3 class="caption">超级爆品</h3>
-      <div class="vip"><img src="../../assets/daily_banner1.png" alt="" /></div>
+      <div class="vip"><img src="../../../assets/daily_banner1.png" alt="" /></div>
       <div class="goods-list" >
         <div class="goods-item"  @click="getDetail()">
-          <div class="goods-pic"><img src="../../assets/item_large1.png" alt="" /></div>
+          <div class="goods-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
           <div class="goods-desc">
             <p class="goods-title" >袖卫衣 8NN00000</p>
             <div class="good-price flex">
               <p class="old-price">￥1200</p>
               <p class="brokerage">
-                <span class="good-icon"></span>
+                <span class="good-icon"><img src="../../../assets/money.png" alt=""></span>
                 佣金￥9.99
               </p>
             </div>
@@ -126,7 +126,7 @@ export default {
   },
   methods:{
     getDetail(){
-      this.$router.push('/tabbar/home/detail');
+	  this.$router.push({ name: "detail" });
     }
   },
   watch: {
@@ -189,5 +189,10 @@ export default {
 .size {
   font-size: 20px;
 }
-
+.good-icon{
+  display: inline-block;
+  vertical-align: text-top;
+  height: 23px;
+  width: 21px;
+}
 </style>

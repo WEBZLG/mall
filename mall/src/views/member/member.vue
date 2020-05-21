@@ -1,38 +1,38 @@
 <template>
   <div class="member">
     <div class="top-bg">
-      <img src="../assets/vip_bg.jpg" alt="" />
+      <img src="../../assets/vip_bg.jpg" alt="" />
       <div class="message">
-        <div class="head"><img src="../assets/sort1.png" alt="" /></div>
+        <div class="head"><img src="../../assets/sort1.png" alt="" /></div>
         <div class="name-type">
           <div class="flex">
             <p class="name">ada_wang</p>
             <div class="flex">
               <div class="vip-icon">
-                <img src="../assets/visitor.png" alt="" />
-                <!--  <img src="../assets/little_chief.png" alt="" />
-                <img src="../assets/large_chief.png" alt="">
-                <img src="../assets/member.png" alt=""> -->
+                <img src="../../assets/visitor.png" alt="" />
+                <!--  <img src="../../assets/little_chief.png" alt="" />
+                <img src="../../assets/large_chief.png" alt="">
+                <img src="../../assets/member.png" alt=""> -->
               </div>
               <span class="type">注册用户</span>
             </div>
           </div>
           <div class="copy-code flex">
             <p class="code">邀请码:4y6kea9sz4</p>
-            <div class="copy-icon"><img src="../assets/copy.png" alt="" /></div>
+            <div class="copy-icon"><img src="../../assets/copy.png" alt="" /></div>
           </div>
         </div>
       </div>
     </div>
     <div class="content">
       <div class="deposit">
-        <img src="../assets/vip_ad1.png" alt="">
+        <img src="../../assets/vip_ad1.png" alt="">
       </div>
       <div class="model-item">
         <van-cell value="" is-link>
           <template #title>
             <span class="custom-title">我的粉丝</span>
-            <span class="icon"><img src="../assets/open.png" /></span>
+            <span class="icon"><img src="../../assets/open.png" /></span>
           </template>
         </van-cell>
         <div class="flex">
@@ -61,7 +61,7 @@
         <van-cell value="" is-link>
           <template #title>
             <span class="custom-title">预估收益</span>
-            <span class="icon"><img src="../assets/open.png" /></span>
+            <span class="icon"><img src="../../assets/open.png" /></span>
           </template>
         </van-cell>
         <div class="flex">
@@ -85,7 +85,7 @@
         <van-cell value="" is-link>
           <template #title>
             <span class="custom-title">到账收益</span>
-            <span class="icon"><img src="../assets/open.png" /></span>
+            <span class="icon"><img src="../../assets/open.png" /></span>
           </template>
         </van-cell>
         <div class="flex">
@@ -109,7 +109,7 @@
         <van-cell value="" is-link>
           <template #title>
             <span class="custom-title">我的订单</span>
-            <span class="icon"><img src="../assets/close.png" /></span>
+            <span class="icon"><img src="../../assets/close.png" /></span>
           </template>
         </van-cell>
         <div class="flex">

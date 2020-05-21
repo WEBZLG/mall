@@ -20,8 +20,8 @@ import { Tabbar, TabbarItem } from 'vant';
 
 Vue.use(Tabbar);
 Vue.use(TabbarItem);
-// import { setStore } from '../../config/global.js'
-// import { setLocalStore, getLocalStore } from '../../config/global.js'
+// import { setStore } from '../../../../config/global.js'
+// import { setLocalStore, getLocalStore } from '../../../../config/global.js'
 // import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
   name: 'tabbar',
@@ -55,33 +55,33 @@ export default {
         {
           name: 'home',
           title: '首页',
-          normal: require('../assets/home_file.png'),
-          active: require('../assets/home.png'),
+          normal: require('../../assets/home_file.png'),
+          active: require('../../assets/home.png'),
         },
         {
           name: 'category',
           title: '分类',
-          normal: require('../assets/sort_file.png'),
-          active: require('../assets/sort.png'),
+          normal: require('../../assets/sort_file.png'),
+          active: require('../../assets/sort.png'),
         },
         {
           name: 'member',
           title: '会员',
-          normal: require('../assets/vip_file.png'),
-          active: require('../assets/vip.png'),
+          normal: require('../../assets/vip_file.png'),
+          active: require('../../assets/vip.png'),
         },
         {
           name: 'cart',
           title: '购物车',
-          normal: require('../assets/cart_file.png'),
-          active: require('../assets/cart.png'),
+          normal: require('../../assets/cart_file.png'),
+          active: require('../../assets/cart.png'),
           // num: 5
         },
         {
           name: 'mine',
           title: '我的',
-          normal: require('../assets/my_file.png'),
-          active: require('../assets/my.png'),
+          normal: require('../../assets/my_file.png'),
+          active: require('../../assets/my.png'),
         }
       ]
     };

@@ -3,7 +3,7 @@
     <van-checkbox-group v-model="result" ref="checkboxGroup" @change="change()">
       <div class="flex cart-item">
         <van-checkbox name="a" checked-color="#FF9900"></van-checkbox>
-        <div class="cart-pic"><img src="../../assets/item1.png" alt=""></div>
+        <div class="cart-pic"><img src="../../../assets/item1.png" alt=""></div>
         <div class="descript">
           <p class="title">ARMANI EXCHANGE 男士AX字 母标识ICON系列圆领长袖卫衣...</p>
           <div class="flex price-num">
@@ -17,7 +17,7 @@
       </div>
       <div class="flex cart-item">
         <van-checkbox name="b" checked-color="#FF9900"></van-checkbox>
-        <div class="cart-pic"><img src="../../assets/item1.png" alt=""></div>
+        <div class="cart-pic"><img src="../../../assets/item1.png" alt=""></div>
         <div class="descript">
           <p class="title">ARMANI EXCHANGE 男士AX字 母标识ICON系列圆领长袖卫衣...</p>
           <div class="flex price-num">
@@ -31,7 +31,7 @@
       </div>
       <div class="flex cart-item">
         <van-checkbox name="c" checked-color="#FF9900"></van-checkbox>
-        <div class="cart-pic"><img src="../../assets/item1.png" alt=""></div>
+        <div class="cart-pic"><img src="../../../assets/item1.png" alt=""></div>
         <div class="descript">
           <p class="title">ARMANI EXCHANGE 男士AX字 母标识ICON系列圆领长袖卫衣...</p>
           <div class="flex price-num">

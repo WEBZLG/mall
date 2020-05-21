@@ -23,8 +23,8 @@
 </template>
 
 <script>
-  import Checked from '../components/cart/checked.vue'
-  import Recommend from '../components/cart/recommend.vue'
+  import Checked from '@/views/cart/components/checked.vue'
+  import Recommend from '@/views/cart/components/recommend.vue'
   export default {
     name: '',
     data() {

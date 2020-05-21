@@ -3,7 +3,7 @@
     <van-divider :style="{ color: '#333333', borderColor: '#333333', padding: '0 16px' }">为你推荐</van-divider>
     <div class="flex content">
       <div class="recommend-item">
-        <div class="recommend-pic"><img src="../../assets/item_large1.png" alt="" /></div>
+        <div class="recommend-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
         <div class="recommend-text">
           <p class="title">男款 2019年春秋款 N EO 休闲 运动服 飞行...</p>
           <div>
@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="recommend-item">
-        <div class="recommend-pic"><img src="../../assets/item_large1.png" alt="" /></div>
+        <div class="recommend-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
         <div class="recommend-text">
           <p class="title">男款 2019年春秋款 N EO 休闲 运动服 飞行...</p>
           <div>
@@ -29,7 +29,7 @@
         </div>
       </div>
       <div class="recommend-item">
-        <div class="recommend-pic"><img src="../../assets/item_large1.png" alt="" /></div>
+        <div class="recommend-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
         <div class="recommend-text">
           <p class="title">男款 2019年春秋款 N EO 休闲 运动服 飞行...</p>
           <div>

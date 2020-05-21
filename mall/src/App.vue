@@ -1,10 +1,15 @@
 <template>
-  <div id="app"><router-view /></div>
+  <div id="app"><router-view/></div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  computed:{
+    key(){
+      return this.$route.name ? this.$route.name+ +new Date() : this.$route+ +new Date();
+   }
+  }
 };
 </script>
 
@@ -138,4 +143,8 @@ img {
 .none{
   display: none;
 }
+.van-nav-bar .van-icon{
+  color: #000000 !important;
+  font-weight: bold;
+ }
 </style>

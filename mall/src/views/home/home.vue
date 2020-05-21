@@ -3,7 +3,7 @@
     <div class="">
       <div class="search-box">
         <div class="ipt-box"><van-search v-model="value" shape="round" background="#ffffff" placeholder="臻悦尚品，搜你所爱" /></div>
-        <div class="message"><img src="../assets/message.png" alt="" /></div>
+        <div class="message"><img src="../../assets/message.png" alt="" /></div>
       </div>
       <ly-tab v-model="selected" :items="navList" :options="options" @change="handleChange" />
       <!--:is实现多个组件实现同一个挂载点-->
@@ -18,8 +18,8 @@ import { Swipe, SwipeItem } from 'vant';
 import { Lazyload } from 'vant';
 import { Search } from 'vant';
 import BScroll from 'better-scroll';
-import tab1 from '../components/home/index.vue';
-import tab2 from '../components/home/goods.vue';
+import tab1 from '@/views/home/components/index.vue';
+import tab2 from '@/views/home/components/goods.vue';
 
 Vue.use(Search);
 Vue.use(Lazyload);
@@ -82,16 +82,17 @@ export default {
       } else {
         this.currentView = 'tab2';
       }
-    }
+    },
+
   },
   components: {
     tab1,
     tab2
   },
   mounted() {
-    this.$nextTick(() => {
-      this.scroll = new BScroll(this.$refs.wrapper, {click: true,});
-    });
+    // this.$nextTick(() => {
+    //   this.scroll = new BScroll(this.$refs.wrapper, {click: true,tap: true});
+    // });
   }
 };
 </script>
@@ -103,7 +104,7 @@ export default {
   right: 0;
   top: 0;
   bottom: 100px;
-  overflow: hidden;
+  overflow: auto;
   // 防止抖动
   -webkit-transform: translateZ(0);
   transform: translateZ(0);

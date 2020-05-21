@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import ContentView from '../components/category/content.vue';
+import ContentView from '@/views/category/components/content.vue';
 import Vue from 'vue';
 import BScroll from 'better-scroll';
 import { Lazyload } from 'vant';

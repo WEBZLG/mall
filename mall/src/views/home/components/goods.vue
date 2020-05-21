@@ -1,9 +1,9 @@
 <template>
   <div class="content">
-    <div class="vip"><img src="../../assets/daily_banner1.png" alt="" /></div>
+    <div class="vip"><img src="../../../assets/daily_banner1.png" alt="" /></div>
     <div class="goods-list" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
       <div class="goods-item">
-        <div class="goods-pic"><img src="../../assets/item_large1.png" alt="" /></div>
+        <div class="goods-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
         <div class="goods-desc">
           <p class="goods-title">袖卫衣 8NN({{clientDetails}})</p>
           <!-- <p class="good-type">海外|自营</p> -->
