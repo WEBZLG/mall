@@ -10,7 +10,9 @@ const Member = () => import('@/views/member/member.vue');
 const Cart = () => import('@/views/cart/cart.vue');
 const Mine = () => import('@/views/mine/mine.vue');
 const Detail = () => import('@/views/goods/detail.vue');
-const Book = () => import('@/views/mine/children/book.vue');
+const Book = () => import('@/views/mine/book/book.vue');
+const Level = () => import('@/views/mine/book/level.vue');
+const Address = () => import('@/views/mine/address/address.vue');
 // 解决多次点击重复路由报错
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
@@ -44,6 +46,16 @@ export default new Router({
       path: '/book',
       name: 'book',
       component: Book,
+    },
+    {
+      path: '/level',
+      name: 'level',
+      component: Level,
+    },
+    {
+      path: '/address',
+      name: 'address',
+      component: Address,
     },
     {
       // 根页面

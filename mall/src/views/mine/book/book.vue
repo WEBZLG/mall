@@ -71,7 +71,7 @@
               </div>
             </div>
           </div>
-          <van-cell class="down-num" title="下级人数(3)" is-link to="index" />
+          <van-cell class="down-num" title="下级人数(3)" is-link to="/level" />
         </div>
         <div class="item-fans">
           <div class="flex">

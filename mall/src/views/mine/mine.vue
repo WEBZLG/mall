@@ -44,7 +44,7 @@
             <span class="custom-title">通讯录</span>
           </template>
         </van-cell>
-        <van-cell value="" is-link>
+        <van-cell value="" is-link to="/address">
           <template #title>
             <span class="icon"><img src="../../assets/dzgl.png" /></span>
             <span class="custom-title">地址管理</span>
