@@ -1,5 +1,5 @@
 <template>
-  <div class="address">
+  <div class="addressC">
     <van-nav-bar title="地址管理" left-arrow @click-left="onClickLeft" />
     <div class="mid-view">
       <van-swipe-cell>
@@ -29,7 +29,7 @@
       </van-swipe-cell>
     </div>
     <div class="btn-box">
-      <van-button type="default" round plain size="large">添加收货地址</van-button>
+      <van-button type="default" round plain size="large" @click='add()'>添加收货地址</van-button>
     </div>
   </div>
 </template>
@@ -50,13 +50,17 @@ export default {
   methods: {
     onClickLeft() {
       this.$router.back();
-    }
+    },
+    add(){
+      console.log(12)
+      this.$router.push('/add')
+    },
   }
 };
 </script>
 
 <style lang="less" scoped>
-.address {
+.addressC {
   position: absolute;
   top: 0;
   left: 0;

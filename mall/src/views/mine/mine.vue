@@ -32,7 +32,7 @@
             <span class="custom-title">我的订单</span>
           </template>
         </van-cell>
-        <van-cell value="" is-link>
+        <van-cell value="" is-link to="/collect">
           <template #title>
             <span class="icon"><img src="../../assets/wdsc.png" /></span>
             <span class="custom-title">我的收藏</span>

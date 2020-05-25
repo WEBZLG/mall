@@ -29,7 +29,7 @@
         <img src="../../assets/vip_ad1.png" alt="">
       </div>
       <div class="model-item">
-        <van-cell value="" is-link>
+        <van-cell value="" is-link to="/fans">
           <template #title>
             <span class="custom-title">我的粉丝</span>
             <span class="icon"><img src="../../assets/open.png" /></span>
