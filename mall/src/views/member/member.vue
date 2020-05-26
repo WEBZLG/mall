@@ -58,7 +58,7 @@
         </div>
       </div>
       <div class="model-item">
-        <van-cell value="" is-link>
+        <van-cell value="" is-link to="/estimate">
           <template #title>
             <span class="custom-title">预估收益</span>
             <span class="icon"><img src="../../assets/open.png" /></span>
@@ -82,7 +82,7 @@
         </div>
       </div>
       <div class="model-item">
-        <van-cell value="" is-link>
+        <van-cell value="" is-link to="/account">
           <template #title>
             <span class="custom-title">到账收益</span>
             <span class="icon"><img src="../../assets/open.png" /></span>

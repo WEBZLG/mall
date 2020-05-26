@@ -15,7 +15,10 @@ const Level = () => import('@/views/mine/book/level.vue');
 const Address = () => import('@/views/mine/address/address.vue');
 const Add = () => import('@/views/mine/address/add.vue');
 const Collect = () => import('@/views/mine/collect/collect.vue');
+const Notice = () => import('@/views/home/notice/notice.vue');
 const Fans = () => import('@/views/member/fans/fans.vue');
+const Estimate = () => import('@/views/member/estimate/estimate.vue');
+const Account = () => import('@/views/member/account/account.vue');
 // 解决多次点击重复路由报错
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
@@ -74,6 +77,21 @@ export default new Router({
       path: '/fans',
       name: 'fans',
       component: Fans,
+    },
+    {
+      path: '/estimate',
+      name: 'estimate',
+      component: Estimate,
+    },
+    {
+      path: '/account',
+      name: 'account',
+      component: Account,
+    },
+    {
+      path: '/notice',
+      name: 'notice',
+      component: Notice,
     },
     {
       // 根页面

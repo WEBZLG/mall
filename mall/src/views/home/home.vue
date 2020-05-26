@@ -3,7 +3,7 @@
     <div class="">
       <div class="search-box">
         <div class="ipt-box"><van-search v-model="value" shape="round" background="#ffffff" placeholder="臻悦尚品，搜你所爱" /></div>
-        <div class="message"><img src="../../assets/message.png" alt="" /></div>
+        <div class="message" @click="notice()"><img src="../../assets/message.png" alt="" /></div>
       </div>
       <ly-tab v-model="selected" :items="navList" :options="options" @change="handleChange" />
       <!--:is实现多个组件实现同一个挂载点-->
@@ -83,7 +83,9 @@ export default {
         this.currentView = 'tab2';
       }
     },
-
+    notice() {
+      this.$router.push('/notice');
+    }
   },
   components: {
     tab1,

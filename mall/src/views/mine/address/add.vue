@@ -25,6 +25,9 @@ export default {
     onSave() {
       Toast('save');
     },
+    onClickLeft() {
+      this.$router.back();
+    },
     onChangeDetail(val) {
       if (val) {
         this.searchResult = [
