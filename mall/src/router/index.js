@@ -19,6 +19,7 @@ const Notice = () => import('@/views/home/notice/notice.vue');
 const Fans = () => import('@/views/member/fans/fans.vue');
 const Estimate = () => import('@/views/member/estimate/estimate.vue');
 const Account = () => import('@/views/member/account/account.vue');
+const Order = () => import('@/views/member/order/order.vue');
 // 解决多次点击重复路由报错
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
@@ -92,6 +93,11 @@ export default new Router({
       path: '/notice',
       name: 'notice',
       component: Notice,
+    },
+    {
+      path: '/order',
+      name: 'order',
+      component: Order,
     },
     {
       // 根页面
