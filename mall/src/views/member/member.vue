@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="content">
-      <div class="deposit">
+      <div class="deposit" @click="deposit()">
         <img src="../../assets/vip_ad1.png" alt="">
       </div>
       <div class="model-item">
@@ -141,6 +141,11 @@
     name: '',
     data() {
       return {};
+    },
+    methods:{
+      deposit(){
+        this.$router.push('/deposit')
+      }
     }
   };
 </script>

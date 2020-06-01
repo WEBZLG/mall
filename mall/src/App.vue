@@ -27,7 +27,15 @@ img {
   height: 100%;
   width: 100%;
 }
-
+#app{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  background-color: #F8F8F8;
+}
 .search-box {
   padding: 30px;
   padding-bottom: 0;
@@ -35,15 +43,7 @@ img {
   align-items: center;
   justify-content: space-between;
 }
-/* .search-ipt {
-  text-indent: 54px;
-  border: none;
-  outline: none;
-  height: 56px;
-  width: 100%;
-  border-radius: 56px;
-  background-color: #f5f5f5;
-} */
+
 .ipt-box {
   flex: 1;
   position: relative;

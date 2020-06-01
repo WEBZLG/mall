@@ -26,7 +26,7 @@
     </div>
     <div class="content">
       <van-cell-group>
-        <van-cell value="" is-link>
+        <van-cell value="" is-link to="/order">
           <template #title>
             <span class="icon"><img src="../../assets/wddd.png" /></span>
             <span class="custom-title">我的订单</span>

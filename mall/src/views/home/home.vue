@@ -106,6 +106,7 @@ export default {
   right: 0;
   top: 0;
   bottom: 100px;
+  background-color: #ffffff;
   overflow: auto;
   // 防止抖动
   -webkit-transform: translateZ(0);

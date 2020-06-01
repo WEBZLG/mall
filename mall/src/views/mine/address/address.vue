@@ -28,9 +28,7 @@
         </template>
       </van-swipe-cell>
     </div>
-    <div class="btn-box">
-      <van-button type="default" round plain size="large" @click='add()'>添加收货地址</van-button>
-    </div>
+    <div class="btn-box"><van-button type="default" round plain size="large" @click="add()">添加收货地址</van-button></div>
   </div>
 </template>
 
@@ -51,10 +49,10 @@ export default {
     onClickLeft() {
       this.$router.back();
     },
-    add(){
-      console.log(12)
-      this.$router.push('/add')
-    },
+    add() {
+      console.log(12);
+      this.$router.push('/add');
+    }
   }
 };
 </script>
@@ -129,20 +127,30 @@ export default {
     font-size: 24px;
     line-height: 34px;
   }
-  .btn-box{
+  .btn-box {
     position: fixed;
     left: 0;
     right: 0;
     bottom: 0;
     padding: 30px;
-    background-color: #F8F8F8;
+    background-color: #f8f8f8;
   }
   .van-button--default {
     height: 80px;
     color: #ffffff;
     font-size: 32px;
     font-weight: bold;
-    background-color: #FF9900;
+    background-color: #ff9900;
+  }
+  .van-button--primary {
+    background-color: #ff9900;
+    border: 1px solid #ff9900;
+    margin: 0px -4px 0 0;
+  }
+  .van-button--danger {
+    background-color: #ff354d;
+    border: 1px solid #ff354d;
+    margin: 0px 0 0 -4px;
   }
 }
 </style>
