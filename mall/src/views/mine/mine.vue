@@ -64,7 +64,7 @@
         </van-cell>
       </van-cell-group>
       <div class="vip"><img src="../../assets/ad1.png" alt="" /></div>
-      <van-button type="default" round plain size="large">退出登录</van-button>
+      <!-- <van-button type="default" round plain size="large">退出登录</van-button> -->
     </div>
   </div>
 </template>

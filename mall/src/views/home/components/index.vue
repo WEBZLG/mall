@@ -54,14 +54,14 @@
       <h3 class="caption">每日爆品</h3>
       <div class="vip"><img src="../../../assets/daily_banner1.png" alt="" /></div>
       <div class="goods-list">
-        <div class="goods-item"  @click="getDetail()">
+        <div class="goods-item" @click="getDetail()">
           <div class="goods-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
           <div class="goods-desc">
             <p class="goods-title">袖卫衣 8NN</p>
             <div class="good-price flex">
               <p class="old-price">￥1200</p>
               <p class="brokerage">
-                <span class="good-icon"><img src="../../../assets/money.png" alt=""></span>
+                <span class="good-icon"><img src="../../../assets/money.png" alt="" /></span>
                 佣金￥9.99
               </p>
             </div>
@@ -80,18 +80,18 @@
       </div>
     </div>
     <!-- 超级爆款 -->
-       <div class="super-hot">
+    <div class="super-hot">
       <h3 class="caption">超级爆品</h3>
       <div class="vip"><img src="../../../assets/daily_banner1.png" alt="" /></div>
-      <div class="goods-list" >
-        <div class="goods-item"  @click="getDetail()">
+      <div class="goods-list">
+        <div class="goods-item" @click="getDetail()">
           <div class="goods-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
           <div class="goods-desc">
-            <p class="goods-title" >袖卫衣 8NN00000</p>
+            <p class="goods-title">袖卫衣 8NN00000</p>
             <div class="good-price flex">
               <p class="old-price">￥1200</p>
               <p class="brokerage">
-                <span class="good-icon"><img src="../../../assets/money.png" alt=""></span>
+                <span class="good-icon"><img src="../../../assets/money.png" alt="" /></span>
                 佣金￥9.99
               </p>
             </div>
@@ -115,7 +115,6 @@
 <script>
 import Vue from 'vue';
 import { Lazyload } from 'vant';
-
 Vue.use(Lazyload);
 export default {
   props: ['clientDetails'],
@@ -124,9 +123,22 @@ export default {
       images: ['https://img.yzcdn.cn/vant/apple-1.jpg', 'https://img.yzcdn.cn/vant/apple-2.jpg']
     };
   },
-  methods:{
-    getDetail(){
-	  this.$router.push({ name: "detail" });
+  mounted() {
+    this.getList();
+  },
+  methods: {
+    getList() {
+      let data = {
+        id: 1,
+        platform: 'wx',
+        token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+      };
+      this.https.post('/default/index', data, '').then(res => {
+        console.log(res);
+      });
+    },
+    getDetail() {
+      this.$router.push({ name: 'detail' });
     }
   },
   watch: {
@@ -189,7 +201,7 @@ export default {
 .size {
   font-size: 20px;
 }
-.good-icon{
+.good-icon {
   display: inline-block;
   vertical-align: text-top;
   height: 23px;
