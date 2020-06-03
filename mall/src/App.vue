@@ -41,6 +41,7 @@ img {
   padding-bottom: 0;
   display: flex;
   align-items: center;
+  background-color: #ffffff;
   justify-content: space-between;
 }
 
