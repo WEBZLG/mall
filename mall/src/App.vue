@@ -148,4 +148,14 @@ img {
   color: #000000 !important;
   font-weight: bold;
  }
+ .no-data{
+   margin: 20% auto;
+   text-align: center;
+   font-size: 28px;
+ }
+ .no-icon{
+   height: 214px;
+   width: 190px;
+   margin:0 auto 30px;
+ }
 </style>

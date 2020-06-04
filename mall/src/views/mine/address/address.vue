@@ -2,29 +2,29 @@
   <div class="addressC">
     <van-nav-bar title="地址管理" left-arrow @click-left="onClickLeft" />
     <div class="mid-view">
-      <van-swipe-cell>
+      <van-swipe-cell v-for="item in dataList" :key="item.id">
         <div>
           <div class="flex item-fans">
             <div class="info">
               <div class="flex name-type">
                 <div>
                   <p class="name">
-                    <span>Ada_Wang</span>
-                    <span>Ada_Wang</span>
+                    <span>{{ item.name }}</span>
+                    <span>{{ item.mobile }}</span>
                   </p>
                 </div>
-                <div class="default">默认</div>
+                <div class="default" v-if="item.is_default == 1">默认</div>
               </div>
               <div class="flex">
-                <div class="wechat">请填写微信号请填写微信号请填写微信号请填写微信号请填写微信号</div>
+                <div class="wechat">{{ item.address }}</div>
                 <div class="active-icon"><img src="../../../assets/edit2.png" alt="" /></div>
               </div>
             </div>
           </div>
         </div>
         <template #right>
-          <van-button square type="primary" text="设为默认" />
-          <van-button square type="danger" text="删除" />
+          <van-button square type="primary" text="设为默认" @click="defaultFun(item.id)" />
+          <van-button square type="danger" text="删除" @click="deleteFun(item.id)" />
         </template>
       </van-swipe-cell>
     </div>
@@ -37,13 +37,22 @@ import Vue from 'vue';
 import { SwipeCell } from 'vant';
 import { NavBar } from 'vant';
 import { Button } from 'vant';
+import { Toast } from 'vant';
+import { Dialog } from 'vant';
+
+Vue.use(Toast);
 Vue.use(Button);
 Vue.use(NavBar);
 Vue.use(SwipeCell);
 export default {
-  name: 'address',
+  name: '',
   data() {
-    return {};
+    return {
+      dataList: ''
+    };
+  },
+  mounted() {
+    this.getData();
   },
   methods: {
     onClickLeft() {
@@ -52,6 +61,83 @@ export default {
     add() {
       console.log(12);
       this.$router.push('/add');
+    },
+    // 获取列表
+    getData() {
+      var that = this;
+      let param = {
+        id: 1,
+        platform: 'wx',
+        token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+      };
+      Toast.loading({
+        duration: 0,
+        message: '加载中...',
+        forbidClick: true
+      });
+      this.https.get('/user/address-list', param, '').then(res => {
+        console.log(res);
+        Toast.clear();
+        if (res.code == 0) {
+          that.dataList = res.data.list;
+        } else {
+          Toast.fail(res.message);
+        }
+      });
+    },
+    // 删除地址
+    deleteFun(id) {
+      var that = this;
+      let param = {
+        id: 1,
+        platform: 'wx',
+        token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+      };
+      Dialog.confirm({
+        message: '确定删除吗？'
+      })
+        .then(res => {
+          Toast.loading({
+            duration: 0,
+            message: '加载中...',
+            forbidClick: true
+          });
+          this.https.get('/user/address-delete', param, '&address_id=' + id).then(res => {
+            console.log(res);
+            Toast.clear();
+            if (res.code == 0) {
+              Toast.success('删除成功');
+              that.getData();
+            } else {
+              Toast.fail(res.message);
+            }
+          });
+        })
+        .catch(() => {});
+    },
+    // 设置默认地址
+    defaultFun(id) {
+      var that = this;
+      let param = {
+        id: 1,
+        platform: 'wx',
+        token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+      };
+      Toast.loading({
+        duration: 0,
+        message: '加载中...',
+        forbidClick: true
+      });
+      this.https.get('/user/address-set-default', param, '&address_id=' + id).then(res => {
+        console.log(res);
+        Toast.clear();
+        if (res.code == 0) {
+          Toast.success('设置成功');
+          that.getData();
+        } else {
+          Toast.fail(res.message);
+        }
+      });
     }
   }
 };

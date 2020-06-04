@@ -1,8 +1,8 @@
 <template>
-  <div class="typeContent"  ref="r_list">
+  <div class="typeContent" ref="r_list">
     <!-- 商品内容列表 -->
     <section class="r_list">
-      <div   ref="good">
+      <div ref="good">
         <ul class="type-list">
           <li v-for="(item, index) in categoriesDetailData" :key="index" class="list ">
             <div class="type-pic" @click="getDetail(item)">
@@ -11,8 +11,11 @@
             </div>
             <p>{{ item.title }}</p>
           </li>
+          <div class="no-data" v-if="categoriesDetailData.length == 0">
+            <div class="no-icon"><img src="../../../assets/nodata.png" alt="" /></div>
+            <p class="no-text">暂无数据</p>
+          </div>
         </ul>
-        <div class="bottomTip">到底了,看看别的分类吧</div>
       </div>
     </section>
   </div>
@@ -62,9 +65,9 @@ export default {
         this.productScroll.scrollToElement(this.$refs.good[0], 10, 0, 0);
       }
     },
-    getDetail(){
-      console.log(123)
-      this.$router.replace({ name: "detail" });
+    getDetail(e) {
+      console.log(e)
+      // this.$router.push({ name: 'detail',params: {id: e.id}});
     }
   }
 };
@@ -82,16 +85,16 @@ export default {
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   .type-pic {
-      height: 150px;
-      width: 150px;
-      border-radius: 10px;
-      overflow: hidden;
-      margin: 0 auto 18px;
+    height: 150px;
+    width: 150px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 0 auto 18px;
   }
-  .type-list{
+  .type-list {
     display: flex;
     flex-wrap: wrap;
-    li{
+    li {
       flex: 0 0 33.33%;
       text-align: center;
       padding-bottom: 30px;

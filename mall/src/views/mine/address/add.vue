@@ -18,12 +18,43 @@ export default {
   name: 'add',
   data() {
     return {
-      areaList
+      areaList,
+      dataObj: {},
+      name:'',
+      mobile:'',
+      province:'',
+      city:'',
+      districe:'',
+      detail:'',
+      is_default:'',
+      address_id:''
     };
   },
   methods: {
-    onSave() {
-      Toast('save');
+    // 保存
+    onSave(e) {
+      console.log(e)
+      var that = this;
+      let param = {
+        id: 1,
+        platform: 'wx',
+        token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+      };
+      return false;
+      Toast.loading({
+        duration: 0,
+        message: '加载中...',
+        forbidClick: true
+      });
+      this.https.get('/user/favorite-list', param, '').then(res => {
+        console.log(res);
+        Toast.clear();
+        if (res.code == 0) {
+          that.dataList = res.data.list;
+        } else {
+          Toast.fail(res.message);
+        }
+      });
     },
     onClickLeft() {
       this.$router.back();
@@ -39,19 +70,18 @@ export default {
       } else {
         this.searchResult = [];
       }
-    },
-    
+    }
   }
 };
 </script>
 
 <style class="less">
-  .van-address-edit .van-button--danger {
-    height: 80px;
-    border: 1px solid #ff9900;
-    background-color: #ff9900;
-  }
-.van-switch--on{
+.van-address-edit .van-button--danger {
+  height: 80px;
+  border: 1px solid #ff9900;
   background-color: #ff9900;
-  }
+}
+.van-switch--on {
+  background-color: #ff9900;
+}
 </style>

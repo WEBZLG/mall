@@ -3,7 +3,6 @@ import $qs from 'qs'
 axios.defaults.baseURL ='https://www.shinecrystal.cn/api/';
 axios.interceptors.request.use(
   config => {
-    config.data = JSON.stringify(config.data);
     config.headers = {
       'Content-Type':'application/x-www-form-urlencoded'
     }
@@ -22,10 +21,10 @@ axios.interceptors.response.use(
   }
 )
 export default {
-  post(url,data={},other={}){
+  post(url,data={},other={},param){
     return new Promise((resolve,reject) => {
       url = url+'?store_id='+data.id+'&_platform='+data.platform+'&access_token='+data.token+other
-      axios.post(url,$qs.stringify(data))
+      axios.post(url,$qs.stringify(param))
         .then(response => {
           resolve(response.data);
         },err => {
@@ -33,10 +32,10 @@ export default {
         })
     })
   },
-  get(url,data={},other={}){
+  get(url,data={},other={},param){
     return new Promise((resolve,reject) => {
       url = url+'?store_id='+data.id+'&_platform='+data.platform+'&access_token='+data.token+other
-      axios.get(url,$qs.stringify(data))
+      axios.get(url,$qs.stringify(param))
         .then(response => {
           resolve(response.data);
         })

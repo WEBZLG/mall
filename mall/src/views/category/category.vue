@@ -25,12 +25,11 @@
   import ContentView from '@/views/category/components/content.vue';
   import Vue from 'vue';
   import BScroll from 'better-scroll';
-  import {
-    Lazyload
-  } from 'vant';
-  import {
-    Search
-  } from 'vant';
+  import {Lazyload} from 'vant';
+  import {Search} from 'vant';
+  import { Toast } from 'vant';
+
+  Vue.use(Toast);
   Vue.use(Search);
   Vue.use(Lazyload);
   export default {
@@ -39,17 +38,7 @@
       return {
         value: '',
         categoriesData: [],
-        categoriesDetailData: [{
-            id: 0,
-            title: 'T恤',
-            url: '../assets/sort1.png'
-          },
-          {
-            id: 1,
-            title: 'T恤',
-            url: '../assets/sort1.png'
-          }
-        ],
+        categoriesDetailData: [],
         currentIndex: 0
       };
     },
@@ -67,23 +56,29 @@
       ContentView
     },
     methods: {
-      // 1. 初始化操作(数据和界面)
       async _initData() {
+        var that = this;
         // 1.1 获取左边的数据
-        let data = {
+        let param = {
           id: 1,
           platform: 'wx',
           token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
         };
-        this.https.post('/default/topic-type', data, '').then(res => {
+        Toast.loading({
+          duration: 0,
+          message: '加载中...',
+          forbidClick: true,
+        });
+        this.https.post('/default/topic-type', param, '').then(res => {
           console.log(res);
+          Toast.clear();
           if(res.code==0){
-            this.categoriesData = res.data.list
+            that.categoriesData = res.data.list
+            this.getList(res.data.list[0].id)
+          }else{
+            Toast.fail(res.message);
           }
         });
-        // 1.2 获取右边的数据
-        this.getList(this.categoriesData[0].id)
-
         // 1.3.初始化滚动视图
         this.$nextTick(() => {
           if (!this.leftScroll) {
@@ -122,7 +117,7 @@
           platform: 'wx',
           token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
         };
-        this.https.post('/default/topic-list', data, '&id='+tid).then(res => {
+        this.https.post('/default/topic-list', data, '&type='+tid).then(res => {
           console.log(res);
           if(res.code==0){
             this.categoriesDetailData = res.data.list

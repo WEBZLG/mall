@@ -149,6 +149,9 @@ export default {
       }
     };
   },
+  mounted() {
+    // this.$route.params.id
+  },
   methods: {
     onClickLeft() {
       this.$router.back();

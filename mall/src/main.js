@@ -6,10 +6,11 @@ import router from './router'
 import LyTab from 'ly-tab'
 import axios from "axios";
 import https from './request/http.js'
+
+Vue.use(LyTab)
 Vue.prototype.https=https
 require('es6-promise').polyfill();
 require('es6-promise/auto');
-Vue.use(LyTab)
 Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({

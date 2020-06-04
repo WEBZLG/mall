@@ -2,46 +2,30 @@
   <div class="collect">
     <van-nav-bar title="我的收藏" left-arrow @click-left="onClickLeft" />
     <div class="mid-view">
-      <van-swipe-cell>
+      <van-swipe-cell v-for="item in dataList" :key="item.id">
         <div class="flex cart-item">
-          <div class="cart-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
+          <div class="cart-pic"><img :src="item.goods_pic" alt="" /></div>
           <div class="descript">
-            <p class="title">ARMANI EXCHANGE 男士AX字 母标识ICON系列圆领长袖卫衣...</p>
+            <p class="title">{{ item.name }}</p>
             <div class="flex price-num">
               <div class="price">
-                <p class="old-price">￥1,200</p>
+                <!-- <p class="old-price">￥1,200</p> -->
                 <p class="new-price">
                   <span class="size">￥</span>
-                  599
+                  {{ item.price }}
                 </p>
               </div>
             </div>
           </div>
         </div>
         <template #right>
-          <van-button square type="danger" text="删除" />
+          <van-button square type="danger" text="删除" @click="deleteData(item)" />
         </template>
       </van-swipe-cell>
-      <van-swipe-cell>
-        <div class="flex cart-item">
-          <div class="cart-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
-          <div class="descript">
-            <p class="title">ARMANI EXCHANGE 男士AX字 母标识ICON系列圆领长袖卫衣...</p>
-            <div class="flex price-num">
-              <div class="price">
-                <p class="old-price">￥1,200</p>
-                <p class="new-price">
-                  <span class="size">￥</span>
-                  599
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <template #right>
-          <van-button square type="danger" text="删除" />
-        </template>
-      </van-swipe-cell>
+    </div>
+    <div class="no-data" v-if="dataList.length == 0">
+      <div class="no-icon"><img src="../../../assets/nodata.png" alt="" /></div>
+      <p class="no-text">暂无数据</p>
     </div>
   </div>
 </template>
@@ -51,6 +35,7 @@ import Vue from 'vue';
 import { Toast } from 'vant';
 import { NavBar } from 'vant';
 import { SwipeCell } from 'vant';
+import { Dialog } from 'vant';
 
 Vue.use(SwipeCell);
 Vue.use(NavBar);
@@ -58,27 +43,75 @@ Vue.use(Toast);
 export default {
   name: 'collect',
   data() {
-    return {};
+    return {
+      dataList: '',
+      goodId: ''
+    };
+  },
+  mounted() {
+    this.getData();
   },
   methods: {
     onClickLeft() {
       this.$router.back();
     },
-    beforeClose({ position, instance }) {
-      switch (position) {
-        case 'left':
-        case 'cell':
-        case 'outside':
-          instance.close();
-          break;
-        case 'right':
-          Dialog.confirm({
-            message: '确定删除吗？'
-          }).then(() => {
-            instance.close();
+
+    // 获取列表
+    getData() {
+      var that = this;
+      let param = {
+        id: 1,
+        platform: 'wx',
+        token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+      };
+      Toast.loading({
+        duration: 0,
+        message: '加载中...',
+        forbidClick: true
+      });
+      this.https.get('/user/favorite-list', param, '').then(res => {
+        console.log(res);
+        Toast.clear();
+        if (res.code == 0) {
+          that.dataList = res.data.list;
+        } else {
+          Toast.fail(res.message);
+        }
+      });
+    },
+    // 删除收藏
+    deleteData(e) {
+      var that = this;
+      this.goodId = e.goods_id;
+      let param = {
+        id: 1,
+        platform: 'wx',
+        token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+      };
+      let obj = {
+        goods_id: e.goods_id
+      };
+      Dialog.confirm({
+        message: '确定删除吗？'
+      })
+        .then(res => {
+          Toast.loading({
+            duration: 0,
+            message: '加载中...',
+            forbidClick: true
           });
-          break;
-      }
+          this.https.post('/user/favorite-remove', param, '', obj).then(res => {
+            console.log(res);
+            Toast.clear();
+            if (res.code == 0) {
+              Toast.success('删除成功');
+              that.getData();
+            } else {
+              Toast.fail(res.msg);
+            }
+          });
+        })
+        .catch(() => {});
     }
   }
 };
@@ -95,9 +128,9 @@ export default {
   .mid-view {
     margin: 30px 0;
     background-color: #ffffff;
-    padding-bottom: 30px;
+    padding: 30px 0;
     .cart-item {
-      padding: 30px 30px 0;
+      padding: 0 30px;
       background-color: #ffffff;
     }
     .cart-pic {
