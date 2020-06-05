@@ -17,7 +17,7 @@
               </div>
               <div class="flex">
                 <div class="wechat">{{ item.address }}</div>
-                <div class="active-icon"><img src="../../../assets/edit2.png" alt="" /></div>
+                <div class="active-icon" @click="editFun(item.id)"><img src="../../../assets/edit2.png" alt="" /></div>
               </div>
             </div>
           </div>
@@ -27,6 +27,10 @@
           <van-button square type="danger" text="删除" @click="deleteFun(item.id)" />
         </template>
       </van-swipe-cell>
+      <div class="no-data" v-if="dataList.length == 0">
+        <div class="no-icon"><img src="../../../assets/nodata.png" alt="" /></div>
+        <p class="no-text">暂无数据</p>
+      </div>
     </div>
     <div class="btn-box"><van-button type="default" round plain size="large" @click="add()">添加收货地址</van-button></div>
   </div>
@@ -55,11 +59,13 @@ export default {
     this.getData();
   },
   methods: {
+    editFun(id) {
+      this.$router.push({ name: 'edit', params: { aid: id } });
+    },
     onClickLeft() {
       this.$router.back();
     },
     add() {
-      console.log(12);
       this.$router.push('/add');
     },
     // 获取列表

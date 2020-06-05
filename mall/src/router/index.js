@@ -14,6 +14,7 @@ const Book = () => import('@/views/mine/book/book.vue');
 const Level = () => import('@/views/mine/book/level.vue');
 const Address = () => import('@/views/mine/address/address.vue');
 const Add = () => import('@/views/mine/address/add.vue');
+const Edit = () => import('@/views/mine/address/edit.vue');
 const Collect = () => import('@/views/mine/collect/collect.vue');
 const Notice = () => import('@/views/home/notice/notice.vue');
 const Fans = () => import('@/views/member/fans/fans.vue');
@@ -71,6 +72,11 @@ export default new Router({
       path: '/add',
       name: 'add',
       component: Add,
+    },
+    {
+      path: '/edit',
+      name: 'edit',
+      component: Edit,
     },
     {
       path: '/collect',

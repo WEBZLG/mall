@@ -20,7 +20,7 @@
             </div>
             <div class="flex">
               <div class="wechat">微信号:请填写微信号</div>
-              <div class="active-icon"><img src="../../../assets/edit2.png" alt="" /></div>
+              <div class="active-icon"><img src="../../../assets/copy2.png" alt="" /></div>
             </div>
           </div>
         </div>
@@ -49,12 +49,12 @@
         </div>
       </van-panel>
       <van-panel title="我的粉丝">
-        <div class="item-fans">
+        <div class="item-fans" v-for="item in dataList" :key="item.id">
           <div class="flex">
-            <div class="head"><img src="../../../assets/sort1.png" alt="" /></div>
+            <div class="head"><img :src="item.avatar_url" alt="暂无图片" /></div>
             <div class="info">
               <div class="flex name-type">
-                <p class="name">Ada_Wang</p>
+                <p class="name">{{ item.nickname }}</p>
                 <div class="flex">
                   <div class="vip-icon">
                     <img src="../../../assets/visitor.png" alt="" />
@@ -62,7 +62,7 @@
                     <img src="../../../assets/large_chief.png" alt="">
                     <img src="../../../assets/member.png" alt=""> -->
                   </div>
-                  <span class="type">注册用户</span>
+                  <span class="type">{{ item.level_name }}</span>
                 </div>
               </div>
               <div class="flex">
@@ -71,31 +71,11 @@
               </div>
             </div>
           </div>
-          <van-cell class="down-num" title="下级人数(3)" is-link to="/level" />
+          <van-cell class="down-num" :title="'下级人数(' + item.child.length + ')'" is-link :to="{name:'level',params:{child:item.child}}" />
         </div>
-        <div class="item-fans">
-          <div class="flex">
-            <div class="head"><img src="../../../assets/sort1.png" alt="" /></div>
-            <div class="info">
-              <div class="flex name-type">
-                <p class="name">Ada_Wang</p>
-                <div class="flex">
-                  <div class="vip-icon">
-                    <img src="../../../assets/visitor.png" alt="" />
-                    <!--  <img src="../../../assets/little_chief.png" alt="" />
-                    <img src="../../../assets/large_chief.png" alt="">
-                    <img src="../../../assets/member.png" alt=""> -->
-                  </div>
-                  <span class="type">注册用户</span>
-                </div>
-              </div>
-              <div class="flex">
-                <div class="wechat">微信号:请填写微信号</div>
-                <div class="active-icon"><img src="../../../assets/copy2.png" alt="" /></div>
-              </div>
-            </div>
-          </div>
-          <van-cell class="down-num" title="下级人数(3)" is-link to="index" />
+        <div class="no-data" v-if="dataList.length == 0">
+          <div class="no-icon"><img src="../../../assets/nodata.png" alt="" /></div>
+          <p class="no-text">暂无粉丝</p>
         </div>
       </van-panel>
     </div>
@@ -107,7 +87,9 @@ import Vue from 'vue';
 import { NavBar } from 'vant';
 import { Panel } from 'vant';
 import { Cell, CellGroup } from 'vant';
+import { Toast } from 'vant';
 
+Vue.use(Toast);
 Vue.use(Cell);
 Vue.use(CellGroup);
 Vue.use(Panel);
@@ -115,11 +97,40 @@ Vue.use(NavBar);
 export default {
   name: 'book',
   data() {
-    return {};
+    return {
+      dataList: ''
+    };
+  },
+  mounted() {
+    this.getData();
   },
   methods: {
     onClickLeft() {
       this.$router.back();
+    },
+    // 获取列表
+    getData() {
+      var that = this;
+      let param = {
+        id: 1,
+        platform: 'wx',
+        token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+      };
+      let status = '';
+      Toast.loading({
+        duration: 0,
+        message: '加载中...',
+        forbidClick: true
+      });
+      this.https.get('/share/get-team_1', param, '&status=' + status).then(res => {
+        console.log(res);
+        Toast.clear();
+        if (res.code == 0) {
+          that.dataList = res.data.list;
+        } else {
+          Toast.fail(res.message);
+        }
+      });
     }
   }
 };
@@ -127,7 +138,7 @@ export default {
 
 <style lang="less" scoped>
 .book {
-  .name-list{
+  .name-list {
     position: absolute;
     top: 92px;
     left: 0;
@@ -147,11 +158,11 @@ export default {
   .van-panel__content {
     padding: 0 30px 30px;
   }
-  .item-fans{
+  .item-fans {
     padding-top: 30px;
     border-bottom: 1px solid #dcdcdc;
   }
-  .item-fans:last-child{
+  .item-fans:last-child {
     border: none;
   }
   .info {
@@ -181,8 +192,8 @@ export default {
     color: #999999;
   }
   .type {
-    width: 140px;
     height: 34px;
+    padding: 0 20px;
     background: rgba(0, 0, 0, 1);
     opacity: 0.34;
     border-radius: 17px;

@@ -1,7 +1,7 @@
 <template>
   <div class="add">
     <van-nav-bar title="地址管理" left-arrow @click-left="onClickLeft" />
-    <van-address-edit :area-list="areaList" show-set-default :area-columns-placeholder="['请选择', '请选择', '请选择']" @save="onSave" @change-detail="onChangeDetail" />
+    <van-address-edit :area-list="areaList"  :area-columns-placeholder="['请选择', '请选择', '请选择']" :address-info="addressinfo" @save="onSave" @change-detail="onChangeDetail" />
 <!--    <van-field readonly clickable label="城市" :value="values" placeholder="选择城市" @click="showPicker = true" />
     <van-popup v-model="showPicker" round position="bottom">
       <van-picker show-toolbar :columns="columns" value-key="text" @cancel="showPicker = false" @confirm="onConfirm" ref="getValue"/>
@@ -32,26 +32,37 @@ export default {
     return {
       columns,
       areaList,
-      // value: '',
-      // showPicker: false,
-      // values:''
+      value: '',
+      showPicker: false,
+      values:'',
+      address_id:'',
+      addressinfo:{
+          name:'',
+          tel:'',
+          addressDetail:'',
+          province:'',
+          city:'',
+          county:'',
+          areaCode:''
+      },
     };
   },
   mounted() {
     this.columns = this.columns.columns
-    // console.log(this.columns )
+    var id = this.$route.params.aid;
+    this.address_id = id;
+    this.exitFun(id);
   },
   methods: {
-    // onConfirm(picker, value, index) {
-    //   var ref = this.$refs.getValue.getColumnValues();
-    //   console.log(ref)
-    //   console.log(picker)
-    //   // this.values = value;
-    //   this.showPicker = false;
-    // },
+    onConfirm(picker, value, index) {
+      var ref = this.$refs.getValue.getColumnValues();
+      console.log(ref)
+      console.log(picker)
+      // this.values = value;
+      this.showPicker = false;
+    },
     // 保存
     onSave(e) {
-      console.log(e)
       var that = this;
       let param = {
         id: 1,
@@ -82,8 +93,10 @@ export default {
         city_id: city,
         district_id: county,
         detail: e.addressDetail,
-        label_name:e.areaCode
+        label_name: e.areaCode,
+        'address_id':that.address_id
       };
+      console.log(params);
       Toast.loading({
         duration: 0,
         message: '加载中...',
@@ -128,20 +141,49 @@ export default {
         }
       });
     },
+    // 地址详情
+    exitFun(id) {
+      var that = this;
+      let param = {
+        id: 1,
+        platform: 'wx',
+        token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+      };
+      Toast.loading({
+        duration: 0,
+        message: '加载中...',
+        forbidClick: true
+      });
+      this.https.get('/user/address-detail', param, '&id=' + id).then(res => {
+        console.log(res);
+        Toast.clear();
+        if (res.code == 0) {
+          that.addressinfo.name=res.data.name
+          that.addressinfo.tel=res.data.mobile
+          // that.addressinfo.province=res.data.name
+          // that.addressinfo.city=res.data.name
+          // that.addressinfo.county=res.data.name
+          that.addressinfo.addressDetail=res.data.detail
+          that.addressinfo.areaCode=res.data.area_code
+        } else {
+          Toast.fail(res.message);
+        }
+      });
+    },
     onClickLeft() {
       this.$router.back();
     },
     onChangeDetail(val) {
-      // if (val) {
-      //   this.searchResult = [
-      //     {
-      //       name: '黄龙万科中心',
-      //       address: '杭州市西湖区'
-      //     }
-      //   ];
-      // } else {
-      //   this.searchResult = [];
-      // }
+      if (val) {
+        this.searchResult = [
+          {
+            name: '黄龙万科中心',
+            address: '杭州市西湖区'
+          }
+        ];
+      } else {
+        this.searchResult = [];
+      }
     }
   }
 };
