@@ -2,41 +2,15 @@
   <div class="recommend">
     <van-divider :style="{ color: '#333333', borderColor: '#333333', padding: '0 16px' }">为你推荐</van-divider>
     <div class="flex content">
-      <div class="recommend-item">
-        <div class="recommend-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
+      <div class="recommend-item" v-for="item in dataList" :key="item.id">
+        <div class="recommend-pic"><img src="item.goods_pic" alt="" /></div>
         <div class="recommend-text">
-          <p class="title">男款 2019年春秋款 N EO 休闲 运动服 飞行...</p>
+          <p class="title">{{item.goods_name}}</p>
           <div>
-            <p class="old-price">￥699</p>
+            <!-- <p class="old-price">￥699</p> -->
             <p class="new-price">
               <span class="size">￥</span>
-              1,699
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="recommend-item">
-        <div class="recommend-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
-        <div class="recommend-text">
-          <p class="title">男款 2019年春秋款 N EO 休闲 运动服 飞行...</p>
-          <div>
-            <p class="old-price">￥699</p>
-            <p class="new-price">
-              <span class="size">￥</span>
-              1,699
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="recommend-item">
-        <div class="recommend-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
-        <div class="recommend-text">
-          <p class="title">男款 2019年春秋款 N EO 休闲 运动服 飞行...</p>
-          <div>
-            <p class="old-price">￥699</p>
-            <p class="new-price">
-              <span class="size">￥</span>
-              1,699
+              {{item.price}}
             </p>
           </div>
         </div>
@@ -56,6 +30,7 @@ Vue.use(Checkbox);
 Vue.use(CheckboxGroup);
 export default {
   name: '',
+  props:['dataList'],
   data() {
     return {};
   }

@@ -32,7 +32,7 @@ Router.prototype.push = function push(location) {
 Vue.use(Router)
 
 export default new Router({
-  // mode: 'history',
+  mode: 'history',
   // 解决路由跳转页面没有置顶
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

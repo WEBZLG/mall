@@ -5,13 +5,21 @@
       <div class="edit" @click="handle()" ref ='edit'>{{editeText}}</div>
     </header>
     <div class="mid-view">
-      <Checked ref='checked' :on-update="checkedData"></Checked>
-      <Recommend></Recommend>
+      <Checked v-if="goodsList.length>0" ref='checked' :on-update="checkedData"  :goodsList="goodsList" @getPrice="getPrice"></Checked>
+      <div class="no-data" v-if="goodsList.length == 0">
+        <div class="no-icon"><img src="../../assets/nodata.png" alt="" /></div>
+        <p class="no-text">暂无数据</p>
+      </div>
+      <Recommend :dataList="dataList"></Recommend>
+      <div class="no-data" v-if="dataList.length == 0">
+        <div class="no-icon"><img src="../../assets/nodata.png" alt="" /></div>
+        <p class="no-text">暂无数据</p>
+      </div>
     </div>
    <div class="total-box flex" v-if="editeText=='编辑' ">
       <div class="price">
-        <p class="new-price"><span class="size">￥</span>1699</p>
-        <p class="old-price">已优惠:￥2,601</p>
+        <p class="new-price"><span class="size">￥</span>{{totalPrice}}</p>
+        <!-- <p class="old-price">已优惠:￥2,601</p> -->
       </div>
       <button class="orange-btn">去结算</button>
     </div>
@@ -23,23 +31,46 @@
 </template>
 
 <script>
+  import Vue from 'vue';
   import Checked from '@/views/cart/components/checked.vue'
   import Recommend from '@/views/cart/components/recommend.vue'
+  import { Toast } from 'vant';
+
+  Vue.use(Toast);
   export default {
     name: '',
     data() {
       return {
-        editeText:'编辑'
+        editeText:'编辑',
+        dataList:[],
+        goodsList:[],
+        totalPrice:0
       }
     },
+    mounted() {
+       this.getData();
+    },
     methods: {
+      //获取数量
+      getPrice(val){
+        console.log(val)
+      },
       // 全选反选
       toggleAll(){
         this.$refs.checked.toggleAll()
       },
       // 获取全选数据
       checkedData(data){
+        var that = this;
         console.log(data)
+        if(data.length==0){
+          this.totalPrice=0;
+        }else{
+          that.totalPrice = 0 
+          for (var i=0; i<data.length;i++) {
+            that.totalPrice =that.totalPrice*1 + data[i].price*1*data[i].num*1
+          }
+        }
       },
       // 编辑完成
       handle(){
@@ -49,6 +80,31 @@
         }else{
           this.editeText = '编辑'
         }
+      },
+      // 获取列表
+      getData() {
+        var that = this;
+        let param = {
+          id: 1,
+          platform: 'wx',
+          token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+        };
+        let status = '';
+        Toast.loading({
+          duration: 0,
+          message: '加载中...',
+          forbidClick: true
+        });
+        this.https.get('/cart/list', param,'').then(res => {
+          console.log(res);
+          Toast.clear();
+          if (res.code == 0) {
+            that.dataList = res.data.mch_list;
+            that.goodsList = res.data.list
+;          } else {
+            Toast.fail(res.message);
+          }
+        });
       }
     },
     components:{
