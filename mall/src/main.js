@@ -6,6 +6,8 @@ import router from './router'
 import LyTab from 'ly-tab'
 import axios from "axios";
 import https from './request/http.js'
+ import infiniteScroll from "vue-infinite-scroll";
+ Vue.use(infiniteScroll);
 
 Vue.use(LyTab)
 Vue.prototype.https=https

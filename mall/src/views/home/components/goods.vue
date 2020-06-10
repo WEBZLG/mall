@@ -36,6 +36,9 @@ export default {
   data() {
     return {};
   },
+  mounted() {
+    console.log()
+  },
   methods: {
     loadMore() {
       this.loading = true;

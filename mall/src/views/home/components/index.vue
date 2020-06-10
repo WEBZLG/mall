@@ -2,7 +2,7 @@
   <div class="content">
     <!-- 轮播图 -->
     <van-swipe :autoplay="3000">
-      <van-swipe-item v-for="(image, index) in images" :key="index"><img v-lazy="image" /></van-swipe-item>
+      <van-swipe-item v-for="(item, index) in dataList.banner_list" :key="index"><img v-lazy="item.pic_url" /></van-swipe-item>
     </van-swipe>
     <!-- 按钮导航 -->
     <div class="nav-btn-list flex">
@@ -115,26 +115,42 @@
 <script>
 import Vue from 'vue';
 import { Lazyload } from 'vant';
+import { Toast } from 'vant';
+
+Vue.use(Toast);
 Vue.use(Lazyload);
 export default {
   props: ['clientDetails'],
   data() {
     return {
-      images: ['https://img.yzcdn.cn/vant/apple-1.jpg', 'https://img.yzcdn.cn/vant/apple-2.jpg']
+      images: ['https://img.yzcdn.cn/vant/apple-1.jpg', 'https://img.yzcdn.cn/vant/apple-2.jpg'],
+      dataList:[]
     };
   },
   mounted() {
-    // this.getList();
+    this.getData();
   },
   methods: {
-    getList() {
-      let data = {
+    getData() {
+      var that = this;
+      let param = {
         id: 1,
         platform: 'wx',
         token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
       };
-      this.https.post('/default/index', data, '').then(res => {
+      Toast.loading({
+        duration: 0,
+        message: '加载中...',
+        forbidClick: true
+      });
+      this.https.post('/default/index', param, '').then(res => {
         console.log(res);
+        Toast.clear();
+        if (res.code == 0) {
+          that.dataList = res.data;
+        } else {
+          Toast.fail(res.message);
+        }
       });
     },
     getDetail() {
