@@ -54,8 +54,8 @@
       <h3 class="caption">每日爆品</h3>
       <div class="vip"><img src="../../../assets/daily_banner1.png" alt="" /></div>
       <div class="goods-list">
-        <div class="goods-item" @click="getDetail()">
-          <div class="goods-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
+        <div class="goods-item">
+          <div class="goods-pic"  @click="getDetail()"><img src="../../../assets/item_large1.png" alt="" /></div>
           <div class="goods-desc">
             <p class="goods-title">袖卫衣 8NN</p>
             <div class="good-price flex">
@@ -71,8 +71,8 @@
                 1699
               </p>
               <div class="btn-bot">
-                <button type="button" class="sm-btn">复制文字</button>
-                <button type="button" class="sm-btn">分享图片</button>
+                <button type="button" class="sm-btn hotCopy" data-clipboard-action="copy"  data-clipboard-text="袖卫衣 8NN00000" @click.stop="copyLink('.hotCopy')">复制文字</button>
+                <button type="button" class="sm-btn" @click.stop="share">分享图片</button>
               </div>
             </div>
           </div>
@@ -84,8 +84,8 @@
       <h3 class="caption">超级爆品</h3>
       <div class="vip"><img src="../../../assets/daily_banner1.png" alt="" /></div>
       <div class="goods-list">
-        <div class="goods-item" @click="getDetail()">
-          <div class="goods-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
+        <div class="goods-item">
+          <div class="goods-pic"  @click="getDetail()"><img src="../../../assets/item_large1.png" alt="" /></div>
           <div class="goods-desc">
             <p class="goods-title">袖卫衣 8NN00000</p>
             <div class="good-price flex">
@@ -101,8 +101,8 @@
                 1699
               </p>
               <div class="btn-bot">
-                <button type="button" class="sm-btn">复制文字</button>
-                <button type="button" class="sm-btn">分享图片</button>
+                <button type="button" class="sm-btn hotCopy" data-clipboard-action="copy"  data-clipboard-text="袖卫衣 8NN00000" @click.stop="copyLink('.hotCopy')">复制文字</button>
+                <button type="button" class="sm-btn" @click.stop="share">分享图片</button>
               </div>
             </div>
           </div>
@@ -116,7 +116,6 @@
 import Vue from 'vue';
 import { Lazyload } from 'vant';
 import { Toast } from 'vant';
-
 Vue.use(Toast);
 Vue.use(Lazyload);
 export default {
@@ -131,6 +130,19 @@ export default {
     this.getData();
   },
   methods: {
+    share(){
+      console.log('分项')
+    },
+    copyLink(className) {
+       let _this = this;
+       let clipboard = new this.clipboard(className);
+       clipboard.on('success', function(e) {
+          Toast.success('复制成功');
+       });
+       clipboard.on('error', function() {
+          Toast.fail('复制失败');
+       });
+     },
     getData() {
       var that = this;
       let param = {

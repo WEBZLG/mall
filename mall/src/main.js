@@ -7,9 +7,11 @@ import LyTab from 'ly-tab'
 import axios from "axios";
 import https from './request/http.js'
  import infiniteScroll from "vue-infinite-scroll";
+ import clipboard from 'clipboard';
  Vue.use(infiniteScroll);
 
 Vue.use(LyTab)
+ Vue.prototype.clipboard = clipboard;
 Vue.prototype.https=https
 require('es6-promise').polyfill();
 require('es6-promise/auto');
