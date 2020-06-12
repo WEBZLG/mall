@@ -101,7 +101,7 @@
                 1699
               </p>
               <div class="btn-bot">
-                <button type="button" class="sm-btn hotCopy" data-clipboard-action="copy"  data-clipboard-text="袖卫衣 8NN00000" @click.stop="copyLink('.hotCopy')">复制文字</button>
+                <button type="button" class="sm-btn hotCopy" data-clipboard-text="袖卫衣 8NN00000" @click="copyLink('.hotCopy')">复制文字</button>
                 <button type="button" class="sm-btn" @click.stop="share">分享图片</button>
               </div>
             </div>
@@ -134,7 +134,7 @@ export default {
       console.log('分项')
     },
     copyLink(className) {
-       let _this = this;
+       let that = this;
        let clipboard = new this.clipboard(className);
        clipboard.on('success', function(e) {
           Toast.success('复制成功');

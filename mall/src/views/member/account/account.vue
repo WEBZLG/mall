@@ -29,7 +29,9 @@ import { Cell, CellGroup } from 'vant';
 import { Button } from 'vant';
 import { Popup } from 'vant';
 import { DatetimePicker } from 'vant';
-
+import { Toast } from 'vant';
+import { Dialog } from 'vant';
+Vue.use(Toast);
 Vue.use(DatetimePicker);
 Vue.use(Popup);
 Vue.use(Button);
@@ -70,6 +72,7 @@ export default {
   },
   mounted() {
     this.nowDay = this.formatter(this.currentDate)
+    // this.getData()
   },
   methods: {
     onClickLeft() {
@@ -92,7 +95,31 @@ export default {
       var val=d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
       return val;
     },
-
+	// 获取列表
+	getData() {
+	  var that = this;
+	  let param = {
+	    id: 1,
+	    platform: 'wx',
+	    token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+	  };
+	  let status = '';
+	  Toast.loading({
+	    duration: 0,
+	    message: '加载中...',
+	    forbidClick: true
+	  });
+	  this.https.post('/profit/arrive', param, '').then(res => {
+	    console.log(res);
+	    Toast.clear();
+	    if (res.code == 0) {
+	      that.tabList = res.data;
+        that.dataList=res.data[0].list;
+	    } else {
+	      Toast.fail(res.message);
+	    }
+	  });
+	},
   }
 };
 </script>
@@ -106,7 +133,7 @@ export default {
     background-color: #ff9900;
   }
   .van-cell-group {
-    margin: 0 30px;
+    padding: 0 30px;
   }
   .van-cell {
     padding: 30px 0;

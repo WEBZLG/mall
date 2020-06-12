@@ -43,7 +43,7 @@ export default {
     loadMore() {
       this.loading = true;
       setTimeout(() => {
-        let last = this.list[this.list.length - 1];
+        // let last = this.list[this.list.length - 1];
         for (let i = 1; i <= 10; i++) {
           this.list.push(last + i);
         }

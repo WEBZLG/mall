@@ -74,7 +74,7 @@ export default {
         that.checkData == [];
         for (var i = 0; i < data.length; i++) {
           that.totalPrice = that.totalPrice * 1 + data[i].price * 1 * data[i].num * 1;
-          that.checkData = that.checkData.concat(data[i].goods_id);
+          that.checkData = that.checkData.concat(data[i].cart_id);
         }
       }
     },
@@ -158,9 +158,6 @@ export default {
               message: '加载中...',
               forbidClick: true
             });
-
-            console.log(cart_id_list);
-
             that.https.get('/cart/delete', param, '&cart_id_list=[' + cart_id_list + ']').then(res => {
               console.log(res);
               Toast.clear();

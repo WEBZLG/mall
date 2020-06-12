@@ -71,7 +71,7 @@ export default {
     background-color: #ff9900;
   }
   .van-cell-group{
-    margin: 0 30px;
+    padding: 0 30px;
   }
   .van-cell{
     padding: 30px 0;

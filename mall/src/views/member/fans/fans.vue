@@ -2,50 +2,33 @@
   <div class="fans">
     <van-nav-bar title="我的粉丝" left-arrow @click-left="onClickLeft" />
     <div class="mid-view">
-      <van-tabs v-model="active" swipe-threshold="5">
-        <van-tab v-for="item in tabList" :title="item.title" :key="item.id">
+      <van-tabs v-model="active" swipe-threshold="5"  @click="onClick">
+        <van-tab v-for="tab in tabList" :title="tab.name" :key="tab.id">
           <div class="name-list">
-            <div class="flex item-fans">
-              <div class="head"><img src="../../../assets/sort1.png" alt="" /></div>
+            <div class="flex item-fans" v-for="item in dataList" :key="item.id">
+              <div class="head"><img :src="item.avatar_url" alt="图片丢失" /></div>
               <div class="info">
                 <div class="flex name-type">
-                  <p class="name">Ada_Wang</p>
+                  <p class="name">{{item.nickname}}</p>
                   <div class="flex">
                     <div class="vip-icon">
-                      <img src="../../../assets/visitor.png" alt="" />
-                      <!--  <img src="../../../assets/little_chief.png" alt="" />
-                          <img src="../../../assets/large_chief.png" alt="">
-                          <img src="../../../assets/member.png" alt=""> -->
+                      <!-- <img src="../../../assets/visitor.png" alt="" /> -->
+                       <!-- <img src="../../../assets/little_chief.png" alt="" /> -->
+                         <img src="../../../assets/large_chief.png" alt="">
+                          <!-- <img src="../../../assets/member.png" alt=""> -->
                     </div>
-                    <span class="type">注册用户</span>
+                    <span class="type">{{tab.name}}</span>
                   </div>
                 </div>
                 <div class="flex">
-                  <div class="wechat">微信号:请填写微信号</div>
-                  <div class="active-icon"><img src="../../../assets/copy2.png" alt="" /></div>
+                  <div class="wechat">微信号:{{item.wechat_code}}</div>
+                  <div class="active-icon copy" :data-clipboard-text="item.wechat_code" @click="copyLink('.copy')"><img src="../../../assets/copy2.png" alt="" /></div>
                 </div>
               </div>
             </div>
-            <div class="flex item-fans">
-              <div class="head"><img src="../../../assets/sort1.png" alt="" /></div>
-              <div class="info">
-                <div class="flex name-type">
-                  <p class="name">Ada_Wang</p>
-                  <div class="flex">
-                    <div class="vip-icon">
-                      <img src="../../../assets/visitor.png" alt="" />
-                      <!--  <img src="../../../assets/little_chief.png" alt="" />
-                          <img src="../../../assets/large_chief.png" alt="">
-                          <img src="../../../assets/member.png" alt=""> -->
-                    </div>
-                    <span class="type">注册用户</span>
-                  </div>
-                </div>
-                <div class="flex">
-                  <div class="wechat">微信号:请填写微信号</div>
-                  <div class="active-icon"><img src="../../../assets/copy2.png" alt="" /></div>
-                </div>
-              </div>
+            <div class="no-data" v-if="dataList.length == 0">
+              <div class="no-icon"><img src="../../../assets/nodata.png" alt="" /></div>
+              <p class="no-text">暂无数据</p>
             </div>
           </div>
         </van-tab>
@@ -58,7 +41,9 @@
 import Vue from 'vue';
 import { NavBar } from 'vant';
 import { Tab, Tabs } from 'vant';
-
+import { Toast } from 'vant';
+import { Dialog } from 'vant';
+Vue.use(Toast);
 Vue.use(Tab);
 Vue.use(Tabs);
 Vue.use(NavBar);
@@ -66,38 +51,56 @@ export default {
   name: 'fans',
   data() {
     return {
-      tabList: [
-        {
-          id: 0,
-          title: '注册用户'
-        },
-        {
-          id: 1,
-          title: '会员'
-        },
-        {
-          id: 2,
-          title: '小队长'
-        },
-        {
-          id: 3,
-          title: '大队正'
-        },
-        {
-          id: 4,
-          title: '核心队长'
-        }
-      ],
+      tabList: [],
+      dataList:[],
       active: 0
     };
+  },
+  mounted() {
+    this.getData();
   },
   methods: {
     onClickLeft() {
       this.$router.back();
     },
     onClick(name, title) {
-      Toast(title);
-    }
+      this.dataList= this.tabList[name].list;
+    },
+    copyLink(className) {
+       let that = this;
+       let clipboard = new this.clipboard(className);
+       clipboard.on('success', function(e) {
+          Toast.success('复制成功');
+       });
+       clipboard.on('error', function() {
+          Toast.fail('复制失败');
+       });
+     },
+	// 获取列表
+	getData() {
+	  var that = this;
+	  let param = {
+	    id: 1,
+	    platform: 'wx',
+	    token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+	  };
+	  let status = '';
+	  Toast.loading({
+	    duration: 0,
+	    message: '加载中...',
+	    forbidClick: true
+	  });
+	  this.https.post('/profit/my_fans', param, '').then(res => {
+	    console.log(res);
+	    Toast.clear();
+	    if (res.code == 0) {
+	      that.tabList = res.data;
+        that.dataList=res.data[0].list;
+	    } else {
+	      Toast.fail(res.message);
+	    }
+	  });
+	},
   }
 };
 </script>
