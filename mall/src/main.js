@@ -8,6 +8,8 @@ import axios from "axios";
 import https from './request/http.js'
  import infiniteScroll from "vue-infinite-scroll";
  import clipboard from 'clipboard';
+ import wx from 'weixin-js-sdk';
+ Vue.prototype.wx = wx
  Vue.use(infiniteScroll);
 
 Vue.use(LyTab)
