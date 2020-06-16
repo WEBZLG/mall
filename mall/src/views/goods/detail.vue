@@ -82,6 +82,7 @@ export default {
   name: 'detail',
   data() {
     return {
+      detailData:'',
       showMall: false,
       mall: '普通快递(免费)',
       images: ['https://img.yzcdn.cn/vant/apple-1.jpg', 'https://img.yzcdn.cn/vant/apple-2.jpg'],
@@ -150,7 +151,8 @@ export default {
     };
   },
   mounted() {
-    // this.$route.params.id
+   let id = this.$route.params.id;
+   this.getData(id);
   },
   methods: {
     onClickLeft() {
@@ -170,7 +172,30 @@ export default {
       this.showSku = true;
     },
     onBuyClicked() {},
-    onAddCartClicked() {}
+    onAddCartClicked() {},
+    // 获取详情
+    getData(id) {
+      var that = this;
+      let param = {
+        id: 1,
+        platform: 'wx',
+        token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+      };
+      Toast.loading({
+        duration: 0,
+        message: '加载中...',
+        forbidClick: true
+      });
+      this.https.post('/default/goods', param, '&id='+id).then(res => {
+        console.log(res);
+        Toast.clear();
+        if (res.code == 0) {
+          that.detailData = res.data;
+        } else {
+          Toast.fail(res.message);
+        }
+      });
+    },
   }
 };
 </script>

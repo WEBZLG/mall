@@ -37,22 +37,22 @@
         </van-cell>
         <div class="flex">
           <div class="item">
-            <p class="number">52人</p>
+            <p class="number">{{zcyh}}人</p>
             <p class="part-type">注册用户</p>
           </div>
           <div class="line"></div>
           <div class="item">
-            <p class="number">52人</p>
+            <p class="number">{{xtz}}人</p>
             <p class="part-type">小团长</p>
           </div>
           <div class="line"></div>
           <div class="item">
-            <p class="number">52人</p>
+            <p class="number">{{dtz}}人</p>
             <p class="part-type">大团长</p>
           </div>
           <div class="line"></div>
           <div class="item">
-            <p class="number">52人</p>
+            <p class="number">{{hxtz}}人</p>
             <p class="part-type">核心团长</p>
           </div>
         </div>
@@ -66,17 +66,17 @@
         </van-cell>
         <div class="flex">
           <div class="item">
-            <p class="number">￥52</p>
+            <p class="number">￥{{ygDataList.extension_money}}</p>
             <p class="part-type">推广收益</p>
           </div>
           <div class="line"></div>
           <div class="item">
-            <p class="number">￥52</p>
+            <p class="number">￥{{ygDataList.team_money}}</p>
             <p class="part-type">团队收益</p>
           </div>
           <div class="line"></div>
           <div class="item">
-            <p class="number">￥52</p>
+            <p class="number">￥{{ygDataList.extension_money}}</p>
             <p class="part-type">总收益</p>
           </div>
         </div>
@@ -90,17 +90,17 @@
         </van-cell>
         <div class="flex">
           <div class="item">
-            <p class="number">￥52</p>
+            <p class="number">￥{{dzDataList.today_money}}</p>
             <p class="part-type">今日到账</p>
           </div>
           <div class="line"></div>
           <div class="item">
-            <p class="number">￥52</p>
+            <p class="number">￥{{dzDataList.yesterday_money}}</p>
             <p class="part-type">昨日到账</p>
           </div>
           <div class="line"></div>
           <div class="item">
-            <p class="number">￥52</p>
+            <p class="number">￥{{dzDataList.total_money}}</p>
             <p class="part-type">总到账</p>
           </div>
         </div>
@@ -109,7 +109,7 @@
         <van-cell value="" is-link to="/order">
           <template #title>
             <span class="custom-title">我的订单</span>
-            <span class="icon"><img src="../../assets/close.png" /></span>
+            <span class="icon"><img src="../../assets/open.png" /></span>
           </template>
         </van-cell>
         <div class="flex">
@@ -134,21 +134,37 @@
     Cell,
     CellGroup
   } from 'vant';
-
+  import {
+    Toast
+  } from 'vant';
+  import {
+    Dialog
+  } from 'vant';
+  Vue.use(Toast);
   Vue.use(Cell);
   Vue.use(CellGroup);
   export default {
     name: '',
     data() {
       return {
-        ygDataList:{},
-        dzDataList:{}
+        ygDataList: {},
+        dzDataList: {},
+        zcyh:'',
+        xtz:'',
+        dtz:'',
+        hxtz:''
       };
     },
-    methods:{
-      deposit(){
+    mounted() {
+      this.getYgData();
+      this.getDzData();
+      this.getFansData();
+    },
+    methods: {
+      deposit() {
         this.$router.push('/deposit')
       },
+      // 预估收益
       getYgData() {
         var that = this;
         let param = {
@@ -171,6 +187,7 @@
           }
         });
       },
+      // 到账收益
       getDzData() {
         var that = this;
         let param = {
@@ -193,6 +210,34 @@
           }
         });
       },
+      // 我的粉丝
+      getFansData() {
+        var that = this;
+        let param = {
+          id: 1,
+          platform: 'wx',
+          token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+        };
+        let status = '';
+        Toast.loading({
+          duration: 0,
+          message: '加载中...',
+          forbidClick: true
+        });
+        this.https.post('/profit/my_fans', param, '').then(res => {
+          console.log(res);
+          Toast.clear();
+          if (res.code == 0) {
+            that.fansDataList = res.data;
+            that.zcyh = res.data[0].count
+            that.xtz = res.data[3].count
+            that.dtz = res.data[4].count
+            that.hxtz = res.data[2].count
+          } else {
+            Toast.fail(res.message);
+          }
+        });
+      },
     }
   };
 </script>
@@ -206,6 +251,7 @@
     bottom: 100px;
     overflow: auto;
     background: #f8f8f8;
+
     .top-bg {
       position: relative;
       height: 340px;
