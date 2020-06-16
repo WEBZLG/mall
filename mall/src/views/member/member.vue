@@ -140,12 +140,59 @@
   export default {
     name: '',
     data() {
-      return {};
+      return {
+        ygDataList:{},
+        dzDataList:{}
+      };
     },
     methods:{
       deposit(){
         this.$router.push('/deposit')
-      }
+      },
+      getYgData() {
+        var that = this;
+        let param = {
+          id: 1,
+          platform: 'wx',
+          token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+        };
+        Toast.loading({
+          duration: 0,
+          message: '加载中...',
+          forbidClick: true
+        });
+        this.https.post('/profit/estimate', param, '').then(res => {
+          console.log(res);
+          Toast.clear();
+          if (res.code == 0) {
+            that.ygDataList = res.data;
+          } else {
+            Toast.fail(res.message);
+          }
+        });
+      },
+      getDzData() {
+        var that = this;
+        let param = {
+          id: 1,
+          platform: 'wx',
+          token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+        };
+        Toast.loading({
+          duration: 0,
+          message: '加载中...',
+          forbidClick: true
+        });
+        this.https.post('/profit/arrive', param, '').then(res => {
+          console.log(res);
+          Toast.clear();
+          if (res.code == 0) {
+            that.dzDataList = res.data;
+          } else {
+            Toast.fail(res.message);
+          }
+        });
+      },
     }
   };
 </script>

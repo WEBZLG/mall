@@ -9,7 +9,7 @@
               <!-- <img v-lazy="item.url" alt="" /> -->
               <img src="../../../assets/item_large1.png" alt="" />
             </div>
-            <p>{{ item.title }}</p>
+            <p>{{ item.name }}</p>
           </li>
           <div class="no-data" v-if="categoriesDetailData.length == 0">
             <div class="no-icon"><img src="../../../assets/nodata.png" alt="" /></div>

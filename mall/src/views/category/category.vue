@@ -69,12 +69,13 @@
           message: '加载中...',
           forbidClick: true,
         });
-        this.https.post('/default/topic-type', param, '').then(res => {
+        this.https.post('/default/cat-list', param, '').then(res => {
           console.log(res);
           Toast.clear();
           if(res.code==0){
             that.categoriesData = res.data.list
-            this.getList(res.data.list[0].id)
+            that.categoriesDetailData = res.data.list[0].list
+            // this.getList(res.data.list[0].id)
           }else{
             Toast.fail(res.message);
           }
@@ -109,21 +110,22 @@
         }, 100);
 
         // 2.4 获取右边的数据
-        this.getList(this.categoriesData[index].id)
+        this.categoriesDetailData =this.categoriesData[index].list
+        // this.getList(this.categoriesData[index].id)
       },
-      getList(tid){
-        let data = {
-          id: 1,
-          platform: 'wx',
-          token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
-        };
-        this.https.post('/default/topic-list', data, '&type='+tid).then(res => {
-          console.log(res);
-          if(res.code==0){
-            this.categoriesDetailData = res.data.list
-          }
-        });
-      }
+      // getList(tid){
+      //   let data = {
+      //     id: 1,
+      //     platform: 'wx',
+      //     token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+      //   };
+      //   this.https.post('/default/topic-list', data, '&type='+tid).then(res => {
+      //     console.log(res);
+      //     if(res.code==0){
+      //       this.categoriesDetailData = res.data.list
+      //     }
+      //   });
+      // }
     }
   };
 </script>
