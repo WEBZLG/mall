@@ -7,7 +7,7 @@
       </div>
       <ly-tab v-model="selected" :items="navList" :options="options" @change="handleChange" />
       <!--:is实现多个组件实现同一个挂载点-->
-      <component :is="currentView" :clientDetails="clientDetails"></component>
+      <component :is="currentView" :clientDetails="clientDetails" :dataList="dataList"></component>
     </div>
   </div>
 </template>
@@ -41,36 +41,7 @@ export default {
         {
           label: '首页',
           id: 0
-        },
-        {
-          label: '服装',
-          id: 1
-        },
-        {
-          label: '鞋',
-          id: 2
-        },
-        {
-          label: '包包',
-          id: 3
-        },
-        {
-          label: '饰品',
-          id: 4
-        },
-        {
-          label: '美妆',
-          id: 5
-        },
-        {
-          label: '潮牌',
-          id: 6
-        },
-        {
-          label: '海淘大牌',
-          id: 7
-        }
-      ],
+        }],
       options: {
         activeColor: '#FF9900' //设置选中颜色
       }
@@ -81,6 +52,7 @@ export default {
     //   this.scroll = new BScroll(this.$refs.wrapper, {click: true,tap: true});
     // });
     // this.getCode();
+    this.getData();
   },
 
   methods: {
@@ -92,10 +64,10 @@ export default {
       this.code = this.getUrlCode().code; // 截取code
       if (this.code == null || this.code === '') {
         // 如果没有code，则去请求
-        window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${encodeURIComponent(local)}&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`;
+          window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${encodeURIComponent(local)}&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`;
       } else {
         // 你自己的业务逻辑
-        cons
+        this.login(this.code);
       }
     },
     getUrlCode() {
@@ -126,8 +98,59 @@ export default {
     notice() {
       this.$router.push('/notice');
     },
-    login() {},
-
+    login(code) {
+      var that = this;
+      let param = {
+        id: 1,
+        platform: 'wx',
+        token: ''
+      };
+      Toast.loading({
+        duration: 0,
+        message: '加载中...',
+        forbidClick: true
+      });
+      this.https.post('/passport/login', param, '&code='+code).then(res => {
+        console.log(res);
+        Toast.clear();
+        if (res.code == 0) {
+          console.log(res.data)
+          this.$root.token = res.data.access_token;
+          console.log(this.$root.token)
+        } else {
+          Toast.fail(res.message);
+        }
+      });
+    },
+    getData() {
+      var that = this;
+      let param = {
+        id: 1,
+        platform: 'wx',
+        token: this.$root.token
+      };
+      Toast.loading({
+        duration: 0,
+        message: '加载中...',
+        forbidClick: true
+      });
+      this.https.post('/default/index', param, '').then(res => {
+        console.log(res);
+        Toast.clear();
+        if (res.code == 0) {
+          that.dataList = res.data;
+          for (var i=0;i<res.data.cat_list.length;i++) {
+            var obj = {
+              label:res.data.cat_list[i].name,
+              id:res.data.cat_list[i].id
+            }
+            that.navList = that.navList.concat(obj)
+            }
+        } else {
+          Toast.fail(res.message);
+        }
+      });
+    },
   },
   components: {
     tab1,

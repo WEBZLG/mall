@@ -62,7 +62,7 @@ export default {
       let param = {
         id: 1,
         platform: 'wx',
-        token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+        token: this.$root.token
       };
       Toast.loading({
         duration: 0,
@@ -86,7 +86,7 @@ export default {
       let param = {
         id: 1,
         platform: 'wx',
-        token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+        token: this.$root.token
       };
       let obj = {
         goods_id: e.goods_id

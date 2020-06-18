@@ -6,69 +6,33 @@
     </van-swipe>
     <!-- 按钮导航 -->
     <div class="nav-btn-list flex">
-      <div class="nav-btn">
-        <div class="nav-icon"><img src="../../../assets/button1.png" alt="" /></div>
-        <p>拼图活动</p>
-      </div>
-      <div class="nav-btn">
-        <div class="nav-icon"><img src="../../../assets/button2.png" alt="" /></div>
-        <p>秒杀专区</p>
-      </div>
-      <div class="nav-btn">
-        <div class="nav-icon"><img src="../../../assets/button3.png" alt="" /></div>
-        <p>优惠折扣</p>
-      </div>
-      <div class="nav-btn">
-        <div class="nav-icon"><img src="../../../assets/button4.png" alt="" /></div>
-        <p>优惠券</p>
-      </div>
-      <div class="nav-btn">
-        <div class="nav-icon"><img src="../../../assets/button5.png" alt="" /></div>
-        <p>满减活动</p>
-      </div>
-      <div class="nav-btn">
-        <div class="nav-icon"><img src="../../../assets/button6.png" alt="" /></div>
-        <p>热销排行</p>
-      </div>
-      <div class="nav-btn">
-        <div class="nav-icon"><img src="../../../assets/button7.png" alt="" /></div>
-        <p>家具日用</p>
-      </div>
-      <div class="nav-btn">
-        <div class="nav-icon"><img src="../../../assets/button8.png" alt="" /></div>
-        <p>品牌专区</p>
-      </div>
-      <div class="nav-btn">
-        <div class="nav-icon"><img src="../../../assets/button9.png" alt="" /></div>
-        <p>时尚生活</p>
-      </div>
-      <div class="nav-btn">
-        <div class="nav-icon"><img src="../../../assets/button10.png" alt="" /></div>
-        <p>大牌好货</p>
+      <div class="nav-btn" v-for="(item, index) in dataList.nav_list" :key="index">
+        <div class="nav-icon"><img :src="item.icon_pic" alt="暂无图标" /></div>
+        <p>{{item.name}}</p>
       </div>
     </div>
     <!-- 会员 -->
     <div class="vip"><img src="../../../assets/ad1.png" alt="" /></div>
     <!-- 每日爆品 -->
-    <div class="day-hot">
-      <h3 class="caption">每日爆品</h3>
-      <div class="vip"><img src="../../../assets/daily_banner1.png" alt="" /></div>
+    <div class="day-hot" v-for="(item, index) in dataList.tag_list" :key="index">
+      <h3 class="caption">{{item.name}}</h3>
+      <div class="vip"><img :src="item.show_pic" alt="暂无" /></div>
       <div class="goods-list">
-        <div class="goods-item">
-          <div class="goods-pic"  @click="getDetail()"><img src="../../../assets/item_large1.png" alt="" /></div>
+        <div class="goods-item" v-for="(goods, idx) in item.goods_list" :key="idx">
+          <div class="goods-pic"  @click="getDetail(goods.id)"><img :src="goods.pic_url" alt="" /></div>
           <div class="goods-desc">
-            <p class="goods-title">袖卫衣 8NN</p>
+            <p class="goods-title">{{goods.name}}</p>
             <div class="good-price flex">
-              <p class="old-price">￥1200</p>
+              <p class="old-price">￥{{goods.original_price}}</p>
               <p class="brokerage">
                 <span class="good-icon"><img src="../../../assets/money.png" alt="" /></span>
-                佣金￥9.99
+                佣金￥{{goods.virtual_sales}}
               </p>
             </div>
             <div class="goods-share flex">
               <p class="new-price">
                 <span class="size">￥</span>
-                1699
+                {{goods.price}}
               </p>
               <div class="btn-bot">
                 <button type="button" class="sm-btn hotCopy" data-clipboard-action="copy"  data-clipboard-text="袖卫衣 8NN00000" @click="copyLink('.hotCopy')">复制文字</button>
@@ -80,7 +44,7 @@
       </div>
     </div>
     <!-- 超级爆款 -->
-    <div class="super-hot">
+<!--    <div class="super-hot">
       <h3 class="caption">超级爆品</h3>
       <div class="vip"><img src="../../../assets/daily_banner1.png" alt="" /></div>
       <div class="goods-list">
@@ -108,7 +72,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -119,15 +83,16 @@ import { Toast } from 'vant';
 Vue.use(Toast);
 Vue.use(Lazyload);
 export default {
-  props: ['clientDetails'],
+  props: ['clientDetails','dataList'],
   data() {
     return {
       images: ['https://img.yzcdn.cn/vant/apple-1.jpg', 'https://img.yzcdn.cn/vant/apple-2.jpg'],
-      dataList:[]
+      // dataList:[]
     };
   },
   mounted() {
-    this.getData();
+    // this.getData();
+    console.log(this.dataList)
   },
   methods: {
     share(){
@@ -148,7 +113,7 @@ export default {
       let param = {
         id: 1,
         platform: 'wx',
-        token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+        token: this.$root.token
       };
       Toast.loading({
         duration: 0,
@@ -165,8 +130,9 @@ export default {
         }
       });
     },
-    getDetail() {
-      this.$router.push({ name: 'detail' });
+    getDetail(id) {
+      console.log(id)
+      this.$router.push({ name: 'detail',params:{id:id}});
     }
   },
   watch: {

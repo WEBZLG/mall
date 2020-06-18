@@ -56,7 +56,7 @@ export default {
       let param = {
         id: 1,
         platform: 'wx',
-        token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+        token: this.$root.token
       };
       let columns = this.columns;
       let province,city,county;
@@ -111,7 +111,7 @@ export default {
       let param = {
         id: 1,
         platform: 'wx',
-        token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+        token: this.$root.token
       };
       Toast.loading({
         duration: 0,

@@ -82,7 +82,7 @@ export default {
 	  let param = {
 	    id: 1,
 	    platform: 'wx',
-	    token: 'eTV7sqoeEANNeFyTqS-g0yVk5rEpaZ_S'
+	    token: this.$root.token
 	  };
 	  let status = '';
 	  Toast.loading({
