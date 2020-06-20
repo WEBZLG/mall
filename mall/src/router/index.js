@@ -10,6 +10,7 @@ const Member = () => import('@/views/member/member.vue');
 const Cart = () => import('@/views/cart/cart.vue');
 const Mine = () => import('@/views/mine/mine.vue');
 const Detail = () => import('@/views/goods/detail.vue');
+const GoodsList = () => import('@/views/goods/goodsList.vue');
 const Book = () => import('@/views/mine/book/book.vue');
 const Level = () => import('@/views/mine/book/level.vue');
 const Address = () => import('@/views/mine/address/address.vue');
@@ -122,6 +123,14 @@ export default new Router({
       path: '/orderDetail',
       name: 'orderDetail',
       component: OrderDetail,
+    },
+    {
+      path: '/goodsList',
+      name: 'goodsList',
+      component: GoodsList,
+      meta: {
+        keepAlive: true
+      },
     },
     {
       // 根页面

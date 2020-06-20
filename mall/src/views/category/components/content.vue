@@ -4,8 +4,8 @@
     <section class="r_list">
       <div ref="good">
         <ul class="type-list">
-          <li v-for="(item, index) in categoriesDetailData" :key="index" class="list ">
-            <div class="type-pic" @click="getDetail(item)">
+          <li v-for="(item, index) in categoriesDetailData" :key="index" class="list " @click="getDetail(item.id)">
+            <div class="type-pic" >
               <!-- <img v-lazy="item.url" alt="" /> -->
               <img src="../../../assets/item_large1.png" alt="" />
             </div>
@@ -67,7 +67,7 @@ export default {
     },
     getDetail(e) {
       console.log(e)
-      // this.$router.push({ name: 'detail',params: {id: e.id}});
+      this.$router.push({ name: 'goodsList',params: {gid: e}});
     }
   }
 };
