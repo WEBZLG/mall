@@ -62,6 +62,7 @@ export default {
       font-weight: bold;
       .van-field__control {
         color: #f34e81;
+        font-weight: 400;
       }
     }
     .have{
