@@ -18,8 +18,8 @@
       </div>
     </div>
     <div class="goods-list">
-      <div class="goods-item">
-        <p class="time">推广时间:20200601</p>
+      <div class="goods-item" v-for="(item,index) in dataList.list.list" :key="index">
+        <p class="time">推广时间:</p>
         <div class="flex">
           <div class="goods-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
           <div class="goods-desc">
@@ -27,6 +27,12 @@
             <p class="new-price">￥2,329</p>
           </div>
         </div>
+      </div>
+      <div v-if="dataList">
+      <div class="no-data" v-if="dataList.list.list.length == 0">
+        <div class="no-icon"><img src="../../../assets/nodata.png" alt="" /></div>
+        <p class="no-text">暂无数据</p>
+      </div>
       </div>
     </div>
   </div>
@@ -39,6 +45,7 @@ import { Calendar } from 'vant';
 Vue.use(Calendar);
 export default {
   name: '',
+  props:['dataList'],
   data() {
     return {
       date1: '',
@@ -48,6 +55,9 @@ export default {
       value1: '开始时间',
       value2: '结束日期'
     };
+  },
+  mounted() {
+    console.log(this.dataList)
   },
   methods: {
     formatDate(date) {
@@ -86,8 +96,14 @@ export default {
     vertical-align: middle;
     margin-left: 20px;
   }
-  .goods-list{
+  .goods-list {
     padding-top: 0;
+    position: fixed;
+    top: 426px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
   }
   .goods-item {
     display: inherit;

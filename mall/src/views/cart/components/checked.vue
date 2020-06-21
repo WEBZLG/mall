@@ -14,7 +14,7 @@
                 {{ item.price }}
               </p>
             </div>
-            <van-stepper v-model="item.number" @change="onChange(item)"/>
+            <van-stepper v-model="item.number" :max="item.max_num" @change="onChange(item)"/>
           </div>
         </div>
       </div>
@@ -93,7 +93,7 @@ export default {
           if(res.code==0){
 
           }else{
-            Toast.fail(res.message);
+            Toast.fail(res.msg);
           }
         });
     }

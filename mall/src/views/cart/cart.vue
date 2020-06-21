@@ -71,7 +71,7 @@ export default {
         this.totalPrice = 0;
       } else {
         that.totalPrice = 0;
-        that.checkData == [];
+        that.checkData = [];
         for (var i = 0; i < data.length; i++) {
           that.totalPrice = that.totalPrice * 1 + data[i].price * 1 * data[i].num * 1;
           that.checkData = that.checkData.concat(data[i].cart_id);
@@ -163,6 +163,7 @@ export default {
               Toast.clear();
               if (res.code == 0) {
                 Toast.success('删除成功！');
+                that.totalPrice = 0;
                 that.getData();
               } else {
                 Toast.fail(res.message);

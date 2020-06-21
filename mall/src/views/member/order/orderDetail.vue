@@ -4,11 +4,15 @@
     <div class="mid-view">
       <div class="detail-bg"><img src="../../../assets/ddxq_bg.png" alt="" /></div>
       <div class="content">
-        <div class="order-status">
+        <div class="order-status" v-if="order_id==''">
+          <span class="detail-icon"><img src="../../../assets/dfk.png" alt="" /></span>
+          <p class="status">订单预览</p>
+        </div>
+        <div class="order-status" v-if="order_id!=''">
           <span class="detail-icon"><img src="../../../assets/dfk.png" alt="" /></span>
           <p class="status">待付款</p>
         </div>
-<!--        <div class="order-status">
+        <!--        <div class="order-status">
           <span class="detail-icon"><img src="../../../assets/yfk.png" alt="" /></span>
           <p class="status">已付款</p>
         </div>
@@ -20,70 +24,20 @@
           <span class="detail-icon"><img src="../../../assets/wx.png" alt="" /></span>
           <p class="status">无效</p>
         </div> -->
-        <div class="contact-bg">
+        <div class="contact-bg" v-if="dataList.address">
           <p class="information">
-            <span class="name">Ada_Wang</span>
-            12299887766
+            <span class="name">{{dataList.address.name}}</span>
+            {{dataList.address.mobile}}
           </p>
-          <p class="address">广东省深圳市南山区高新科技园北区1号</p>
+          <p class="address">{{dataList.address.province}}{{dataList.address.city}}{{dataList.address.district}}{{dataList.address.detail}}</p>
         </div>
         <div class="goods-item">
-          <div class="flex goods-child">
-            <div class="goods-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
+          <div class="flex goods-child" v-for="item in dataList.list" :key="item.goods_id">
+            <div class="goods-pic"><img :src="item.goods_pic" alt="暂无" /></div>
             <div class="goods-desc">
-              <p class="goods-title">Burberry/博柏利【20春夏】女装 服饰 棕色棉 质翻领经典格纹衬衣</p>
+              <p class="goods-title">{{item.goods_name}}</p>
               <div class="flex">
-                <p class="new-price">￥2,329</p>
-                <p>x1</p>
-              </div>
-            </div>
-          </div>
-          <div class="flex goods-child">
-            <div class="goods-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
-            <div class="goods-desc">
-              <p class="goods-title">Burberry/博柏利【20春夏】女装 服饰 棕色棉 质翻领经典格纹衬衣</p>
-              <div class="flex">
-                <p class="new-price">￥2,329</p>
-                <p>x1</p>
-              </div>
-            </div>
-          </div>
-          <div class="flex goods-child">
-            <div class="goods-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
-            <div class="goods-desc">
-              <p class="goods-title">Burberry/博柏利【20春夏】女装 服饰 棕色棉 质翻领经典格纹衬衣</p>
-              <div class="flex">
-                <p class="new-price">￥2,329</p>
-                <p>x1</p>
-              </div>
-            </div>
-          </div>
-          <div class="flex goods-child">
-            <div class="goods-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
-            <div class="goods-desc">
-              <p class="goods-title">Burberry/博柏利【20春夏】女装 服饰 棕色棉 质翻领经典格纹衬衣</p>
-              <div class="flex">
-                <p class="new-price">￥2,329</p>
-                <p>x1</p>
-              </div>
-            </div>
-          </div>
-          <div class="flex goods-child">
-            <div class="goods-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
-            <div class="goods-desc">
-              <p class="goods-title">Burberry/博柏利【20春夏】女装 服饰 棕色棉 质翻领经典格纹衬衣</p>
-              <div class="flex">
-                <p class="new-price">￥2,329</p>
-                <p>x1</p>
-              </div>
-            </div>
-          </div>
-          <div class="flex goods-child">
-            <div class="goods-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
-            <div class="goods-desc">
-              <p class="goods-title">Burberry/博柏利【20春夏】女装 服饰 棕色棉 质翻领经典格纹衬衣</p>
-              <div class="flex">
-                <p class="new-price">￥2,329</p>
+                <p class="new-price">￥{{item.single_price}}</p>
                 <p>x1</p>
               </div>
             </div>
@@ -93,19 +47,19 @@
           <p>快递</p>
           <p>普通快递（免费）</p>
         </div>
-        <div class="module flex">
+        <!--        <div class="module flex">
           <p>优惠券</p>
           <p>20元优惠券</p>
-        </div>
+        </div> -->
         <div class="module total">
           <div class="flex">
             <p>商品总额</p>
-            <p>￥3636</p>
+            <p>￥{{totalPrice}}</p>
           </div>
-          <div class="flex">
+          <!--      <div class="flex">
             <p>优惠券</p>
             <p>-￥20</p>
-          </div>
+          </div> -->
           <div class="flex">
             <p>运费</p>
             <p>￥0</p>
@@ -115,9 +69,10 @@
       <div class="bottom flex">
         <p class="price">
           <span class="size">￥</span>
-          3122
+          {{totalPrice}}
         </p>
-        <van-button round type="info" size="small" color="#FF9900" class="pay-btn">去支付</van-button>
+        <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="order_id==''" @click="submitOrder">提交订单</van-button>
+        <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="order_id!=''" @click="payFor">去支付</van-button>
         <!-- <van-button round type="info" size="small" color="#FF9900" class="pay-btn">查看物流</van-button> -->
       </div>
     </div>
@@ -125,130 +80,251 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import { NavBar } from 'vant';
-import { Button } from 'vant';
+  import Vue from 'vue';
+  import {
+    NavBar
+  } from 'vant';
+  import {
+    Button
+  } from 'vant';
+  import {
+    Toast
+  } from 'vant';
+  import wx from "weixin-jsapi"
 
-Vue.use(Button);
-Vue.use(NavBar);
-export default {
-  name: '',
-  data() {
-    return {};
-  },
-  methods: {
-    onClickLeft() {
-      this.$router.back();
+  Vue.use(Toast);
+  Vue.use(Button);
+  Vue.use(NavBar);
+  export default {
+    name: 'orderDetail',
+    data() {
+      return {
+        dataList: '',
+        totalPrice: '',
+        order_id: ''
+      };
+    },
+    mounted() {
+      var dataList = this.$route.params.data;
+      this.dataList = dataList;
+      for (var i = 0; i < dataList.list.length; i++) {
+        this.totalPrice = this.totalPrice * 1 + dataList.list[i].single_price * 1;
+      }
+      localStorage.setItem('goodsId', dataList.goods_info.goods_id);
+      console.log(dataList)
+    },
+    methods: {
+      onClickLeft() {
+        this.$router.back();
+      },
+      // 提交订单
+      submitOrder() {
+        var that = this;
+        let param = {
+          id: 1,
+          platform: 'wx',
+          token: this.$root.token
+        };
+        that.dataList.goods_info['num'] = 1
+
+        let params = {
+          offline: 0,
+          address_name: that.dataList.address.name,
+          address_mobile: that.dataList.address.mobile,
+          address_id: that.dataList.address.id,
+          payment: 0,
+          goods_info: JSON.stringify(that.dataList.goods_info),
+          cart_id_list: that.dataList.goods_card_list
+        }
+        Toast.loading({
+          duration: 0,
+          message: '加载中...',
+          forbidClick: true
+        });
+        this.https.post('/order/submit', param, '', params).then(res => {
+          console.log(res);
+          Toast.clear();
+          if (res.code == 0) {
+            that.order_id = res.data.order_id;
+            Toast.success(res.msg)
+          } else {
+            Toast.fail(res.msg);
+          }
+        });
+      },
+      // 支付
+      payFor() {
+        var that = this;
+        let param = {
+          id: 1,
+          platform: 'wx',
+          token: this.$root.token
+        };
+        Toast.loading({
+          duration: 0,
+          message: '加载中...',
+          forbidClick: true
+        });
+        this.https.get('/order/pay-data', param, '&pay_type=WECHAT_PAY' + '&order_id_list=[' + that.order_id + ']').then(
+          res => {
+            console.log(res);
+            Toast.clear();
+            if (res.code == 0) {
+              wx.config({
+                debug: false, //这里一般在测试阶段先用ture，等打包给后台的时候就改回false,
+                appId: res.data.appId,
+                timestamp: res.data.timeStamp,
+                nonceStr: res.data.nonceStr,
+                signature: res.data.paySign,
+                jsApiList: ["chooseWXPay"]
+              });
+              wx.ready(() => {
+                wx.chooseWXPay({
+                  timestamp: res.res.mch_id, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+                  nonceStr: res.res.nonce_str, // 支付签名随机串，不长于 32 位
+                  package: res.res.prepay_id, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+                  signType: "MD5", // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+                  paySign: res.res.sign, // 支付签名
+                  success: function(res) {
+                    Toast.success("支付成功");
+                  },
+                  cancel: function(res) {
+                    Toast.fail("已取消支付");
+                  }
+                });
+              });
+            } else {
+              Toast.fail(res.msg);
+            }
+          });
+      }
     }
-  }
-};
+  };
 </script>
 
 <style lang="less">
-.order-detail {
-  .mid-view {
-    position: absolute;
-    top: 92px;
-    left: 0;
-    right: 0;
-    bottom: 108px;
-    overflow: auto;
-  }
-  .detail-bg {
-    height: 200px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 0;
-  }
-  .content {
-    position: relative;
-    .detail-icon {
-      display: inline-block;
-      vertical-align: middle;
-      height: 36px;
-      width: 36px;
-      margin: 40px 20px;
+  .order-detail {
+    .mid-view {
+      position: absolute;
+      top: 92px;
+      left: 0;
+      right: 0;
+      bottom: 108px;
+      overflow: auto;
     }
-    .status {
-      color: #ffffff;
-      font-size: 36px;
-      font-weight: bold;
-      display: inline-block;
-      vertical-align: middle;
-    }
-    .contact-bg {
-      height: 152px;
-      background: url(../../../assets/address_bg2.png) no-repeat;
-      background-size: cover;
-      padding: 30px;
-      font-size: 28px;
-      box-sizing: border-box;
-      color: #999999;
-      .information {
-        font-weight: bold;
-        color: #333333;
-        height: 56px;
-        .name {
-          margin-right: 20px;
-        }
-      }
-    }
-    .goods-item {
-      display: inherit;
-      background-color: #ffffff;
-      border-radius: 10px;
-      margin: 20px 0px;
-      padding: 30px;
 
-      .goods-child {
-        margin-bottom: 30px;
-        &:last-child {
-          margin-bottom: 0;
-        }
-        .goods-pic {
-          height: 100px;
-          width: 100px;
-        }
-        .goods-title {
-          font-size: 24px;
-        }
-        .new-price {
-          color: #f34e81;
+    .detail-bg {
+      height: 200px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+
+      .detail-icon {
+        display: inline-block;
+        vertical-align: middle;
+        height: 36px;
+        width: 36px;
+        margin: 40px 20px;
+      }
+
+      .status {
+        color: #ffffff;
+        font-size: 36px;
+        font-weight: bold;
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      .contact-bg {
+        height: 152px;
+        background: url(../../../assets/address_bg2.png) no-repeat;
+        background-size: cover;
+        padding: 30px;
+        font-size: 28px;
+        box-sizing: border-box;
+        color: #999999;
+
+        .information {
           font-weight: bold;
+          color: #333333;
+          height: 56px;
+
+          .name {
+            margin-right: 20px;
+          }
         }
       }
+
+      .goods-item {
+        display: inherit;
+        background-color: #ffffff;
+        border-radius: 10px;
+        margin: 20px 0px;
+        padding: 30px;
+
+        .goods-child {
+          margin-bottom: 30px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          .goods-pic {
+            height: 100px;
+            width: 100px;
+          }
+
+          .goods-title {
+            font-size: 24px;
+          }
+
+          .new-price {
+            color: #f34e81;
+            font-weight: bold;
+          }
+        }
+      }
+
+      .module {
+        background-color: #ffffff;
+        padding: 40px 30px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+
+      .total {
+        line-height: 42px;
+      }
     }
-    .module {
+
+    .bottom {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
       background-color: #ffffff;
-      padding: 40px 30px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
-    .total {
-      line-height: 42px;
-    }
-  }
-  .bottom {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #ffffff;
-    padding: 24px 30px;
-    .pay-btn {
-      height: 60px;
-      width: 193px;
-    }
-    .price {
-      font-weight: bold;
-      font-size: 40px;
-      color: #f34e81;
-    }
-    .size {
-      font-size: 28px;
+      padding: 24px 30px;
+
+      .pay-btn {
+        height: 60px;
+        width: 193px;
+      }
+
+      .price {
+        font-weight: bold;
+        font-size: 40px;
+        color: #f34e81;
+      }
+
+      .size {
+        font-size: 28px;
+      }
     }
   }
-}
 </style>

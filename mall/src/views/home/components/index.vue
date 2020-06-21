@@ -43,36 +43,6 @@
         </div>
       </div>
     </div>
-    <!-- 超级爆款 -->
-<!--    <div class="super-hot">
-      <h3 class="caption">超级爆品</h3>
-      <div class="vip"><img src="../../../assets/daily_banner1.png" alt="" /></div>
-      <div class="goods-list">
-        <div class="goods-item">
-          <div class="goods-pic"  @click="getDetail()"><img src="../../../assets/item_large1.png" alt="" /></div>
-          <div class="goods-desc">
-            <p class="goods-title">袖卫衣 8NN00000</p>
-            <div class="good-price flex">
-              <p class="old-price">￥1200</p>
-              <p class="brokerage">
-                <span class="good-icon"><img src="../../../assets/money.png" alt="" /></span>
-                佣金￥9.99
-              </p>
-            </div>
-            <div class="goods-share flex">
-              <p class="new-price">
-                <span class="size">￥</span>
-                1699
-              </p>
-              <div class="btn-bot">
-                <button type="button" class="sm-btn hotCopy" data-clipboard-text="袖卫衣 8NN00000" @click="copyLink('.hotCopy')">复制文字</button>
-                <button type="button" class="sm-btn" @click.stop="share">分享图片</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -132,7 +102,7 @@ export default {
     },
     getDetail(id) {
       console.log(id)
-      this.$router.push({ name: 'detail',params:{id:id}});
+      this.$router.push({ name: 'detail',params:{gid:id}});
     }
   },
   watch: {

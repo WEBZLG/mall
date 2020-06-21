@@ -3,10 +3,10 @@
     <van-nav-bar title="我的订单" left-arrow @click-left="onClickLeft" />
     <van-tabs v-model="activeName" @click="onClick">
       <van-tab title="我推广的" name="a">
-        <popularize></popularize>
+        <popularize :dataList="dataList"></popularize>
       </van-tab>
       <van-tab title="我购买的" name="b">
-        <mybuy></mybuy>
+        <mybuy  :dataList="dataList"></mybuy>
       </van-tab>
     </van-tabs>
   </div>
@@ -60,7 +60,7 @@ export default {
     mybuy
   },
   mounted() {
-    this.getData(1,'','')
+    this.getData(2,'','')
   },
   methods: {
     onClickLeft() {
@@ -68,9 +68,9 @@ export default {
     },
     onClick(name, title) {
       if(name=='a'){
-        this.getData(1,'','')
-      }else if(name=='b'){
         this.getData(2,'','')
+      }else if(name=='b'){
+        this.getData(1,'','')
       }
     },
     // 获取列表
@@ -88,10 +88,11 @@ export default {
         forbidClick: true
       });
       this.https.post('/profit/order', param, '&type='+type+'&sTime='+sTime+'&eTime='+eTime).then(res => {
-        console.log(res);
+
         Toast.clear();
         if (res.code == 0) {
           that.dataList = res.data;
+                  console.log(res.data);
         } else {
           Toast.fail(res.message);
         }
@@ -110,5 +111,8 @@ export default {
     bottom: 0;
     overflow: auto;
     background-color: #F8F8F8;
+  }
+  .new-price{
+    font-size: 24px;
   }
 </style>
