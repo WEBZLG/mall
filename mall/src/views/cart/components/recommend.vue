@@ -3,7 +3,7 @@
     <van-divider :style="{ color: '#333333', borderColor: '#333333', padding: '0 16px' }">为你推荐</van-divider>
     <div class="flex content">
       <div class="recommend-item" v-for="item in dataList" :key="item.id">
-        <div class="recommend-pic"><img src="item.goods_pic" alt="" /></div>
+        <div class="recommend-pic"><img width="100%" height="100%"   src="item.goods_pic" alt="" /></div>
         <div class="recommend-text">
           <p class="title">{{item.goods_name}}</p>
           <div>

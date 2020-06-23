@@ -4,7 +4,7 @@
       <van-tabbar-item v-for="(item, index) in tabbars" :key="index" @click="tab(index, item.name)" :info="item.name == 'cart' ? goodsNum : ''">
         <span :class="currIndex == index ? active : ''">{{ item.title }}</span>
         <template slot="icon" slot-scope="props">
-          <img :src="props.active ? item.active : item.normal" />
+          <img width="23px" height="19px"   :src="props.active ? item.active : item.normal" />
         </template>
       </van-tabbar-item>
     </van-tabbar>
@@ -136,8 +136,5 @@ export default {
   .van-tabbar {
     height: 100px;
   }
-  .van-tabbar-item__icon img {
-    height: 38px;
-    width: 46px;
-  }
+
 </style>

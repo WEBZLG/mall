@@ -1,38 +1,38 @@
 <template>
   <div class="member">
     <div class="top-bg">
-      <img src="../../assets/vip_bg.jpg" alt="" />
+      <img width="100%" height="100%"   src="../../assets/vip_bg.jpg" alt="" />
       <div class="message">
-        <div class="head"><img src="../../assets/sort1.png" alt="" /></div>
+        <div class="head"><img width="100%" height="100%"   :src="dataList.avatar_url" alt="暂无" /></div>
         <div class="name-type">
           <div class="flex">
-            <p class="name">ada_wang</p>
+            <p class="name">{{dataList.nickname||'臻悦用户'}}</p>
             <div class="flex">
               <div class="vip-icon">
-                <img src="../../assets/visitor.png" alt="" />
-                <!--  <img src="../../assets/little_chief.png" alt="" />
-                <img src="../../assets/large_chief.png" alt="">
-                <img src="../../assets/member.png" alt=""> -->
+                <img width="100%" height="100%"   src="../../assets/visitor.png" alt="" />
+                <!--  <img width="100%" height="100%"   src="../../assets/little_chief.png" alt="" />
+                <img width="100%" height="100%"   src="../../assets/large_chief.png" alt="">
+                <img width="100%" height="100%"   src="../../assets/member.png" alt=""> -->
               </div>
-              <span class="type">注册用户</span>
+              <span class="type">{{dataList.level_name}}</span>
             </div>
           </div>
           <div class="copy-code flex">
-            <p class="code">邀请码:4y6kea9sz4</p>
-            <div class="copy-icon"><img src="../../assets/copy.png" alt="" /></div>
+            <p class="code">邀请码:{{dataList.mobile||'暂无'}}</p>
+            <div class="copy-icon"><img width="100%" height="100%"   src="../../assets/copy.png" alt="" /></div>
           </div>
         </div>
       </div>
     </div>
     <div class="content">
       <div class="deposit" @click="deposit()">
-        <img src="../../assets/vip_ad1.png" alt="">
+        <img width="100%" height="100%"   src="../../assets/vip_ad1.png" alt="">
       </div>
       <div class="model-item">
         <van-cell value="" is-link to="/fans">
           <template #title>
             <span class="custom-title">我的粉丝</span>
-            <span class="icon"><img src="../../assets/open.png" /></span>
+            <span class="icon"><img width="100%" height="100%"   src="../../assets/open.png" /></span>
           </template>
         </van-cell>
         <div class="flex">
@@ -61,7 +61,7 @@
         <van-cell value="" is-link to="/estimate">
           <template #title>
             <span class="custom-title">预估收益</span>
-            <span class="icon"><img src="../../assets/open.png" /></span>
+            <span class="icon"><img width="100%" height="100%"   src="../../assets/open.png" /></span>
           </template>
         </van-cell>
         <div class="flex">
@@ -85,7 +85,7 @@
         <van-cell value="" is-link to="/account">
           <template #title>
             <span class="custom-title">到账收益</span>
-            <span class="icon"><img src="../../assets/open.png" /></span>
+            <span class="icon"><img width="100%" height="100%"   src="../../assets/open.png" /></span>
           </template>
         </van-cell>
         <div class="flex">
@@ -105,11 +105,11 @@
           </div>
         </div>
       </div>
-      <div class="model-item">
+<!--      <div class="model-item">
         <van-cell value="" is-link to="/order">
           <template #title>
             <span class="custom-title">我的订单</span>
-            <span class="icon"><img src="../../assets/open.png" /></span>
+            <span class="icon"><img width="100%" height="100%"   src="../../assets/open.png" /></span>
           </template>
         </van-cell>
         <div class="flex">
@@ -123,7 +123,7 @@
             <p class="part-type">今日推广订单</p>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -147,6 +147,7 @@
     name: '',
     data() {
       return {
+        dataList:'',
         ygDataList: {},
         dzDataList: {},
         zcyh:'',
@@ -159,6 +160,7 @@
       this.getYgData();
       this.getDzData();
       this.getFansData();
+      this.getData()
     },
     methods: {
       deposit() {
@@ -238,6 +240,29 @@
           }
         });
       },
+        // 获取个人详情
+        getData() {
+          var that = this;
+          let param = {
+            id: 1,
+            platform: 'wx',
+            token: this.$root.token
+          };
+          Toast.loading({
+            duration: 0,
+            message: '加载中...',
+            forbidClick: true
+          });
+          this.https.get('/user/index', param, '' ).then(res => {
+            console.log(res);
+            Toast.clear();
+            if (res.code == 0) {
+              that.dataList = res.data.user_info;
+            } else {
+              Toast.fail(res.msg);
+            }
+          });
+        },
     }
   };
 </script>
@@ -284,7 +309,7 @@
 
     .copy-icon {
       width: 27px;
-      height: 28px;
+      // height: 28px;
       margin-left: 20px;
     }
 
@@ -349,7 +374,6 @@
 
     .icon {
       display: inline-block;
-      height: 28px;
       width: 34px;
       vertical-align: middle;
     }

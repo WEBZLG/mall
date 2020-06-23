@@ -16,17 +16,12 @@ export default {
 <style>
 html,
 body,
-img,
 p {
   margin: 0;
   padding: 0;
   font-size: 24px;
 }
-img {
-  display: block;
-  height: 100%;
-  width: 100%;
-}
+
 #app{
   position: absolute;
   top: 0;

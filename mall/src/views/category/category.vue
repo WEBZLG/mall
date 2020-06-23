@@ -134,11 +134,12 @@
   .category {
     .search-box{
       padding: 30px;
+      display: none;
     }
     .listWrapper {
       display: flex;
       position: absolute;
-      top: 124px;
+      top: 0;
       bottom: 100px;
       width: 100%;
       overflow: hidden;

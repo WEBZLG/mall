@@ -5,34 +5,34 @@
         <div>
           <span @click="show1 = true">{{ value1 }}</span>
           <van-calendar v-model="show1" @confirm="onConfirm1" />
-          <span class="down-icon"><img src="../../../assets/down.png" alt="" /></span>
+          <span class="down-icon"><img width="100%" height="100%"   src="../../../assets/down.png" alt="" /></span>
         </div>
         <p>至</p>
         <div>
           <div>
             <span @click="show2 = true">{{ value2 }}</span>
             <van-calendar v-model="show2" @confirm="onConfirm2" />
-            <span class="down-icon"><img src="../../../assets/down.png" alt="" /></span>
+            <span class="down-icon"><img width="100%" height="100%"   src="../../../assets/down.png" alt="" /></span>
           </div>
         </div>
       </div>
     </div>
     <div class="goods-list">
-      <div class="goods-item" v-for="(item,index) in dataList.list.list" :key="index">
+      <div class="goods-item" v-for="(item,index) in dataList.list" :key="index">
         <p class="time">推广时间:</p>
         <div class="flex">
-          <div class="goods-pic"><img src="../../../assets/item_large1.png" alt="" /></div>
+          <div class="goods-pic"><img width="100%" height="100%"   src="../../../assets/item_large1.png" alt="" /></div>
           <div class="goods-desc">
             <p class="goods-title">Burberry/博柏利【20春夏】女装 服饰 棕色棉 质翻领经典格纹衬衣</p>
             <p class="new-price">￥2,329</p>
           </div>
         </div>
       </div>
-      <div v-if="dataList">
-      <div class="no-data" v-if="dataList.list.list.length == 0">
-        <div class="no-icon"><img src="../../../assets/nodata.png" alt="" /></div>
-        <p class="no-text">暂无数据</p>
-      </div>
+      <div v-if="dataList.list">
+       <div class="no-data" v-if="dataList.list.length == 0">
+          <div class="no-icon"><img width="100%" height="100%"   src="../../../assets/nodata.png" alt="" /></div>
+          <p class="no-text">暂无数据</p>
+        </div>
       </div>
     </div>
   </div>
@@ -90,7 +90,7 @@ export default {
     background-color: #f5f5f5;
   }
   .down-icon {
-    height: 15px;
+    // height: 15px;
     width: 26px;
     display: inline-block;
     vertical-align: middle;

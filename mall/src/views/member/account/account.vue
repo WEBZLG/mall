@@ -5,7 +5,7 @@
       <van-tabs v-model="active" swipe-threshold="5">
         <van-tab v-for="item in tabList" :title="item.title" :key="item.id">
           <div>
-            <div class="change-date" @click="showPopup" v-if="item.id==3">{{ nowDay }} <span class="down-icon"><img src="../../../assets/down.png" alt=""></span></div>
+            <div class="change-date" @click="showPopup" v-if="item.id==3">{{ nowDay }} <span class="down-icon"><img width="100%" height="100%"   src="../../../assets/down.png" alt=""></span></div>
             <van-popup v-model="show" position="bottom" :style="{ height: '35%' }">
               <van-datetime-picker v-model="currentDate" type="date" title="选择年月日" :min-date="minDate" :max-date="maxDate" @cancel="show = false" @confirm="confirmPicker" />
             </van-popup>

@@ -26,6 +26,7 @@ new Vue({
   data: function() {
     return {
       token: 'gfl_TwNXred-zWaHivTExCestIMLCOu5',
+      // token: ''
     }
   },
   components: {

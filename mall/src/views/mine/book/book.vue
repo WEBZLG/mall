@@ -4,46 +4,46 @@
     <div class="name-list">
       <van-panel title="我自己">
         <div class="flex">
-          <div class="head"><img src="../../../assets/sort1.png" alt="" /></div>
+          <div class="head"><img width="100%" height="100%"   src="../../../assets/sort1.png" alt="" /></div>
           <div class="info">
             <div class="flex name-type">
               <p class="name">Ada_Wang</p>
               <div class="flex">
                 <div class="vip-icon">
-                  <img src="../../../assets/visitor.png" alt="" />
-                  <!--  <img src="../../../assets/little_chief.png" alt="" />
-                    <img src="../../../assets/large_chief.png" alt="">
-                    <img src="../../../assets/member.png" alt=""> -->
+                  <img width="100%" height="100%"   src="../../../assets/visitor.png" alt="" />
+                  <!--  <img width="100%" height="100%"   src="../../../assets/little_chief.png" alt="" />
+                    <img width="100%" height="100%"   src="../../../assets/large_chief.png" alt="">
+                    <img width="100%" height="100%"   src="../../../assets/member.png" alt=""> -->
                 </div>
                 <span class="type">注册用户</span>
               </div>
             </div>
             <div class="flex">
               <div class="wechat">微信号:请填写微信号</div>
-              <div class="active-icon"><img src="../../../assets/copy2.png" alt="" /></div>
+              <div class="active-icon"><img width="100%" height="100%"   src="../../../assets/copy2.png" alt="" /></div>
             </div>
           </div>
         </div>
       </van-panel>
       <van-panel title="邀请人">
         <div class="flex">
-          <div class="head"><img src="../../../assets/sort1.png" alt="" /></div>
+          <div class="head"><img width="100%" height="100%"   src="../../../assets/sort1.png" alt="" /></div>
           <div class="info">
             <div class="flex name-type">
               <p class="name">Ada_Wang</p>
               <div class="flex">
                 <div class="vip-icon">
-                  <img src="../../../assets/visitor.png" alt="" />
-                  <!--  <img src="../../../assets/little_chief.png" alt="" />
-                    <img src="../../../assets/large_chief.png" alt="">
-                    <img src="../../../assets/member.png" alt=""> -->
+                  <img width="100%" height="100%"   src="../../../assets/visitor.png" alt="" />
+                  <!--  <img width="100%" height="100%"   src="../../../assets/little_chief.png" alt="" />
+                    <img width="100%" height="100%"   src="../../../assets/large_chief.png" alt="">
+                    <img width="100%" height="100%"   src="../../../assets/member.png" alt=""> -->
                 </div>
                 <span class="type">注册用户</span>
               </div>
             </div>
             <div class="flex">
               <div class="wechat">微信号:666666</div>
-              <div class="active-icon"><img src="../../../assets/copy2.png" alt="" /></div>
+              <div class="active-icon"><img width="100%" height="100%"   src="../../../assets/copy2.png" alt="" /></div>
             </div>
           </div>
         </div>
@@ -51,30 +51,30 @@
       <van-panel title="我的粉丝">
         <div class="item-fans" v-for="item in dataList" :key="item.id">
           <div class="flex">
-            <div class="head"><img :src="item.avatar_url" alt="暂无图片" /></div>
+            <div class="head"><img width="100%" height="100%"   :src="item.avatar_url" alt="暂无图片" /></div>
             <div class="info">
               <div class="flex name-type">
                 <p class="name">{{ item.nickname }}</p>
                 <div class="flex">
                   <div class="vip-icon">
-                    <img src="../../../assets/visitor.png" alt="" />
-                    <!--  <img src="../../../assets/little_chief.png" alt="" />
-                    <img src="../../../assets/large_chief.png" alt="">
-                    <img src="../../../assets/member.png" alt=""> -->
+                    <img width="100%" height="100%"   src="../../../assets/visitor.png" alt="" />
+                    <!--  <img width="100%" height="100%"   src="../../../assets/little_chief.png" alt="" />
+                    <img width="100%" height="100%"   src="../../../assets/large_chief.png" alt="">
+                    <img width="100%" height="100%"   src="../../../assets/member.png" alt=""> -->
                   </div>
                   <span class="type">{{ item.level_name }}</span>
                 </div>
               </div>
               <div class="flex">
                 <div class="wechat">微信号:请填写微信号</div>
-                <div class="active-icon"><img src="../../../assets/copy2.png" alt="" /></div>
+                <div class="active-icon"><img width="100%" height="100%"   src="../../../assets/copy2.png" alt="" /></div>
               </div>
             </div>
           </div>
           <van-cell class="down-num" :title="'下级人数(' + item.child.length + ')'" is-link :to="{name:'level',params:{child:item.child}}" />
         </div>
         <div class="no-data" v-if="dataList.length == 0">
-          <div class="no-icon"><img src="../../../assets/nodata.png" alt="" /></div>
+          <div class="no-icon"><img width="100%" height="100%"   src="../../../assets/nodata.png" alt="" /></div>
           <p class="no-text">暂无粉丝</p>
         </div>
       </van-panel>

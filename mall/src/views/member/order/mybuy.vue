@@ -5,30 +5,30 @@
         <div>
           <span @click="show1 = true">{{ value1 }}</span>
           <van-calendar v-model="show1" @confirm="onConfirm1" />
-          <span class="down-icon"><img src="../../../assets/down.png" alt="" /></span>
+          <span class="down-icon"><img width="100%" height="100%"   src="../../../assets/down.png" alt="" /></span>
         </div>
         <p>至</p>
         <div>
           <div>
             <span @click="show2 = true">{{ value2 }}</span>
             <van-calendar v-model="show2" @confirm="onConfirm2" />
-            <span class="down-icon"><img src="../../../assets/down.png" alt="" /></span>
+            <span class="down-icon"><img width="100%" height="100%"   src="../../../assets/down.png" alt="" /></span>
           </div>
         </div>
       </div>
     </div>
-    <van-tabs v-model="activeName" swipe-threshold="5">
+<!--    <van-tabs v-model="activeName" swipe-threshold="5">
       <van-tab v-for="item in tabList" :title="item.title" :key="item.id"></van-tab>
-    </van-tabs>
+    </van-tabs> -->
     <div class="goods-list">
-      <div class="goods-item" @click="orderDetail()" v-for="(item,index) in dataList.list" :key="index">
-        <div class="flex status">
+      <div class="goods-item"  v-for="(item,index) in dataList" :key="index">
+        <div class="flex status" @click="orderDetail(item.order_id)">
           <p class="time">推广时间:{{item.addtime}}</p>
           <p class="new-price" v-if="item.is_pay==0">待付款</p>
           <p class="new-price" v-if="item.is_pay==1">已付款</p>
         </div>
         <div class="flex goods-child" v-for="(goods,idx) in item.goods_list" :key="idx">
-          <div class="goods-pic"><img :src="goods.goods_pic" alt="暂无"/></div>
+          <div class="goods-pic"><img width="100%" height="100%"   :src="goods.goods_pic" alt="暂无"/></div>
           <div class="goods-desc">
             <p class="goods-title">{{goods.goods_name}}</p>
             <div class="flex">
@@ -48,11 +48,9 @@
           <van-button round type="info" size="small" color="#FF9900" class="pay-btn">去支付</van-button>
         </div>
       </div>
-      <div v-if="dataList.list">
-      <div class="no-data" v-if="dataList.list.length == 0">
-        <div class="no-icon"><img src="../../../assets/nodata.png" alt="" /></div>
+     <div class="no-data" v-if="dataList.length == 0">
+        <div class="no-icon"><img width="100%" height="100%"   src="../../../assets/nodata.png" alt="" /></div>
         <p class="no-text">暂无数据</p>
-      </div>
       </div>
     </div>
   </div>
@@ -156,7 +154,7 @@
     }
 
     .down-icon {
-      height: 15px;
+      // height: 15px;
       width: 26px;
       display: inline-block;
       vertical-align: middle;
@@ -166,7 +164,8 @@
     .goods-list {
       padding-top: 0;
       position: fixed;
-      top: 426px;
+      // top: 426px;
+      top: 340px;
       left: 0;
       right: 0;
       bottom: 0;

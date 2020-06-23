@@ -3,23 +3,23 @@
     <van-nav-bar title="下级" left-arrow @click-left="onClickLeft" />
     <div class="name-list">
       <div class="flex item-fans" v-for="item in childList" :key="item.id">
-        <div class="head"><img :src="item.avatar_url" alt="暂无图片" /></div>
+        <div class="head"><img width="100%" height="100%"   :src="item.avatar_url" alt="暂无图片" /></div>
         <div class="info">
           <div class="flex name-type">
             <p class="name">{{item.nickname}}</p>
             <div class="flex">
               <div class="vip-icon">
-                <img src="../../../assets/visitor.png" alt="" />
-                <!--  <img src="../../../assets/little_chief.png" alt="" />
-                    <img src="../../../assets/large_chief.png" alt="">
-                    <img src="../../../assets/member.png" alt=""> -->
+                <img width="100%" height="100%"   src="../../../assets/visitor.png" alt="" />
+                <!--  <img width="100%" height="100%"   src="../../../assets/little_chief.png" alt="" />
+                    <img width="100%" height="100%"   src="../../../assets/large_chief.png" alt="">
+                    <img width="100%" height="100%"   src="../../../assets/member.png" alt=""> -->
               </div>
               <span class="type">{{item.level_name}}</span>
             </div>
           </div>
           <div class="flex">
             <div class="wechat">微信号:请填写微信号</div>
-            <div class="active-icon"><img src="../../../assets/copy2.png" alt="" /></div>
+            <div class="active-icon"><img width="100%" height="100%"   src="../../../assets/copy2.png" alt="" /></div>
           </div>
         </div>
       </div>

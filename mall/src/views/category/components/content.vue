@@ -6,13 +6,13 @@
         <ul class="type-list">
           <li v-for="(item, index) in categoriesDetailData" :key="index" class="list " @click="getDetail(item.id)">
             <div class="type-pic" >
-              <!-- <img v-lazy="item.url" alt="" /> -->
-              <img src="../../../assets/item_large1.png" alt="" />
+              <!-- <img width="100%" height="100%"   v-lazy="item.url" alt="" /> -->
+              <img width="100%" height="100%"   src="../../../assets/item_large1.png" alt="" />
             </div>
             <p>{{ item.name }}</p>
           </li>
           <div class="no-data" v-if="categoriesDetailData.length == 0">
-            <div class="no-icon"><img src="../../../assets/nodata.png" alt="" /></div>
+            <div class="no-icon"><img width="100%" height="100%"   src="../../../assets/nodata.png" alt="" /></div>
             <p class="no-text">暂无数据</p>
           </div>
         </ul>
@@ -78,7 +78,7 @@ export default {
   position: absolute;
   left: 210px;
   right: 0;
-  top: 0;
+  top: 20px;
   bottom: 0;
   overflow: hidden;
   // 防止抖动

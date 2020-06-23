@@ -4,9 +4,9 @@
     <div class="mid-view">
       <van-swipe-cell v-for="item in dataList" :key="item.id">
         <div class="flex cart-item">
-          <div class="cart-pic"><img :src="item.goods_pic" alt="" /></div>
+          <div class="cart-pic" @click="getDetail(item.goods_id)"><img width="100%" height="100%"   :src="item.goods_pic" alt="" /></div>
           <div class="descript">
-            <p class="title">{{ item.name }}</p>
+            <p class="title"  @click="getDetail(item.goods_id)">{{ item.name }}</p>
             <div class="flex price-num">
               <div class="price">
                 <!-- <p class="old-price">￥1,200</p> -->
@@ -24,7 +24,7 @@
       </van-swipe-cell>
     </div>
     <div class="no-data" v-if="dataList.length == 0">
-      <div class="no-icon"><img src="../../../assets/nodata.png" alt="" /></div>
+      <div class="no-icon"><img width="100%" height="100%"   src="../../../assets/nodata.png" alt="" /></div>
       <p class="no-text">暂无数据</p>
     </div>
   </div>
@@ -55,7 +55,10 @@ export default {
     onClickLeft() {
       this.$router.back();
     },
-
+    // 详情
+    getDetail(id) {
+      this.$router.push({ name: 'detail',params:{gid:id}});
+    },
     // 获取列表
     getData() {
       var that = this;

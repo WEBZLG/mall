@@ -3,7 +3,7 @@
     <van-nav-bar title="商品列表" left-arrow @click-left="onClickLeft" />
     <div class="flex content">
       <div class="recommend-item" v-for="item in dataList" :key="item.id" @click="getDetail(item.id)">
-        <div class="recommend-pic"><img :src="item.pic_url" alt="" /></div>
+        <div class="recommend-pic"><img width="100%" height="100%"   :src="item.pic_url" alt="" /></div>
         <div class="recommend-text">
           <p class="title">{{item.name}}</p>
           <div class="flex">
@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="no-data" v-if="dataList.length == 0">
-        <div class="no-icon"><img src="../../assets/nodata.png" alt="" /></div>
+        <div class="no-icon"><img width="100%" height="100%"   src="../../assets/nodata.png" alt="" /></div>
         <p class="no-text">暂无数据</p>
       </div>
     </div>

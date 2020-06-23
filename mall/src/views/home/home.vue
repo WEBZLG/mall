@@ -3,7 +3,7 @@
     <div class="">
       <div class="search-box">
         <div class="ipt-box"><van-search v-model="value" shape="round" background="#ffffff" placeholder="臻悦尚品，搜你所爱" /></div>
-        <div class="message" @click="notice()"><img src="../../assets/message.png" alt="" /></div>
+        <div class="message" @click="notice()"><img width="100%" height="100%"  src="../../assets/message.png" alt=""/></div>
       </div>
       <ly-tab v-model="selected" :items="navList" :options="options" @change="handleChange" />
       <!--:is实现多个组件实现同一个挂载点-->
@@ -87,8 +87,7 @@ export default {
 
     // ly-tab组件的绑定事件函数
     handleChange(item, index) {
-      console.log(item, index);
-      this.clientDetails = index;
+      this.clientDetails = item.id;
       if (index == 0) {
         this.currentView = 'tab1';
       } else {

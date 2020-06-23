@@ -4,11 +4,11 @@
     <div class="mid-view">
       <div class="go-vip">
         成为会员再省20%
-        <span class="right-icon"><img src="../../assets/next_w.png" alt="" /></span>
+        <span class="right-icon"><img width="100%" height="100%"   src="../../assets/next_w.png" alt="" /></span>
       </div>
       <!-- 轮播图 -->
       <van-swipe :autoplay="0">
-        <van-swipe-item v-for="(image, index) in detailData.pic_list" :key="index"><img v-lazy="image.pic_url" /></van-swipe-item>
+        <van-swipe-item v-for="(image, index) in detailData.pic_list" :key="index"><img width="100%" height="100%"   v-lazy="image.pic_url" /></van-swipe-item>
       </van-swipe>
       <div class="handle flex">
         <div class="price">
@@ -21,8 +21,8 @@
         <div class="btn-box">
           <div>
             <p class="brokerage">
-              <span class="good-icon"><img src="../../assets/money.png" alt="" /></span>
-              佣金￥9.99
+              <span class="good-icon"><img width="100%" height="100%"   src="../../assets/money.png" alt="" /></span>
+              推广佣金￥{{detailData.share_price}}
             </p>
           </div>
           <div class="btn-bot">
@@ -34,7 +34,7 @@
       <div class="descript">
         <p class="title">{{ detailData.name }}</p>
         <div class="flex ">
-          <p>推广次数：189</p>
+          <p>推广次数：{{detailData.share_num}}</p>
           <p>销量：{{ detailData.sales_volume }}</p>
         </div>
       </div>
@@ -78,8 +78,8 @@
           </div>
         </van-action-sheet>
       </div>
-      <div class="detail-pic"><img src="../../assets/spxq.png" alt="" /></div>
-      <div class="detail-pics content">
+      <div class="detail-pic"><img width="100%" height="100%"   src="../../assets/spxq.png" alt="" /></div>
+      <div class="detail-pics">
         <div v-html="detailData.detail"></div>
       </div>
     </div>
@@ -152,15 +152,16 @@
     mounted() {
       let id = this.$route.params.gid;
       let tid = this.$route.params.tid;
-      this.getAddressData();
       localStorage.setItem('listTypeId', tid);
       if(id==undefined){
           let id = localStorage.getItem('goodsId');
           this.goodsId = id;
           this.getData(id);
+          this.getAddressData();
       }else{
         this.goodsId = id;
         this.getData(id);
+        this.getAddressData();
       }
     },
     methods: {
@@ -176,6 +177,7 @@
       },
       showAddress() {
         this.showAddr = true;
+        this.getAddressData();
       },
       chooseAddres(item) {
         this.chooseAddr = '地址：' + item.address;
@@ -221,7 +223,8 @@
           Toast.clear();
           if (res.code == 0) {
             that.detailData = res.data;
-
+            const regex = new RegExp('<img', 'gi')
+            that.detailData.detail = that.detailData.detail.replace(regex, `<img width='100%'`)
           } else {
             Toast.fail(res.msg);
           }
@@ -324,14 +327,8 @@
           platform: 'wx',
           token: this.$root.token
         };
-        Toast.loading({
-          duration: 0,
-          message: '加载中...',
-          forbidClick: true
-        });
+
         this.https.get('/user/address-list', param, '').then(res => {
-          console.log(res);
-          Toast.clear();
           if (res.code == 0) {
             that.addrDataList = res.data.list;
             this.chooseAddr = '地址：' + res.data.list[0].address;
@@ -417,7 +414,7 @@
       margin: 20px 0;
 
       .van-cell {
-        padding: 8px 32px;
+        padding: 20px 32px;
       }
     }
   }

@@ -17,7 +17,7 @@
               </div>
               <div class="flex">
                 <div class="wechat">{{ item.address }}</div>
-                <div class="active-icon" @click="editFun(item.id)"><img src="../../../assets/edit2.png" alt="" /></div>
+                <div class="active-icon" @click="editFun(item.id)"><img width="100%" height="100%"   src="../../../assets/edit2.png" alt="" /></div>
               </div>
             </div>
           </div>
@@ -28,7 +28,7 @@
         </template>
       </van-swipe-cell>
       <div class="no-data" v-if="dataList.length == 0">
-        <div class="no-icon"><img src="../../../assets/nodata.png" alt="" /></div>
+        <div class="no-icon"><img width="100%" height="100%"   src="../../../assets/nodata.png" alt="" /></div>
         <p class="no-text">暂无数据</p>
       </div>
     </div>

@@ -6,28 +6,28 @@
         <van-tab v-for="tab in tabList" :title="tab.name" :key="tab.id">
           <div class="name-list">
             <div class="flex item-fans" v-for="item in dataList" :key="item.id">
-              <div class="head"><img :src="item.avatar_url" alt="图片丢失" /></div>
+              <div class="head"><img width="100%" height="100%"   :src="item.avatar_url" alt="图片丢失" /></div>
               <div class="info">
                 <div class="flex name-type">
                   <p class="name">{{item.nickname}}</p>
                   <div class="flex">
                     <div class="vip-icon">
-                      <!-- <img src="../../../assets/visitor.png" alt="" /> -->
-                       <!-- <img src="../../../assets/little_chief.png" alt="" /> -->
-                         <img src="../../../assets/large_chief.png" alt="">
-                          <!-- <img src="../../../assets/member.png" alt=""> -->
+                      <!-- <img width="100%" height="100%"   src="../../../assets/visitor.png" alt="" /> -->
+                       <!-- <img width="100%" height="100%"   src="../../../assets/little_chief.png" alt="" /> -->
+                         <img width="100%" height="100%"   src="../../../assets/large_chief.png" alt="">
+                          <!-- <img width="100%" height="100%"   src="../../../assets/member.png" alt=""> -->
                     </div>
                     <span class="type">{{tab.name}}</span>
                   </div>
                 </div>
                 <div class="flex">
                   <div class="wechat">微信号:{{item.wechat_code}}</div>
-                  <div class="active-icon copy" :data-clipboard-text="item.wechat_code" @click="copyLink('.copy')"><img src="../../../assets/copy2.png" alt="" /></div>
+                  <div class="active-icon copy" :data-clipboard-text="item.wechat_code" @click="copyLink('.copy')"><img width="100%" height="100%"   src="../../../assets/copy2.png" alt="" /></div>
                 </div>
               </div>
             </div>
             <div class="no-data" v-if="dataList.length == 0">
-              <div class="no-icon"><img src="../../../assets/nodata.png" alt="" /></div>
+              <div class="no-icon"><img width="100%" height="100%"   src="../../../assets/nodata.png" alt="" /></div>
               <p class="no-text">暂无数据</p>
             </div>
           </div>

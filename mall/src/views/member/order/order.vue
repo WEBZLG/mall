@@ -91,7 +91,7 @@ export default {
 
         Toast.clear();
         if (res.code == 0) {
-          that.dataList = res.data;
+          that.dataList = res.data.list;
                   console.log(res.data);
         } else {
           Toast.fail(res.message);
@@ -111,8 +111,9 @@ export default {
     bottom: 0;
     overflow: auto;
     background-color: #F8F8F8;
+    .new-price{
+      font-size: 24px;
+    }
   }
-  .new-price{
-    font-size: 24px;
-  }
+
 </style>

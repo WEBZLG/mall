@@ -2,31 +2,31 @@
   <div class="content">
     <!-- 轮播图 -->
     <van-swipe :autoplay="3000">
-      <van-swipe-item v-for="(item, index) in dataList.banner_list" :key="index"><img v-lazy="item.pic_url" /></van-swipe-item>
+      <van-swipe-item v-for="(item, index) in dataList.banner_list" :key="index"><img width="100%" height="100%"   v-lazy="item.pic_url" /></van-swipe-item>
     </van-swipe>
     <!-- 按钮导航 -->
     <div class="nav-btn-list flex">
       <div class="nav-btn" v-for="(item, index) in dataList.nav_list" :key="index">
-        <div class="nav-icon"><img :src="item.icon_pic" alt="暂无图标" /></div>
+        <div class="nav-icon"><img width="100%" height="100%"   :src="item.icon_pic" alt="暂无图标" /></div>
         <p>{{item.name}}</p>
       </div>
     </div>
     <!-- 会员 -->
-    <div class="vip"><img src="../../../assets/ad1.png" alt="" /></div>
+    <div class="vip"><img width="100%" height="100%"   src="../../../assets/ad1.png" alt="" /></div>
     <!-- 每日爆品 -->
     <div class="day-hot" v-for="(item, index) in dataList.tag_list" :key="index">
       <h3 class="caption">{{item.name}}</h3>
-      <div class="vip"><img :src="item.show_pic" alt="暂无" /></div>
+      <div class="vip"><img width="100%" height="100%"   :src="item.show_pic" alt="暂无" /></div>
       <div class="goods-list">
         <div class="goods-item" v-for="(goods, idx) in item.goods_list" :key="idx">
-          <div class="goods-pic"  @click="getDetail(goods.id)"><img :src="goods.pic_url" alt="" /></div>
+          <div class="goods-pic"  @click="getDetail(goods.id)"><img width="100%" height="100%"   :src="goods.pic_url" alt="" /></div>
           <div class="goods-desc">
-            <p class="goods-title">{{goods.name}}</p>
+            <p class="goods-title" @click="getDetail(goods.id)">{{goods.name}}</p>
             <div class="good-price flex">
               <p class="old-price">￥{{goods.original_price}}</p>
               <p class="brokerage">
-                <span class="good-icon"><img src="../../../assets/money.png" alt="" /></span>
-                佣金￥{{goods.virtual_sales}}
+                <span class="good-icon"><img width="100%" height="100%"   src="../../../assets/money.png" alt="" /></span>
+                推广佣金￥{{goods.virtual_sales}}
               </p>
             </div>
             <div class="goods-share flex">
@@ -35,7 +35,7 @@
                 {{goods.price}}
               </p>
               <div class="btn-bot">
-                <button type="button" class="sm-btn hotCopy" data-clipboard-action="copy"  data-clipboard-text="袖卫衣 8NN00000" @click="copyLink('.hotCopy')">复制文字</button>
+                <button type="button" class="sm-btn hotCopy" data-clipboard-action="copy"  :data-clipboard-text="goods.name" @click="copyLink('.hotCopy')">复制文字</button>
                 <button type="button" class="sm-btn" @click.stop="share">分享图片</button>
               </div>
             </div>

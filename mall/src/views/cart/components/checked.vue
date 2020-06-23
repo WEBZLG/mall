@@ -1,11 +1,11 @@
 <template>
   <div class="check-box">
     <van-checkbox-group v-model="result" ref="checkboxGroup" @change="change()">
-      <div class="flex cart-item" v-for="item in goodsList" :key="item.goods_id">
+      <div class="flex cart-item" v-for="(item,idx) in goodsList" :key="idx">
         <van-checkbox :name="item" checked-color="#FF9900"></van-checkbox>
-        <div class="cart-pic"><img :src="item.goods_pic" alt="" /></div>
+        <div class="cart-pic" @click="getDetail(item.goods_id)"><img width="100%" height="100%"   :src="item.goods_pic" alt="" /></div>
         <div class="descript">
-          <p class="title">{{ item.good_name }}</p>
+          <p class="title" @click="getDetail(item.goods_id)">{{ item.goods_name }}</p>
           <div class="flex price-num">
             <div class="price">
               <!-- <p class="old-price">￥{{item.price}}</p> -->
@@ -14,7 +14,7 @@
                 {{ item.price }}
               </p>
             </div>
-            <van-stepper v-model="item.number" :max="item.max_num" @change="onChange(item)"/>
+            <van-stepper v-model="item.num" :max="item.max_num" @change="onChange(item)"/>
           </div>
         </div>
       </div>
@@ -62,6 +62,10 @@ export default {
     change() {
       this.onUpdate(this.result);
     },
+    // 详情
+    getDetail(id) {
+      this.$router.push({ name: 'detail',params:{gid:id}});
+    },
     onChange(item){
       for (var i=0;i<this.result.length;i++) {
         if(this.result[i].goods_id==item.goods_id){
@@ -82,14 +86,7 @@ export default {
           id:id,
           num:num
         }
-        // Toast.loading({
-        //   duration: 0,
-        //   message: '加载中...',
-        //   forbidClick: true,
-        // });
         this.https.post('/cart/cart-edit', param, '',params).then(res => {
-          console.log(res);
-          // Toast.clear();
           if(res.code==0){
 
           }else{

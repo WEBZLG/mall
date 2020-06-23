@@ -7,12 +7,12 @@
     <div class="mid-view">
       <Checked v-if="goodsList.length > 0" ref="checked" :on-update="checkedData" :goodsList="goodsList" @getPrice="getPrice"></Checked>
       <div class="no-data" v-if="goodsList.length == 0">
-        <div class="no-icon"><img src="../../assets/nodata.png" alt="" /></div>
+        <div class="no-icon"><img width="100%" height="100%"   src="../../assets/nodata.png" alt="" /></div>
         <p class="no-text">暂无数据</p>
       </div>
       <Recommend :dataList="dataList"></Recommend>
       <div class="no-data" v-if="dataList.length == 0">
-        <div class="no-icon"><img src="../../assets/nodata.png" alt="" /></div>
+        <div class="no-icon"><img width="100%" height="100%"   src="../../assets/nodata.png" alt="" /></div>
         <p class="no-text">暂无数据</p>
       </div>
     </div>
@@ -24,7 +24,7 @@
         </p>
         <!-- <p class="old-price">已优惠:￥2,601</p> -->
       </div>
-      <button class="orange-btn">去结算</button>
+      <button class="orange-btn" @click="submitView">去结算</button>
     </div>
     <div class="total-box flex" v-else>
       <button class="orange-btn" @click="collectData">移入收藏夹</button>
@@ -48,11 +48,13 @@ export default {
       dataList: [],
       goodsList: [],
       totalPrice: 0,
-      checkData: []
+      checkData: [],
+      addressId:''
     };
   },
   mounted() {
     this.getData();
+    this.getAddressData();
   },
   methods: {
     //获取数量
@@ -172,6 +174,44 @@ export default {
           })
           .catch(() => {});
       }
+    },
+    //立即购买
+    submitView() {
+      var that = this;
+      if (this.checkData.length == 0) {
+        Toast('请勾选商品')
+        return false;
+      }
+      let param = {
+        id: 1,
+        platform: 'wx',
+        token: this.$root.token
+      };
+      var cart_list =JSON.stringify(that.checkData);
+      this.https.post('/order/submit-preview', param, '&cart_id_list=' + cart_list + '&address_id=' + that.addressId + '&type=s').then(res => {
+        if (res.code == 0) {
+          console.log(res)
+          that.$router.push({name:'cartOrderDetail',params:{data:res.data}})
+        } else {
+          Toast.fail(res.msg);
+        }
+      });
+    },
+    // 获取地址列表
+    getAddressData() {
+      var that = this;
+      let param = {
+        id: 1,
+        platform: 'wx',
+        token: this.$root.token
+      };
+      this.https.get('/user/address-list', param, '').then(res => {
+        if (res.code == 0) {
+          that.addressId = res.data.list[0].id;
+        } else {
+          Toast.fail(res.message);
+        }
+      });
     }
   },
   components: {

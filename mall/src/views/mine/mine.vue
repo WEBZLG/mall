@@ -1,25 +1,25 @@
 <template>
   <div class="mine">
     <div class="top-bg">
-      <img src="../../assets/my_bg.png" alt="" />
+      <img width="100%" height="100%"   src="../../assets/my_bg.png" alt="" />
       <div class="message">
-        <div class="head"><img src="../../assets/sort1.png" alt="" /></div>
+        <div class="head"><img width="100%" height="100%"   :src="dataList.avatar_url" alt="暂无" /></div>
         <div class="name-type">
           <div class="flex">
-            <p class="name">ada_wang</p>
+            <p class="name">{{dataList.nickname||'臻悦用户'}}</p>
             <div class="flex">
               <div class="vip-icon">
-                <img src="../../assets/visitor.png" alt="" />
-                <!--  <img src="../../assets/little_chief.png" alt="" />
-                <img src="../../assets/large_chief.png" alt="">
-                <img src="../../assets/member.png" alt=""> -->
+                <img width="100%" height="100%"   src="../../assets/visitor.png" alt="" />
+                <!--  <img width="100%" height="100%"   src="../../assets/little_chief.png" alt="" />
+                <img width="100%" height="100%"   src="../../assets/large_chief.png" alt="">
+                <img width="100%" height="100%"   src="../../assets/member.png" alt=""> -->
               </div>
-              <span class="type">注册用户</span>
+              <span class="type">{{dataList.level_name}}</span>
             </div>
           </div>
           <div class="copy-code flex">
-            <p class="code">188****9909</p>
-            <div class="copy-icon"><img src="../../assets/edit.png" alt="" /></div>
+            <p class="code">{{dataList.mobile||'手机号码'}}</p>
+            <div class="copy-icon"><img width="100%" height="100%"   src="../../assets/edit.png" alt="" /></div>
           </div>
         </div>
       </div>
@@ -28,42 +28,42 @@
       <van-cell-group>
         <van-cell value="" is-link to="/order">
           <template #title>
-            <span class="icon"><img src="../../assets/wddd.png" /></span>
+            <span class="icon"><img width="100%" height="100%"   src="../../assets/wddd.png" /></span>
             <span class="custom-title">我的订单</span>
           </template>
         </van-cell>
         <van-cell value="" is-link to="/collect">
           <template #title>
-            <span class="icon"><img src="../../assets/wdsc.png" /></span>
+            <span class="icon"><img width="100%" height="100%"   src="../../assets/wdsc.png" /></span>
             <span class="custom-title">我的收藏</span>
           </template>
         </van-cell>
         <van-cell value="" is-link to="/book" >
           <template #title>
-            <span class="icon"><img src="../../assets/txl.png" /></span>
+            <span class="icon"><img width="100%" height="100%"   src="../../assets/txl.png" /></span>
             <span class="custom-title">通讯录</span>
           </template>
         </van-cell>
         <van-cell value="" is-link to="/address">
           <template #title>
-            <span class="icon"><img src="../../assets/dzgl.png" /></span>
+            <span class="icon"><img width="100%" height="100%"   src="../../assets/dzgl.png" /></span>
             <span class="custom-title">地址管理</span>
           </template>
         </van-cell>
         <van-cell value="" is-link>
           <template #title>
-            <span class="icon"><img src="../../assets/gywm.png" /></span>
+            <span class="icon"><img width="100%" height="100%"   src="../../assets/gywm.png" /></span>
             <span class="custom-title">关于我们</span>
           </template>
         </van-cell>
         <van-cell value="" is-link>
           <template #title>
-            <span class="icon"><img src="../../assets/lxwm.png" /></span>
+            <span class="icon"><img width="100%" height="100%"   src="../../assets/lxwm.png" /></span>
             <span class="custom-title">联系我们</span>
           </template>
         </van-cell>
       </van-cell-group>
-      <div class="vip"><img src="../../assets/ad1.png" alt="" /></div>
+      <div class="vip"><img width="100%" height="100%"   src="../../assets/ad1.png" alt="" /></div>
       <!-- <van-button type="default" round plain size="large">退出登录</van-button> -->
     </div>
   </div>
@@ -78,6 +78,10 @@
     Cell,
     CellGroup
   } from 'vant';
+  import {
+    Toast
+  } from 'vant';
+  Vue.use(Toast);
   Vue.use(Button);
   Vue.use(Cell);
   Vue.use(CellGroup);
@@ -85,8 +89,36 @@
     name: '',
     data() {
       return {
-
+dataList:''
       }
+    },
+    mounted() {
+      this.getData()
+    },
+    methods:{
+      // 获取个人详情
+      getData() {
+        var that = this;
+        let param = {
+          id: 1,
+          platform: 'wx',
+          token: this.$root.token
+        };
+        Toast.loading({
+          duration: 0,
+          message: '加载中...',
+          forbidClick: true
+        });
+        this.https.get('/user/index', param, '' ).then(res => {
+          console.log(res);
+          Toast.clear();
+          if (res.code == 0) {
+            that.dataList = res.data.user_info
+          } else {
+            Toast.fail(res.msg);
+          }
+        });
+      },
     }
   }
 </script>
@@ -133,7 +165,7 @@
 
     .copy-icon {
       width: 27px;
-      height: 28px;
+      // height: 28px;
       margin-left: 20px;
     }
 
@@ -163,7 +195,7 @@
 
     .icon {
       display: inline-block;
-      vertical-align: text-top;
+      // vertical-align: text-top;
       height: 28px;
       width: 28px;
     }
