@@ -12,7 +12,7 @@
       </div>
     </div>
     <!-- 会员 -->
-    <div class="vip"><img width="100%" height="100%"   src="../../../assets/ad1.png" alt="" /></div>
+    <div class="vip" @click="goVip"><img width="100%" height="100%"   src="../../../assets/ad1.png" alt="" /></div>
     <!-- 每日爆品 -->
     <div class="day-hot" v-for="(item, index) in dataList.tag_list" :key="index">
       <h3 class="caption">{{item.name}}</h3>
@@ -56,7 +56,6 @@ export default {
   props: ['clientDetails','dataList'],
   data() {
     return {
-      images: ['https://img.yzcdn.cn/vant/apple-1.jpg', 'https://img.yzcdn.cn/vant/apple-2.jpg'],
       // dataList:[]
     };
   },
@@ -67,6 +66,9 @@ export default {
   methods: {
     share(){
       console.log('分项')
+    },
+    goVip(){
+      this.$router.push({name:"vip"})
     },
     copyLink(className) {
        let that = this;

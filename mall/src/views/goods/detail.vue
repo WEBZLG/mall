@@ -396,7 +396,6 @@
         .right-icon {
           display: inline-block;
           width: 15px;
-          height: 26px;
           vertical-align: middle;
         }
       }

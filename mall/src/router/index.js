@@ -8,7 +8,7 @@ const Home = () => import('@/views/home/home.vue');
 const Category = () => import('@/views/category/category.vue');
 const Member = () => import('@/views/member/member.vue');
 const Cart = () => import('@/views/cart/cart.vue');
-const Cart = () => import('@/views/cart/orderDetails.vue');
+const CartOrder = () => import('@/views/cart/orderDetail.vue');
 const Mine = () => import('@/views/mine/mine.vue');
 const Detail = () => import('@/views/goods/detail.vue');
 const GoodsList = () => import('@/views/goods/goodsList.vue');
@@ -26,7 +26,7 @@ const Order = () => import('@/views/member/order/order.vue');
 const Deposit = () => import('@/views/member/deposit/deposit.vue');
 const DepositList = () => import('@/views/member/deposit/depositList.vue');
 const OrderDetail = () => import('@/views/member/order/orderDetail.vue');
-const CartOrderDetail = () => import('@/views/cart/orderDetail.vue');
+const Vip = () => import('@/views/member/vip/vip.vue');
 // 解决多次点击重复路由报错
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
@@ -72,9 +72,9 @@ export default new Router({
       component: Address,
     },
     {
-      path: '/cartOrderDetail',
-      name: 'cartOrderDetail',
-      component: CartOrderDetail,
+      path: '/cartOrder',
+      name: 'cartOrder',
+      component: CartOrder,
     },
     {
       path: '/add',
@@ -130,6 +130,11 @@ export default new Router({
       path: '/orderDetail',
       name: 'orderDetail',
       component: OrderDetail,
+    },
+    {
+      path: '/vip',
+      name: 'vip',
+      component: Vip,
     },
     {
       path: '/goodsList',

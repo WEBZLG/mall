@@ -2,26 +2,26 @@
   <div class="order-detail">
     <van-nav-bar title="订单详情" left-arrow @click-left="onClickLeft" />
     <div class="mid-view">
-      <div class="detail-bg"><img width="100%" height="100%"   src="../../../assets/ddxq_bg.png" alt="" /></div>
+      <div class="detail-bg"><img width="100%" height="100%"   src="../../assets/ddxq_bg.png" alt="" /></div>
       <div class="content">
         <div class="order-status" v-if="order_id == ''">
-          <span class="detail-icon"><img width="100%" height="100%"   src="../../../assets/dfk.png" alt="" /></span>
+          <span class="detail-icon"><img width="100%" height="100%"   src="../../assets/dfk.png" alt="" /></span>
           <p class="status">订单预览</p>
         </div>
         <div class="order-status" v-if="order_id != ''">
-          <span class="detail-icon"><img width="100%" height="100%"   src="../../../assets/dfk.png" alt="" /></span>
+          <span class="detail-icon"><img width="100%" height="100%"   src="../../assets/dfk.png" alt="" /></span>
           <p class="status">待付款</p>
         </div>
         <!--        <div class="order-status">
-          <span class="detail-icon"><img width="100%" height="100%"   src="../../../assets/yfk.png" alt="" /></span>
+          <span class="detail-icon"><img width="100%" height="100%"   src="../../assets/yfk.png" alt="" /></span>
           <p class="status">已付款</p>
         </div>
         <div class="order-status">
-          <span class="detail-icon"><img width="100%" height="100%"   src="../../../assets/ywc.png" alt="" /></span>
+          <span class="detail-icon"><img width="100%" height="100%"   src="../../assets/ywc.png" alt="" /></span>
           <p class="status">已完成</p>
         </div>
         <div class="order-status">
-          <span class="detail-icon"><img width="100%" height="100%"   src="../../../assets/wx.png" alt="" /></span>
+          <span class="detail-icon"><img width="100%" height="100%"   src="../../assets/wx.png" alt="" /></span>
           <p class="status">无效</p>
         </div> -->
         <div class="contact-bg" v-if="dataList.address">
@@ -104,7 +104,7 @@ export default {
     for (var i = 0; i < dataList.list.length; i++) {
       this.totalPrice = this.totalPrice * 1 + dataList.list[i].single_price * 1;
     }
-    localStorage.setItem('goodsId', dataList.goods_info.goods_id);
+    // localStorage.setItem('goodsId', dataList.goods_info.goods_id);
     console.log(dataList);
   },
   methods: {
@@ -119,16 +119,13 @@ export default {
         platform: 'wx',
         token: this.$root.token
       };
-      that.dataList.goods_info['num'] = 1;
-
       let params = {
         offline: 0,
         address_name: that.dataList.address.name,
         address_mobile: that.dataList.address.mobile,
         address_id: that.dataList.address.id,
         payment: 0,
-        goods_info: JSON.stringify(that.dataList.goods_info),
-        cart_id_list: that.dataList.goods_card_list
+        cart_id_list:  JSON.stringify(that.dataList.cart_id_list)
       };
       Toast.loading({
         duration: 0,
@@ -243,7 +240,7 @@ export default {
 
     .contact-bg {
       height: 152px;
-      background: url(../../../assets/address_bg2.png) no-repeat;
+      background: url(../../assets/address_bg2.png) no-repeat;
       background-size: cover;
       padding: 30px;
       font-size: 28px;

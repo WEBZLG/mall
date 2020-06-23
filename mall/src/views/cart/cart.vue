@@ -191,7 +191,7 @@ export default {
       this.https.post('/order/submit-preview', param, '&cart_id_list=' + cart_list + '&address_id=' + that.addressId + '&type=s').then(res => {
         if (res.code == 0) {
           console.log(res)
-          that.$router.push({name:'cartOrderDetail',params:{data:res.data}})
+          that.$router.push({name:'cartOrder',params:{data:res.data}})
         } else {
           Toast.fail(res.msg);
         }
