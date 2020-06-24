@@ -2,7 +2,7 @@
   <div class="detail">
     <van-nav-bar title="商品详情" left-arrow @click-left="onClickLeft" />
     <div class="mid-view">
-      <div class="go-vip">
+      <div class="go-vip" @click="goVip">
         成为会员再省20%
         <span class="right-icon"><img width="100%" height="100%"   src="../../assets/next_w.png" alt="" /></span>
       </div>
@@ -165,6 +165,9 @@
       }
     },
     methods: {
+      goVip(){
+        this.$router.push({name:"vip"})
+      },
       goCart() {
         this.$router.replace('/tabbar/cart');
       },

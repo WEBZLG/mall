@@ -41,13 +41,17 @@
 <script>
 import Vue from 'vue';
 import { Calendar } from 'vant';
-
+import { Toast } from 'vant';
+import { Dialog } from 'vant';
+Vue.use(Dialog);
+Vue.use(Toast);
 Vue.use(Calendar);
 export default {
   name: '',
-  props:['dataList'],
+  // props:['dataList'],
   data() {
     return {
+      dataList:[],
       date1: '',
       date2: '',
       show1: false,
@@ -57,7 +61,7 @@ export default {
     };
   },
   mounted() {
-    console.log(this.dataList)
+    this.getData(2,'','')
   },
   methods: {
     formatDate(date) {
@@ -70,7 +74,32 @@ export default {
     onConfirm2(date) {
       this.show2 = false;
       this.value2 = this.formatDate(date);
-    }
+    },
+    // 获取列表
+    getData(type,sTime,eTime) {
+      var that = this;
+      let param = {
+        id: 1,
+        platform: 'wx',
+        token: this.$root.token
+      };
+
+      Toast.loading({
+        duration: 0,
+        message: '加载中...',
+        forbidClick: true
+      });
+      this.https.post('/profit/order', param, '&type='+type+'&sTime='+sTime+'&eTime='+eTime).then(res => {
+
+        Toast.clear();
+        if (res.code == 0) {
+          that.dataList = res.data.list;
+          
+        } else {
+          Toast.fail(res.message);
+        }
+      });
+    },
   }
 };
 </script>

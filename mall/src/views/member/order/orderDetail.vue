@@ -146,6 +146,31 @@ export default {
         }
       });
     },
+    // 订单详情
+    orderDetail() {
+      var that = this;
+      let param = {
+        id: 1,
+        platform: 'wx',
+        token: this.$root.token
+      };
+
+      Toast.loading({
+        duration: 0,
+        message: '加载中...',
+        forbidClick: true
+      });
+      this.https.get('/order/submit', param, '&order_id='+that.order_id,).then(res => {
+        console.log(res);
+        Toast.clear();
+        if (res.code == 0) {
+
+          Toast.success(res.msg);
+        } else {
+          Toast.fail(res.msg);
+        }
+      });
+    },
     // 支付
     payFor() {
       var that = this;
@@ -179,7 +204,7 @@ export default {
       });
     },
     onBridgeReady(res) {
-      console.log(res)
+      let that = this;
       WeixinJSBridge.invoke(
         'getBrandWCPayRequest',
         {
@@ -192,6 +217,7 @@ export default {
         },
         function(res) {
           if (res.err_msg == 'get_brand_wcpay_request:ok') {
+            that.orderDetail() 
             // 使用以上方式判断前端返回,微信团队郑重提示：
             //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
           }

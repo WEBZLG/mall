@@ -60,7 +60,7 @@ export default {
     mybuy
   },
   mounted() {
-    this.getData(2,'','')
+    // this.getData(2,'','')
   },
   methods: {
     onClickLeft() {
@@ -68,35 +68,10 @@ export default {
     },
     onClick(name, title) {
       if(name=='a'){
-        this.getData(2,'','')
+        // this.getData(2,'','')
       }else if(name=='b'){
-        this.getData(1,'','')
+        // this.getData(1,'','')
       }
-    },
-    // 获取列表
-    getData(type,sTime,eTime) {
-      var that = this;
-      let param = {
-        id: 1,
-        platform: 'wx',
-        token: this.$root.token
-      };
-
-      Toast.loading({
-        duration: 0,
-        message: '加载中...',
-        forbidClick: true
-      });
-      this.https.post('/profit/order', param, '&type='+type+'&sTime='+sTime+'&eTime='+eTime).then(res => {
-
-        Toast.clear();
-        if (res.code == 0) {
-          that.dataList = res.data.list;
-                  console.log(res.data);
-        } else {
-          Toast.fail(res.message);
-        }
-      });
     },
   }
 };
