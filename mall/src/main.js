@@ -26,6 +26,8 @@ new Vue({
   data: function() {
     return {
       token: 'gfl_TwNXred-zWaHivTExCestIMLCOu5',
+      posterUrl:'https://www.shinecrystal.cn/api/share/goods?store_id=1&_platform=wx&access_token=gfl_TwNXred-zWaHivTExCestIMLCOu5&goods_id='
+      // posterUrl:'',
       // token: ''
     }
   },

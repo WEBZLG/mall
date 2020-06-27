@@ -21,7 +21,7 @@
             </p>
             <div class="btn-bot">
               <button type="button" class="sm-btn">复制文字</button>
-              <button type="button" class="sm-btn">分享图片</button>
+              <button type="button" class="sm-btn">分享</button>
             </div>
           </div>
         </div>

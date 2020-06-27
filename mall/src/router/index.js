@@ -26,6 +26,7 @@ const Order = () => import('@/views/member/order/order.vue');
 const Deposit = () => import('@/views/member/deposit/deposit.vue');
 const DepositList = () => import('@/views/member/deposit/depositList.vue');
 const OrderDetail = () => import('@/views/member/order/orderDetail.vue');
+const PayOrderDetail = () => import('@/views/member/order/payOrderDetail.vue');
 const Vip = () => import('@/views/member/vip/vip.vue');
 // 解决多次点击重复路由报错
 const originalPush = Router.prototype.push
@@ -130,6 +131,11 @@ export default new Router({
       path: '/orderDetail',
       name: 'orderDetail',
       component: OrderDetail,
+    },
+    {
+      path: '/payOrderDetail',
+      name: 'payOrderDetail',
+      component: PayOrderDetail,
     },
     {
       path: '/vip',

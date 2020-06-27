@@ -1,21 +1,20 @@
 <template>
   <div class="buy">
     <div class="filter-box">
-      <div class="flex filter">
+      <div class="flex filter" @click="show = true">
         <div>
-          <span @click="show1 = true">{{ value1 }}</span>
-          <van-calendar v-model="show1" @confirm="onConfirm1" />
+          <span>{{ value1 }}</span>
           <span class="down-icon"><img width="100%" height="100%" src="../../../assets/down.png" alt="" /></span>
         </div>
         <p>至</p>
         <div>
           <div>
-            <span @click="show2 = true">{{ value2 }}</span>
-            <van-calendar v-model="show2" @confirm="onConfirm2" />
+            <span>{{ value2 }}</span>
             <span class="down-icon"><img width="100%" height="100%" src="../../../assets/down.png" alt="" /></span>
           </div>
         </div>
       </div>
+      <van-calendar v-model="show" type="range" @confirm="onConfirm"  color="#FF9900"/>
     </div>
     <!--    <van-tabs v-model="activeName" swipe-threshold="5">
       <van-tab v-for="item in tabList" :title="item.title" :key="item.id"></van-tab>
@@ -77,8 +76,7 @@ export default {
   data() {
     return {
       dataList: [],
-      tabList: [
-        {
+      tabList: [{
           id: 0,
           title: '注册用户'
         },
@@ -97,14 +95,10 @@ export default {
         {
           id: 4,
           title: '核心队长'
-        }
-      ],
+        }],
       active: 0,
       activeName: 'a',
-      date1: '',
-      date2: '',
-      show1: false,
-      show2: false,
+      show: false,
       value1: '开始时间',
       value2: '结束日期'
     };
@@ -120,16 +114,17 @@ export default {
       Toast(title);
     },
     formatDate(date) {
-      return `${date.getMonth() + 1}/${date.getDate()}`;
+      console.log(date)
+      return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     },
-    onConfirm1(date) {
-      this.show1 = false;
-      this.value1 = this.formatDate(date);
+    onConfirm(date) {
+      const [start, end] = date;
+      this.show = false;
+      this.value1 = `${this.formatDate(start)}`;
+      this.value2 = `${this.formatDate(end)}`;
+      this.getData(1, this.value1, this.value2)
     },
-    onConfirm2(date) {
-      this.show2 = false;
-      this.value2 = this.formatDate(date);
-    },
+
     orderDetail() {
       this.$router.push('/orderDetail');
     },
@@ -146,7 +141,7 @@ export default {
         message: '加载中...',
         forbidClick: true
       });
-      this.https.post('/profit/order', param, '&type=' + type + '&sTime=' + sTime + '&eTime=' + eTime).then(res => {
+      this.https.post('/profit/order', param, '&type=' + type + '&start_time=' + sTime + '&end_time=' + eTime).then(res => {
         Toast.clear();
         if (res.code == 0) {
           that.dataList = res.data.list;
@@ -234,6 +229,7 @@ export default {
           if (res.err_msg == 'get_brand_wcpay_request:ok') {
             // 使用以上方式判断前端返回,微信团队郑重提示：
             //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+            this.getData(1, '', '')
           }
         }
       );

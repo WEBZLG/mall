@@ -4,40 +4,40 @@
     <div class="mid-view">
       <div class="detail-bg"><img width="100%" height="100%"   src="../../../assets/ddxq_bg.png" alt="" /></div>
       <div class="content">
-        <div class="order-status" v-if="order_id == ''">
+<!--        <div class="order-status" v-if="order_id == ''">
           <span class="detail-icon"><img width="100%" height="100%"   src="../../../assets/dfk.png" alt="" /></span>
           <p class="status">订单预览</p>
         </div>
         <div class="order-status" v-if="order_id != ''">
           <span class="detail-icon"><img width="100%" height="100%"   src="../../../assets/dfk.png" alt="" /></span>
           <p class="status">待付款</p>
-        </div>
-        <div class="order-status" v-if="dataList.is_pay==1">
+        </div> -->
+        <div class="order-status" >
           <span class="detail-icon"><img width="100%" height="100%"   src="../../../assets/yfk.png" alt="" /></span>
           <p class="status">已付款</p>
         </div>
-        <div class="order-status" v-if="dataList.is_confirm==1">
+<!--        <div class="order-status" v-if="dataList.is_confirm==1">
           <span class="detail-icon"><img width="100%" height="100%"   src="../../../assets/ywc.png" alt="" /></span>
           <p class="status">已完成</p>
-        </div>
+        </div> -->
 <!--        <div class="order-status">
           <span class="detail-icon"><img width="100%" height="100%"   src="../../../assets/wx.png" alt="" /></span>
           <p class="status">无效</p>
         </div> -->
         <div class="contact-bg" v-if="dataList.address">
           <p class="information">
-            <span class="name">{{ dataList.address.name }}</span>
-            {{ dataList.address.mobile }}
+            <span class="name">{{ dataList.name }}</span>
+            {{ dataList.mobile }}
           </p>
-          <p class="address">{{ dataList.address.province }}{{ dataList.address.city }}{{ dataList.address.district }}{{ dataList.address.detail }}</p>
+          <p class="address">{{ dataList.address}}</p>
         </div>
         <div class="goods-item">
-          <div class="flex goods-child" v-for="(item,index) in dataList.list" :key="index">
+          <div class="flex goods-child" v-for="(item,index) in dataList.goods_list" :key="index">
             <div class="goods-pic"><img width="100%" height="100%"   :src="item.goods_pic" alt="暂无" /></div>
             <div class="goods-desc">
-              <p class="goods-title">{{ item.goods_name }}</p>
+              <p class="goods-title">{{ item.name }}</p>
               <div class="flex">
-                <p class="new-price">￥{{ item.single_price }}</p>
+                <p class="new-price">￥{{ item.total_price }}</p>
                 <p>x1</p>
               </div>
             </div>
@@ -54,7 +54,7 @@
         <div class="module total">
           <div class="flex">
             <p>商品总额</p>
-            <p>￥{{ totalPrice }}</p>
+            <p>￥{{ dataList.goods_total_price }}</p>
           </div>
           <!--      <div class="flex">
             <p>优惠券</p>
@@ -69,11 +69,11 @@
       <div class="bottom flex">
         <p class="price">
           <span class="size">￥</span>
-          {{ totalPrice }}
+          {{dataList.total_price }}
         </p>
-        <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="order_id == ''" @click="submitOrder">提交订单</van-button>
-        <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="order_id != ''" @click="payFor">去支付</van-button>
-        <van-button round type="info" size="small" color="#FF9900" class="pay-btn"  v-if="dataList.is != ''">查看物流</van-button>
+<!--        <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="order_id == ''" @click="submitOrder">提交订单</van-button>
+        <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="order_id != ''" @click="payFor">去支付</van-button> -->
+        <van-button round type="info" size="small" color="#FF9900" class="pay-btn"  v-if="dataList.is_send==1">查看物流</van-button>
       </div>
     </div>
   </div>
@@ -90,7 +90,7 @@ Vue.use(Toast);
 Vue.use(Button);
 Vue.use(NavBar);
 export default {
-  name: 'orderDetail',
+  name: 'payOrderDetail',
   data() {
     return {
       dataList: '',
@@ -101,10 +101,10 @@ export default {
   mounted() {
     var dataList = this.$route.params.data;
     this.dataList = dataList;
-    for (var i = 0; i < dataList.list.length; i++) {
-      this.totalPrice = this.totalPrice * 1 + dataList.list[i].single_price * 1;
-    }
-    localStorage.setItem('goodsId', dataList.goods_info.goods_id);
+    // for (var i = 0; i < dataList.list.length; i++) {
+    //   this.totalPrice = this.totalPrice * 1 + dataList.list[i].single_price * 1;
+    // }
+    // localStorage.setItem('goodsId', dataList.goods_info.goods_id);
     console.log(dataList);
   },
   methods: {
@@ -164,7 +164,10 @@ export default {
         console.log(res);
         Toast.clear();
         if (res.code == 0) {
-          that.$router.push({name:'payOrderDetail',params:{data:res.data}})
+          // that.dataList = res.data
+          that.$router.push({name:'orderDetail',params:{data:res.data}})
+          // Toast.success(res.msg);
+          console.log(that.dataList)
         } else {
           Toast.fail(res.msg);
         }

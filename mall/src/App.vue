@@ -153,4 +153,9 @@ p {
    width: 190px;
    margin:0 auto 30px;
  }
+ .shareCode{
+   height: 222px;
+   width: 222px;
+ }
+
 </style>

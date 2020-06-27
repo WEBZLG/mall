@@ -1,21 +1,20 @@
 <template>
   <div class="popularize">
     <div class="filter-box">
-      <div class="flex filter">
+      <div class="flex filter" @click="show = true">
         <div>
-          <span @click="show1 = true">{{ value1 }}</span>
-          <van-calendar v-model="show1" @confirm="onConfirm1" />
+          <span>{{ value1 }}</span>
           <span class="down-icon"><img width="100%" height="100%"   src="../../../assets/down.png" alt="" /></span>
         </div>
         <p>至</p>
         <div>
           <div>
-            <span @click="show2 = true">{{ value2 }}</span>
-            <van-calendar v-model="show2" @confirm="onConfirm2" />
+            <span>{{ value2 }}</span>
             <span class="down-icon"><img width="100%" height="100%"   src="../../../assets/down.png" alt="" /></span>
           </div>
         </div>
       </div>
+      <van-calendar v-model="show"  type="range" @confirm="onConfirm"  color="#FF9900"/>
     </div>
     <div class="goods-list">
       <div class="goods-item" v-for="(item,index) in dataList.list" :key="index">
@@ -52,10 +51,7 @@ export default {
   data() {
     return {
       dataList:[],
-      date1: '',
-      date2: '',
-      show1: false,
-      show2: false,
+      show: false,
       value1: '开始时间',
       value2: '结束日期'
     };
@@ -65,15 +61,14 @@ export default {
   },
   methods: {
     formatDate(date) {
-      return `${date.getMonth() + 1}/${date.getDate()}`;
+      return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     },
-    onConfirm1(date) {
-      this.show1 = false;
-      this.value1 = this.formatDate(date);
-    },
-    onConfirm2(date) {
-      this.show2 = false;
-      this.value2 = this.formatDate(date);
+    onConfirm(date) {
+      const [start, end] = date;
+      this.show = false;
+      this.value1 = `${this.formatDate(start)}`;
+      this.value2 = `${this.formatDate(end)}`;
+      this.getData(2, this.value1, this.value2)
     },
     // 获取列表
     getData(type,sTime,eTime) {
@@ -94,7 +89,7 @@ export default {
         Toast.clear();
         if (res.code == 0) {
           that.dataList = res.data.list;
-          
+
         } else {
           Toast.fail(res.message);
         }

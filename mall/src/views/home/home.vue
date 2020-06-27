@@ -115,6 +115,7 @@ export default {
         if (res.code == 0) {
           console.log(res.data)
           this.$root.token = res.data.access_token;
+          this.$root.posterUrl = 'https://www.shinecrystal.cn/api/share/goods?store_id=1&_platform=wx&access_token='+res.data.access_token+'&goods_id='
           console.log(this.$root.token)
         } else {
           Toast.fail(res.message);
@@ -168,8 +169,8 @@ export default {
   background-color: #ffffff;
   overflow: auto;
   // 防止抖动
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
+  // -webkit-transform: translateZ(0);
+  // transform: translateZ(0);
 
   .ipt-box {
     margin-right: 30px;

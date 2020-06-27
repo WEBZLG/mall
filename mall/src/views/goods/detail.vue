@@ -291,6 +291,7 @@
         this.https.post('/cart/add-cart', param, '', params).then(res => {
           if (res.code == 0) {
             Toast.success('添加成功！');
+            this.showGoods = false;
           } else {
             Toast.fail(res.msg);
           }
@@ -316,6 +317,7 @@
           '&type=s').then(res => {
           if (res.code == 0) {
             console.log(res)
+            this.showGoods = false;
             that.$router.push({name:'orderDetail',params:{data:res.data}})
           } else {
             Toast.fail(res.msg);
