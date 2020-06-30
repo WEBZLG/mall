@@ -1,5 +1,6 @@
 <template>
-  <div class="content">
+  <div class="">
+    <van-nav-bar :title="title" left-arrow @click-left="onClickLeft" />
     <!-- <div class="vip"><img width="100%" height="100%"   src="../../../assets/daily_banner1.png" alt="" /></div> -->
     <div class="goods-list" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
       <div class="goods-item" v-for="(item,index) in dataList" :key="index">
@@ -35,20 +36,32 @@
 </template>
 
 <script>
-  import Vue from 'vue';
-  import { Toast } from 'vant';
-  Vue.use(Toast);
+import Vue from 'vue';
+import { Toast } from 'vant';
+import { NavBar } from 'vant';
+Vue.use(NavBar);
+Vue.use(Toast);
 export default {
   props: ['clientDetails'],
   data() {
     return {
-      dataList:''
+      dataList:'',
+      tid:'',
+      title:''
     };
   },
   mounted() {
-    this.getData(this.clientDetails)
+    var id =  this.$route.params.gid;
+    var title =  this.$route.params.title;
+
+    this.tid = id;
+    this.title = title;
+    this.getData(id)
   },
   methods: {
+    onClickLeft() {
+      this.$router.back();
+    },
     loadMore() {
       this.loading = true;
       setTimeout(() => {
@@ -80,7 +93,6 @@ export default {
         console.log(res);
         Toast.clear();
         if (res.code == 0) {
-          console.log(that.dataList)
           that.dataList = res.data.list;
         } else {
           Toast.fail(res.message);

@@ -6,7 +6,11 @@
     </van-swipe>
     <!-- 按钮导航 -->
     <div class="nav-btn-list flex">
-      <div class="nav-btn" v-for="(item, index) in dataList.nav_list" :key="index">
+      <div class="nav-btn" v-for="item in navList" :key="item.id" @click="goNav(item)">
+        <div class="nav-icon"><img width="100%" height="100%" :src="item.icon_pic" alt="暂无图标" /></div>
+        <p>{{ item.name }}</p>
+      </div>
+      <div class="nav-btn" v-for="(item, index) in dataList.nav_list" :key="index" @click="goNav(item)">
         <div class="nav-icon"><img width="100%" height="100%" :src="item.icon_pic" alt="暂无图标" /></div>
         <p>{{ item.name }}</p>
       </div>
@@ -47,13 +51,8 @@
     <van-overlay :show="show" @click="show = false">
       <div class="wrapper" @click.stop>
         <div class="block">
-          <div class="shareBox" id="shareBox" v-if="goodsInfo.id">
-            <!--            <div><img :src="goodsInfo.pic_url" alt="" width="100" /></div>
-            <p>{{ goodsInfo.name }}</p>
-            <p>{{ goodsInfo.price }}</p> -->
-            <div class="shareCode"><img :src="this.$root.posterUrl + goodsInfo.id" width="100%" /></div>
-            <button type="button" class="save-btn" @click.stop="save">保存{{goodsInfo.id}}</button>
-          </div>
+          <vue-canvas-poster :painting="painting" @success="success"></vue-canvas-poster>
+          <div class="shareCode"><img width="100%" :src="shareCode" alt="" /></div>
         </div>
       </div>
     </van-overlay>
@@ -65,7 +64,7 @@ import Vue from 'vue';
 import { Lazyload } from 'vant';
 import { Toast } from 'vant';
 import { Overlay } from 'vant';
-import html2canvas from "html2canvas"
+import html2canvas from 'html2canvas';
 Vue.use(Toast);
 Vue.use(Lazyload);
 Vue.use(Overlay);
@@ -73,26 +72,112 @@ export default {
   props: ['clientDetails', 'dataList'],
   data() {
     return {
-      // dataList:[]
+      navList: [
+        {
+          id: 61,
+          name: '拼团活动',
+          icon_pic: require('../../../assets/button1.png')
+        },
+        {
+          id: 62,
+          name: '秒杀专区',
+          icon_pic: require('../../../assets/button2.png')
+        },
+        {
+          id: 63,
+          name: '限时爆款',
+          icon_pic: require('../../../assets/button3.png')
+        },
+        {
+          id: 64,
+          name: '优惠券',
+          icon_pic: require('../../../assets/button4.png')
+        },
+        {
+          id: 65,
+          name: '新人专享',
+          icon_pic: require('../../../assets/button5.png')
+        }
+      ],
       goodsInfo: '',
-      show: false
+      show: false,
+      shareCode: '',
+      shareUrl: '',
+      painting: {}
     };
   },
   mounted() {
     // this.getData();
-    console.log(this.dataList);
-    console.log(this.$root.posterUrl);
   },
   methods: {
-    share(goods) {
-      this.goodsInfo = goods;
-      this.show = true;
-      console.log(goods);
-       html2canvas(document.querySelector("#capture")).then(canvas => {
-           document.body.appendChild(canvas)
-       });
-
+    success(src) {
+      console.log(src);
+      this.shareCode = src;
     },
+    fail(err) {
+      console.log('fail', err);
+    },
+    goNav(e) {
+      console.log(e);
+      if (e.id == 61) {
+        this.$router.push({ name: 'group', params: { title: e.name, gid: e.id } });
+      } else {
+        this.$router.push({ name: 'hotList', params: { title: e.name, gid: e.id } });
+      }
+    },
+    // 分项
+    share(goods) {
+      console.log(goods);
+      this.goodsInfo = goods;
+      this.shareUrl = this.$root.posterUrl + goods.id;
+      this.painting = {
+        width: '630px',
+        height: '806px',
+        background: '#ffffff',
+        views: [
+          {
+            type: 'image',
+            url: this.$root.posterUrl + goods.id,
+            css: {
+              top: '20px',
+              left: '36px',
+              borderRadius: '40px',
+              width: '80px',
+              height: '80px'
+            }
+          },
+          {
+            type: 'text',
+            text: '我的名字',
+            css: {
+              bottom: '215px',
+              left: '30px',
+              right:'30px',
+              width: '569px',
+              maxLines: 1,
+              fontSize: '26px'
+            }
+          },
+          {
+            type: 'qrcode',
+            content: this.$root.posterUrl + goods.id,
+            css: {
+              bottom: '104px',
+              right: '30px',
+              color: '#000',
+              background: '#fff',
+              width: '82px',
+              height: '82px',
+              borderWidth: '10px',
+              borderColor: '#fff'
+            }
+          }
+        ]
+      }
+      this.show = true;
+    },
+    save() {},
+
     goVip() {
       this.$router.push({ name: 'vip' });
     },
@@ -144,15 +229,19 @@ export default {
 
 <style lang="less">
 .shareCode {
-  margin: 0 auto;
-  margin-top: 20%;
+  width: 630px;
+  height: 806px;
+  margin: 20% auto 0;
 }
 .save-btn {
-  border: 1px solid #ffffff;
-  color: #ffffff;
-  background: inherit;
-  margin: 38px auto;
   display: block;
+  height: 80px;
+  background: rgba(255, 153, 0, 1);
+  border-radius: 40px;
+  width: 630px;
+  margin: 0 auto;
+  border: none;
+  color: #ffffff;
 }
 .van-swipe {
   height: 314px;

@@ -19,6 +19,8 @@ const Add = () => import('@/views/mine/address/add.vue');
 const Edit = () => import('@/views/mine/address/edit.vue');
 const Collect = () => import('@/views/mine/collect/collect.vue');
 const Notice = () => import('@/views/home/notice/notice.vue');
+const HotList = () => import('@/views/home/hotGoods/hotList.vue');
+const Group = () => import('@/views/home/group/group.vue');
 const Fans = () => import('@/views/member/fans/fans.vue');
 const Estimate = () => import('@/views/member/estimate/estimate.vue');
 const Account = () => import('@/views/member/account/account.vue');
@@ -141,6 +143,16 @@ export default new Router({
       path: '/vip',
       name: 'vip',
       component: Vip,
+    },
+    {
+      path: '/hotList',
+      name: 'hotList',
+      component: HotList,
+    },
+    {
+      path: '/group',
+      name: 'group',
+      component: Group,
     },
     {
       path: '/goodsList',

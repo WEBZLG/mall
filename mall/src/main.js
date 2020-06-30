@@ -9,7 +9,9 @@ import https from './request/http.js'
 import infiniteScroll from "vue-infinite-scroll";
 import clipboard from 'clipboard';
 import wx from 'weixin-js-sdk';
+import vueCanvasPoster from 'vue-canvas-poster'
 Vue.prototype.wx = wx
+Vue.use(vueCanvasPoster)
 Vue.use(infiniteScroll);
 
 Vue.use(LyTab)
