@@ -16,13 +16,11 @@
 
 <script type="text/javascript">
 import Vue from 'vue';
-import { Tabbar, TabbarItem } from 'vant';
-
+import { Tabbar, TabbarItem,Toast } from 'vant';
+ Vue.use(Toast);
 Vue.use(Tabbar);
 Vue.use(TabbarItem);
-// import { setStore } from '../../../../config/global.js'
-// import { setLocalStore, getLocalStore } from '../../../../config/global.js'
-// import { mapState, mapMutations, mapActions } from 'vuex'
+
 export default {
   name: 'tabbar',
   created() {
@@ -49,6 +47,7 @@ export default {
   },
   data() {
     return {
+      userInfo:'',
       currIndex: 0,
       active: 0,
       tabbars: [
@@ -75,7 +74,6 @@ export default {
           title: '购物车',
           normal: require('../../assets/cart_file.png'),
           active: require('../../assets/cart.png'),
-          // num: 5
         },
         {
           name: 'mine',
@@ -86,39 +84,29 @@ export default {
       ]
     };
   },
-  components: {
-  },
+
   mounted() {
-    // this._initData();
+
   },
   computed: {
-    // ...mapState(['shopCart'], ['userInfo']),
     goodsNum() {
       let num = 0;
-      // Object.values(this.shopCart).forEach((goods, index) => {
-      //   num += goods.num;
-      // });
-      // if (num > 0) {
-      //   return num;
-      // }
     }
   },
   methods: {
-    // 0. 延展mutations方法
-    // ...mapMutations(['INIT_SHOP_CART', 'INIT_USER_INFO']),
-    // ...mapActions(['autoLogin']),
-    // 1.点击tabbar触发的方法
     tab(index, val) {
       this.currIndex = index;
+      console.log(index, val)
+      if(index==2){
+        if(that.$root.userInfo.is_distributor==0){
+          this.$router.push({name:'vip'});
+        }else{
+          this.$router.push(val);
+        }
+      }else{
       this.$router.push(val);
-      // 将索引保存到本地
-      //   setLocalStore('tatbarActive', index);
-    }
-    // 2.初始化购物车数据
-    // _initData () {
-    //   this.INIT_SHOP_CART();
-    //   this.INIT_USER_INFO();
-    // }
+      }
+    },
   }
 };
 </script>

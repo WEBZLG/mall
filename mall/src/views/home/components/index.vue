@@ -64,7 +64,7 @@ import Vue from 'vue';
 import { Lazyload } from 'vant';
 import { Toast } from 'vant';
 import { Overlay } from 'vant';
-import html2canvas from 'html2canvas';
+// import html2canvas from 'html2canvas';
 Vue.use(Toast);
 Vue.use(Lazyload);
 Vue.use(Overlay);
@@ -111,7 +111,7 @@ export default {
   },
   methods: {
     success(src) {
-      console.log(src);
+      // console.log(src);
       this.shareCode = src;
     },
     fail(err) {
@@ -137,18 +137,15 @@ export default {
         views: [
           {
             type: 'image',
-            url: this.$root.posterUrl + goods.id,
+            url:  goods.pic_url,
             css: {
-              top: '20px',
-              left: '36px',
-              borderRadius: '40px',
-              width: '80px',
-              height: '80px'
+              width: '630px',
+              height: '504px'
             }
           },
           {
             type: 'text',
-            text: '我的名字',
+            text: goods.name,
             css: {
               bottom: '215px',
               left: '30px',
@@ -156,6 +153,32 @@ export default {
               width: '569px',
               maxLines: 1,
               fontSize: '26px'
+            }
+          },
+          {
+            type: 'text',
+            text: goods.price,
+            css: {
+              bottom: '142px',
+              left: '35px',
+              width: '569px',
+              maxLines: 1,
+              fontSize: '48px',
+              fontWeight:'bold',
+              color:'#F34E81'
+            }
+          },
+          {
+            type: 'text',
+            text: goods.original_price,
+            css: {
+              bottom: '103px',
+              left: '35px',
+              width: '569px',
+              maxLines: 1,
+              textDecoration:'line-through',
+              fontSize: '20px',
+              color:'#F34E81'
             }
           },
           {
@@ -176,8 +199,6 @@ export default {
       }
       this.show = true;
     },
-    save() {},
-
     goVip() {
       this.$router.push({ name: 'vip' });
     },
