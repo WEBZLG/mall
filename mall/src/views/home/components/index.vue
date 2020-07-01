@@ -29,7 +29,7 @@
             <div class="good-price flex">
               <p class="old-price">￥{{ goods.original_price }}</p>
               <p class="brokerage">
-                <span class="good-icon"><img width="100%" height="100%" src="../../../assets/money.png" alt="" /></span>
+                <span class="good-icon"><img  width="100%" height="100%" src="../../../assets/money.png" alt="" /></span>
                 推广佣金￥{{ goods.virtual_sales }}
               </p>
             </div>
@@ -52,7 +52,7 @@
       <div class="wrapper" @click.stop>
         <div class="block">
           <vue-canvas-poster :painting="painting" @success="success"></vue-canvas-poster>
-          <div class="shareCode"><img width="100%" :src="shareCode" alt="" /></div>
+          <div class="shareCode" @touchstart="gotouchstart" @touchmove="gotouchmove" @touchend="gotouchend"><img  crossorigin="anonymous" width="100%" :src="shareCode" alt="" /></div>
         </div>
       </div>
     </van-overlay>
@@ -60,11 +60,11 @@
 </template>
 
 <script>
+var timeOutEvent = 0; //定时器
 import Vue from 'vue';
 import { Lazyload } from 'vant';
 import { Toast } from 'vant';
 import { Overlay } from 'vant';
-// import html2canvas from 'html2canvas';
 Vue.use(Toast);
 Vue.use(Lazyload);
 Vue.use(Overlay);
@@ -121,10 +121,13 @@ export default {
       console.log(e);
       if (e.id == 61) {
         this.$router.push({ name: 'group', params: { title: e.name, gid: e.id } });
+      } else if (e.id == 64) {
+        this.$router.push({ name: 'group', params: { title: e.name, gid: e.id } });
       } else {
         this.$router.push({ name: 'hotList', params: { title: e.name, gid: e.id } });
       }
     },
+
     // 分项
     share(goods) {
       console.log(goods);
@@ -137,8 +140,10 @@ export default {
         views: [
           {
             type: 'image',
-            url:  goods.pic_url,
+            url: goods.pic_url.toString(),
             css: {
+              top: '0px',
+              left: '0px',
               width: '630px',
               height: '504px'
             }
@@ -147,38 +152,51 @@ export default {
             type: 'text',
             text: goods.name,
             css: {
-              bottom: '215px',
+              bottom: '245px',
               left: '30px',
-              right:'30px',
+              right: '30px',
               width: '569px',
-              maxLines: 1,
+              maxLines: 2,
               fontSize: '26px'
             }
           },
           {
             type: 'text',
-            text: goods.price,
+            text: '￥' + goods.price,
             css: {
               bottom: '142px',
-              left: '35px',
+              left: '30px',
               width: '569px',
               maxLines: 1,
               fontSize: '48px',
-              fontWeight:'bold',
-              color:'#F34E81'
+              fontWeight: 'bold',
+              color: '#F34E81'
             }
           },
           {
             type: 'text',
-            text: goods.original_price,
+            text: '￥' + goods.original_price,
             css: {
               bottom: '103px',
-              left: '35px',
+              left: '30px',
               width: '569px',
               maxLines: 1,
-              textDecoration:'line-through',
+              textDecoration: 'line-through',
               fontSize: '20px',
-              color:'#F34E81'
+              color: '#F34E81'
+            }
+          },
+          {
+            type: 'text',
+            text: '请长按图片进行保存分享',
+            css: {
+              bottom: '30px',
+              left: '30px',
+              width: '569px',
+              maxLines: 1,
+              textAlign: 'center',
+              fontSize: '24px',
+              color: '#F34E81'
             }
           },
           {
@@ -196,8 +214,31 @@ export default {
             }
           }
         ]
-      }
+      };
       this.show = true;
+    },
+
+    // 长按事件
+    gotouchstart() {
+      let that = this;
+      clearTimeout(timeOutEvent); //清除定时器
+      timeOutEvent = 0;
+      timeOutEvent = setTimeout(function() {
+        //执行长按要执行的内容，
+        that.shareData();
+      }, 600); //这里设置定时
+    },
+    //手释放，如果在500毫秒内就释放，则取消长按事件，此时可以执行onclick应该执行的事件
+    gotouchend() {
+      clearTimeout(timeOutEvent);
+      if (timeOutEvent != 0) {
+        //这里写要执行的内容（尤如onclick事件）
+      }
+    },
+    //如果手指有移动，则取消所有事件，此时说明用户只是要移动而不是长按
+    gotouchmove() {
+      clearTimeout(timeOutEvent); //清除定时器
+      timeOutEvent = 0;
     },
     goVip() {
       this.$router.push({ name: 'vip' });
@@ -214,7 +255,6 @@ export default {
     },
     getData() {
       var that = this;
-      var that = this;
       let param = {
         id: 1,
         platform: 'wx',
@@ -230,6 +270,28 @@ export default {
         Toast.clear();
         if (res.code == 0) {
           that.dataList = res.data;
+        } else {
+          Toast.fail(res.message);
+        }
+      });
+    },
+    // 分享
+    shareData() {
+      var that = this;
+      let param = {
+        id: 1,
+        platform: 'wx',
+        token: this.$root.token
+      };
+      Toast.loading({
+        duration: 0,
+        message: '加载中...',
+        forbidClick: true
+      });
+      this.https.get('/share/goods', param, '&goods_id='+this.goodsInfo.id+'&share_user='+this.$root.userInfo.id).then(res => {
+        console.log(res);
+        Toast.clear();
+        if (res.code == 0) {
         } else {
           Toast.fail(res.message);
         }
@@ -254,16 +316,7 @@ export default {
   height: 806px;
   margin: 20% auto 0;
 }
-.save-btn {
-  display: block;
-  height: 80px;
-  background: rgba(255, 153, 0, 1);
-  border-radius: 40px;
-  width: 630px;
-  margin: 0 auto;
-  border: none;
-  color: #ffffff;
-}
+
 .van-swipe {
   height: 314px;
   border-radius: 10px;

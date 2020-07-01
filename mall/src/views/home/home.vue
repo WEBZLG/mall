@@ -61,42 +61,16 @@
       // this.$nextTick(() => {
       //   this.scroll = new BScroll(this.$refs.wrapper, {click: true,tap: true});
       // });
-      this.getCode();
-      this.getData();
-      this.getUserInfo();
+      // this.getCode();
+      var that = this;
+      setTimeout(function(){
+        that.getData();
+
+      },1000)
+        // this.getUserInfo();
     },
 
     methods: {
-      getCode() {
-        // 非静默授权，第一次有弹框
-        this.code = '';
-        var local = window.location.href; // 获取页面url
-        var appid = 'wx7ca5f43f16c9ece4';
-        this.code = this.getUrlCode().code; // 截取code
-        if (this.code == null || this.code === '') {
-          // 如果没有code，则去请求
-          window.location.href =
-            `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${encodeURIComponent(local)}&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`;
-        } else {
-          // 你自己的业务逻辑
-          this.login(this.code);
-        }
-      },
-      getUrlCode() {
-        // 截取url中的code方法
-        var url = location.search;
-        this.winUrl = url;
-        var theRequest = new Object();
-        if (url.indexOf('?') != -1) {
-          var str = url.substr(1);
-          var strs = str.split('&');
-          for (var i = 0; i < strs.length; i++) {
-            theRequest[strs[i].split('=')[0]] = strs[i].split('=')[1];
-          }
-        }
-        return theRequest;
-      },
-
       // ly-tab组件的绑定事件函数
       handleChange(item, index) {
         this.clientDetails = item.id;
@@ -109,33 +83,7 @@
       notice() {
         this.$router.push('/notice');
       },
-      login(code) {
-        var that = this;
-        let param = {
-          id: 1,
-          platform: 'wx',
-          token: ''
-        };
-        Toast.loading({
-          duration: 0,
-          message: '加载中...',
-          forbidClick: true
-        });
-        this.https.post('/passport/login', param, '&code=' + code).then(res => {
-          console.log(res);
-          Toast.clear();
-          if (res.code == 0) {
-            console.log(res.data)
-            this.$root.token = res.data.access_token;
-            this.$root.posterUrl =
-              'https://www.shinecrystal.cn/api/share/goods?store_id=1&_platform=wx&access_token=' + res.data.access_token +
-              '&goods_id='
-            console.log(this.$root.token)
-          } else {
-            Toast.fail(res.message);
-          }
-        });
-      },
+
       getData() {
         var that = this;
         let param = {
@@ -165,29 +113,7 @@
           }
         });
       },
-      getUserInfo() {
-          var that = this;
-          let param = {
-            id: 1,
-            platform: 'wx',
-            token: this.$root.token
-          };
-          Toast.loading({
-            duration: 0,
-            message: '加载中...',
-            forbidClick: true
-          });
-          this.https.get('/user/index', param, '' ).then(res => {
-            console.log(res);
-            Toast.clear();
-            if (res.code == 0) {
-              that.userInfo = res.data.user_info;
-              that.$root.userInfo = res.data.user_info;
-            } else {
-              Toast.fail(res.msg);
-            }
-          });
-      }
+
     },
     components: {
       tab1,

@@ -60,7 +60,10 @@ export default {
     mybuy
   },
   mounted() {
-    // this.getData(2,'','')
+    if(localStorage.getItem('activeName')){
+      let name=localStorage.getItem('activeName');
+      this.activeName = name;
+    }
   },
   methods: {
     onClickLeft() {

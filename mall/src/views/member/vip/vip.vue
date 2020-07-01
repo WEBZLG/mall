@@ -42,7 +42,7 @@
           token: this.$root.token
         };
         let params = {
-          level_id:that.$root.userInfo.id,
+          level_id:that.$root.userInfo.level,
           pay_type:'WECHAT_PAY'
         }
         Toast.loading({

@@ -109,7 +109,7 @@ export default {
   },
   methods: {
     onClickLeft() {
-      this.$router.back();
+      this.$router.go(-2);
     },
     // 提交订单
     submitOrder() {

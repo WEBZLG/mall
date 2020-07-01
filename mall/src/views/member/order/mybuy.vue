@@ -14,7 +14,7 @@
           </div>
         </div>
       </div>
-      <van-calendar v-model="show" type="range" @confirm="onConfirm"  color="#FF9900"/>
+      <van-calendar v-model="show" type="range" @confirm="onConfirm" :min-date="minDate"  color="#FF9900"/>
     </div>
     <!--    <van-tabs v-model="activeName" swipe-threshold="5">
       <van-tab v-for="item in tabList" :title="item.title" :key="item.id"></van-tab>
@@ -44,8 +44,8 @@
           </p>
         </div>
         <div class="total-price btn-box flex">
-          <p @click="defaultOrder(item.order_id)">取消订单</p>
-          <van-button round type="info" size="small" color="#FF9900" class="pay-btn" @click="payFor(item.order_id)">去支付</van-button>
+          <p class="defaultOrder" @click="defaultOrder(item.order_id)">取消订单</p>
+          <van-button round type="info" size="small"  v-if="item.is_pay == 0" color="#FF9900" class="pay-btn" @click="payFor(item.order_id)">去支付</van-button>
         </div>
       </div>
       <div class="no-data" v-if="dataList.length == 0">
@@ -76,6 +76,7 @@ export default {
   data() {
     return {
       dataList: [],
+      minDate:new Date(2020,0, 1),
       tabList: [{
           id: 0,
           title: '注册用户'
@@ -125,8 +126,8 @@ export default {
       this.getData(1, this.value1, this.value2)
     },
 
-    orderDetail() {
-      this.$router.push('/orderDetail');
+    orderDetail(id) {
+      this.$router.push({name:'myOrderDetail',params:{id:id}});
     },
     // 获取列表
     getData(type, sTime, eTime) {
@@ -141,7 +142,7 @@ export default {
         message: '加载中...',
         forbidClick: true
       });
-      this.https.post('/profit/order', param, '&type=' + type + '&start_time=' + sTime + '&end_time=' + eTime).then(res => {
+      this.https.post('/profit/order', param, '&type=' + type + '&start_time=' + sTime + '&end_time=' + eTime+'&status=-1').then(res => {
         Toast.clear();
         if (res.code == 0) {
           that.dataList = res.data.list;
@@ -245,7 +246,9 @@ export default {
     background-color: #ffffff;
     margin-top: 20px;
   }
-
+.defaultOrder{
+  margin-top: 15px;
+}
   .filter {
     justify-content: space-around;
     height: 60px;

@@ -7,7 +7,7 @@
           <li v-for="(item, index) in categoriesDetailData" :key="index" class="list " @click="getDetail(item.id)">
             <div class="type-pic" >
               <!-- <img width="100%" height="100%"   v-lazy="item.url" alt="" /> -->
-              <img width="100%" height="100%"   src="../../../assets/item_large1.png" alt="" />
+              <img width="100%" height="100%"   :src="item.pic_url" alt="暂无图片" />
             </div>
             <p>{{ item.name }}</p>
           </li>
