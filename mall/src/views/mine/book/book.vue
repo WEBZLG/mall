@@ -4,18 +4,18 @@
     <div class="name-list">
       <van-panel title="我自己">
         <div class="flex">
-          <div class="head"><img width="100%" height="100%"   src="../../../assets/sort1.png" alt="" /></div>
+          <div class="head"><img width="100%" height="100%"   :src="userInfo.avatar_url" alt="" /></div>
           <div class="info">
             <div class="flex name-type">
-              <p class="name">Ada_Wang</p>
+              <p class="name">{{userInfo.nickname}}</p>
               <div class="flex">
                 <div class="vip-icon">
-                  <img width="100%" height="100%"   src="../../../assets/visitor.png" alt="" />
-                  <!--  <img width="100%" height="100%"   src="../../../assets/little_chief.png" alt="" />
-                    <img width="100%" height="100%"   src="../../../assets/large_chief.png" alt="">
-                    <img width="100%" height="100%"   src="../../../assets/member.png" alt=""> -->
+                  <img width="100%" height="100%"  v-if="userInfo.level==0" src="../../../assets/visitor.png" alt="" />
+                   <!-- <img width="100%" height="100%"   src="../../../assets/little_chief.png" alt="" /> -->
+                    <img width="100%" height="100%"  v-if="userInfo.level==1"  src="../../../assets/large_chief.png" alt="">
+                    <img width="100%" height="100%"   v-if="userInfo.level==2"  src="../../../assets/member.png" alt="">
                 </div>
-                <span class="type">注册用户</span>
+                <span class="type">{{userInfo.level_name}}</span>
               </div>
             </div>
             <div class="flex">
@@ -27,22 +27,22 @@
       </van-panel>
       <van-panel title="邀请人">
         <div class="flex">
-          <div class="head"><img width="100%" height="100%"   src="../../../assets/sort1.png" alt="" /></div>
+          <div class="head"><img width="100%" height="100%"   :src="parentInfo.avatar_url" alt="" /></div>
           <div class="info">
             <div class="flex name-type">
-              <p class="name">Ada_Wang</p>
+              <p class="name">{{parentInfo.nickname}}</p>
               <div class="flex">
                 <div class="vip-icon">
-                  <img width="100%" height="100%"   src="../../../assets/visitor.png" alt="" />
-                  <!--  <img width="100%" height="100%"   src="../../../assets/little_chief.png" alt="" />
-                    <img width="100%" height="100%"   src="../../../assets/large_chief.png" alt="">
-                    <img width="100%" height="100%"   src="../../../assets/member.png" alt=""> -->
+                  <img width="100%" height="100%" v-if="parentInfo.level==0"  src="../../../assets/visitor.png" alt="" />
+                   <img width="100%" height="100%"  v-if="parentInfo.level==1"  src="../../../assets/little_chief.png" alt="" />
+                    <!-- <img width="100%" height="100%"   src="../../../assets/large_chief.png" alt=""> -->
+                    <img width="100%" height="100%"   v-if="parentInfo.level==2" src="../../../assets/member.png" alt="">
                 </div>
-                <span class="type">注册用户</span>
+                <span class="type">{{parentInfo.level_name}}</span>
               </div>
             </div>
             <div class="flex">
-              <div class="wechat">微信号:666666</div>
+              <div class="wechat">微信号:{{parentInfo.wechat_code||'暂无'}}</div>
               <div class="active-icon"><img width="100%" height="100%"   src="../../../assets/copy2.png" alt="" /></div>
             </div>
           </div>
@@ -98,7 +98,9 @@ export default {
   name: 'book',
   data() {
     return {
-      dataList: ''
+      dataList: '',
+	  userInfo:'',
+    parentInfo:'',
     };
   },
   mounted() {
@@ -127,6 +129,8 @@ export default {
         Toast.clear();
         if (res.code == 0) {
           that.dataList = res.data.list;
+          that.userInfo = res.data.user_info;
+          that.parentInfo = res.data.parent_info;
         } else {
           Toast.fail(res.message);
         }

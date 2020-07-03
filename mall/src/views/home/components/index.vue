@@ -19,7 +19,7 @@
     <div class="vip" @click="goVip"><img width="100%" height="100%" src="../../../assets/ad1.png" alt="" /></div>
     <!-- 每日爆品 -->
     <div class="day-hot" v-for="(item, index) in dataList.tag_list" :key="index">
-      <h3 class="caption">{{ item.name }}</h3>
+      <h3 class="caption flex"><span>{{ item.name }}</span> <span @click="moreGoods(item.id)">更多商品</span></h3>
       <div class="vip"><img width="100%" height="100%" :src="item.show_pic" alt="暂无" /></div>
       <div class="goods-list">
         <div class="goods-item" v-for="(goods, idx) in item.goods_list" :key="idx">
@@ -127,7 +127,9 @@ export default {
         this.$router.push({ name: 'hotList', params: { title: e.name, gid: e.id } });
       }
     },
-
+    moreGoods(id){
+      this.$router.push({ name: 'goodsList', params: { gid:id } })
+    },
     // 分项
     share(goods) {
       console.log(goods);
@@ -162,7 +164,7 @@ export default {
           },
           {
             type: 'text',
-            text: '￥' + goods.price,
+            text: '嗨购价￥' + goods.price,
             css: {
               bottom: '142px',
               left: '30px',
@@ -175,7 +177,7 @@ export default {
           },
           {
             type: 'text',
-            text: '￥' + goods.original_price,
+            text: '市场价￥' + goods.original_price,
             css: {
               bottom: '103px',
               left: '30px',

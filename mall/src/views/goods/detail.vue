@@ -276,7 +276,7 @@ export default {
               },
               {
                 type: 'text',
-                text:'￥'+ res.data.price.toString(),
+                text:'嗨购价￥'+ res.data.price.toString(),
                 css: {
                   bottom: '142px',
                   left: '30px',
@@ -289,7 +289,7 @@ export default {
               },
               {
                 type: 'text',
-                text:'￥'+ res.data.original_price.toString(),
+                text:'市场价￥'+ res.data.original_price.toString(),
                 css: {
                   bottom: '103px',
                   left: '30px',
