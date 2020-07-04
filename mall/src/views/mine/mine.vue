@@ -21,11 +21,11 @@
             <p class="code">{{ dataList.mobile || '手机号码' }}</p>
             <div class="copy-icon"><img width="100%" height="100%" src="../../assets/edit.png" alt="" /></div>
           </div>
-          <button type="button" class="my-card" @click.stop="share(goods)">我的名片</button>
         </div>
       </div>
     </div>
     <div class="content">
+      <div class="my-card" @click.stop="share()"><img src="../../assets/card.png" width="100%" alt="" /></div>
       <van-cell-group>
         <van-cell value="" is-link to="/order">
           <template #title>
@@ -64,7 +64,7 @@
           </template>
         </van-cell>
       </van-cell-group>
-      <div class="vip" @click="goVip"><img width="100%" height="100%" src="../../assets/ad1.png" alt="" /></div>
+      <!-- <div class="vip" @click="goVip"><img width="100%" height="100%" src="../../assets/ad1.png" alt="" /></div> -->
       <!-- <van-button type="default" round plain size="large">退出登录</van-button> -->
     </div>
   </div>
@@ -75,6 +75,8 @@ import Vue from 'vue';
 import { Button } from 'vant';
 import { Cell, CellGroup } from 'vant';
 import { Toast } from 'vant';
+import { Overlay } from 'vant';
+Vue.use(Overlay);
 Vue.use(Toast);
 Vue.use(Button);
 Vue.use(Cell);
@@ -83,7 +85,11 @@ export default {
   name: '',
   data() {
     return {
-      dataList: ''
+      dataList: '',
+      show: false,
+      shareCode: '',
+      shareUrl: '',
+      painting: {}
     };
   },
   mounted() {
@@ -116,11 +122,52 @@ export default {
         }
       });
     },
+    success(src) {
+      // console.log(src);
+      this.shareCode = src;
+    },
+    fail(err) {
+      console.log('fail', err);
+    },
+    copyLink(className) {
+      let that = this;
+      let clipboard = new this.clipboard(className);
+      clipboard.on('success', function(e) {
+        Toast.success('复制成功');
+      });
+      clipboard.on('error', function() {
+        Toast.fail('复制失败');
+      });
+    },
+    // 长按事件
+    gotouchstart() {
+      let that = this;
+      clearTimeout(timeOutEvent); //清除定时器
+      timeOutEvent = 0;
+      timeOutEvent = setTimeout(function() {
+        //执行长按要执行的内容，
+        that.shareData();
+      }, 600); //这里设置定时
+    },
+    //手释放，如果在500毫秒内就释放，则取消长按事件，此时可以执行onclick应该执行的事件
+    gotouchend() {
+      clearTimeout(timeOutEvent);
+      if (timeOutEvent != 0) {
+        //这里写要执行的内容（尤如onclick事件）
+      }
+    },
+    //如果手指有移动，则取消所有事件，此时说明用户只是要移动而不是长按
+    gotouchmove() {
+      clearTimeout(timeOutEvent); //清除定时器
+      timeOutEvent = 0;
+    },
     // 分项
     share(goods) {
-      console.log(goods);
-      this.goodsInfo = goods;
-      this.shareUrl = this.$root.posterUrl + goods.id;
+      var that =this;
+
+      // 请求名片接口
+      
+      // 
       this.painting = {
         width: '630px',
         height: '806px',
@@ -128,7 +175,7 @@ export default {
         views: [
           {
             type: 'image',
-            url: goods.pic_url.toString(),
+            url: that.dataList.pic_url.toString(),
             css: {
               top: '0px',
               left: '0px',
@@ -150,7 +197,7 @@ export default {
           },
           {
             type: 'text',
-            text: '￥' + goods.price,
+            text: '嗨购价￥' + goods.price,
             css: {
               bottom: '142px',
               left: '30px',
@@ -163,7 +210,7 @@ export default {
           },
           {
             type: 'text',
-            text: '￥' + goods.original_price,
+            text: '市场价￥' + goods.original_price,
             css: {
               bottom: '103px',
               left: '30px',
@@ -204,7 +251,7 @@ export default {
         ]
       };
       this.show = true;
-    },
+    }
   }
 };
 </script>
@@ -218,19 +265,13 @@ export default {
   bottom: 100px;
   overflow: auto;
   background: #f8f8f8;
-  .my-card {
-    height: 40px;
-    line-height: 40px;
-    border-radius: 40px;
-    font-size: 22px;
-    color: #f34e81;
-    outline: none;
-    border: none;
-    background-color: #ffffff;
+   .my-card{
     position: absolute;
-    right: 0;
-    top: 68px;
+    left: 30px;
+    right: 30px;
+    top: 280px;
   }
+
   .top-bg {
     position: relative;
     height: 340px;
@@ -306,7 +347,7 @@ export default {
   .van-cell-group {
     border-radius: 10px;
     overflow: hidden;
-    margin-top: -56px;
+    margin-top: 170px;
   }
 
   .vip {

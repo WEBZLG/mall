@@ -11,6 +11,7 @@ const Cart = () => import('@/views/cart/cart.vue');
 const CartOrder = () => import('@/views/cart/orderDetail.vue');
 const Mine = () => import('@/views/mine/mine.vue');
 const Detail = () => import('@/views/goods/detail.vue');
+const ShareDetail = () => import('@/views/shareDetail/detail.vue');
 const GoodsList = () => import('@/views/goods/goodsList.vue');
 const Book = () => import('@/views/mine/book/book.vue');
 const Level = () => import('@/views/mine/book/level.vue');
@@ -19,6 +20,9 @@ const Add = () => import('@/views/mine/address/add.vue');
 const Edit = () => import('@/views/mine/address/edit.vue');
 const Collect = () => import('@/views/mine/collect/collect.vue');
 const Notice = () => import('@/views/home/notice/notice.vue');
+const NoticeDetail = () => import('@/views/home/notice/detail.vue');
+const CouponList = () => import('@/views/home/coupon/list.vue');
+const CouponDetail = () => import('@/views/home/coupon/detail.vue');
 const HotList = () => import('@/views/home/hotGoods/hotList.vue');
 const Group = () => import('@/views/home/group/group.vue');
 const Fans = () => import('@/views/member/fans/fans.vue');
@@ -61,9 +65,24 @@ export default new Router({
       component: Detail
     },
     {
+      path: '/shareDetail',
+      name: 'shareDetail',
+      component: ShareDetail
+    },
+    {
       path: '/book',
       name: 'book',
       component: Book,
+    },
+    {
+      path: '/couponList',
+      name: 'couponList',
+      component: CouponList,
+    },
+    {
+      path: '/couponDetail',
+      name: 'couponDetail',
+      component: CouponDetail,
     },
     {
       path: '/level',
@@ -114,6 +133,11 @@ export default new Router({
       path: '/notice',
       name: 'notice',
       component: Notice,
+    },
+    {
+      path: '/noticeDetail',
+      name: 'noticeDetail',
+      component: NoticeDetail,
     },
     {
       path: '/order',

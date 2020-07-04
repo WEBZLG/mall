@@ -2,25 +2,25 @@
   <div class="order-detail">
     <van-nav-bar title="订单详情" left-arrow @click-left="onClickLeft" />
     <div class="mid-view">
-      <div class="detail-bg"><img width="100%" height="100%"   src="../../../assets/ddxq_bg.png" alt="" /></div>
+      <div class="detail-bg"><img width="100%" height="100%" src="../../../assets/ddxq_bg.png" alt="" /></div>
       <div class="content">
         <div class="order-status" v-if="order_id == ''">
-          <span class="detail-icon"><img width="100%" height="100%"   src="../../../assets/dfk.png" alt="" /></span>
+          <span class="detail-icon"><img width="100%" height="100%" src="../../../assets/dfk.png" alt="" /></span>
           <p class="status">订单预览</p>
         </div>
         <div class="order-status" v-if="order_id != ''">
-          <span class="detail-icon"><img width="100%" height="100%"   src="../../../assets/dfk.png" alt="" /></span>
+          <span class="detail-icon"><img width="100%" height="100%" src="../../../assets/dfk.png" alt="" /></span>
           <p class="status">待付款</p>
         </div>
-        <div class="order-status" v-if="dataList.is_pay==1">
-          <span class="detail-icon"><img width="100%" height="100%"   src="../../../assets/yfk.png" alt="" /></span>
+        <div class="order-status" v-if="dataList.is_pay == 1">
+          <span class="detail-icon"><img width="100%" height="100%" src="../../../assets/yfk.png" alt="" /></span>
           <p class="status">已付款</p>
         </div>
-        <div class="order-status" v-if="dataList.is_confirm==1">
-          <span class="detail-icon"><img width="100%" height="100%"   src="../../../assets/ywc.png" alt="" /></span>
+        <div class="order-status" v-if="dataList.is_confirm == 1">
+          <span class="detail-icon"><img width="100%" height="100%" src="../../../assets/ywc.png" alt="" /></span>
           <p class="status">已完成</p>
         </div>
-<!--        <div class="order-status">
+        <!--        <div class="order-status">
           <span class="detail-icon"><img width="100%" height="100%"   src="../../../assets/wx.png" alt="" /></span>
           <p class="status">无效</p>
         </div> -->
@@ -32,8 +32,8 @@
           <p class="address">{{ dataList.address.province }}{{ dataList.address.city }}{{ dataList.address.district }}{{ dataList.address.detail }}</p>
         </div>
         <div class="goods-item">
-          <div class="flex goods-child" v-for="(item,index) in dataList.list" :key="index">
-            <div class="goods-pic"><img width="100%" height="100%"   :src="item.goods_pic" alt="暂无" /></div>
+          <div class="flex goods-child" v-for="(item, index) in dataList.list" :key="index">
+            <div class="goods-pic"><img width="100%" height="100%" :src="item.goods_pic" alt="暂无" /></div>
             <div class="goods-desc">
               <p class="goods-title">{{ item.goods_name }}</p>
               <div class="flex">
@@ -47,18 +47,39 @@
           <p>快递</p>
           <p>普通快递（免费）</p>
         </div>
-        <!--        <div class="module flex">
+<!--        <div class="module flex"  @click="showAddress">
           <p>优惠券</p>
-          <p>20元优惠券</p>
+          <p>暂无优惠券</p>
         </div> -->
+        <van-action-sheet v-model="showAddr">
+          <div class="content">
+            <div v-for="item in dataList.coupon_list" :key="item.id" @click="chooseAddres(item)" class="addrItem">
+              <div class="flex item-fans">
+                <div class="info">
+                  <div class="flex name-type">
+                    <div>
+                      <p class="name">
+                        <span>{{ item.name }}</span>
+                        <span>{{ item.mobile }}</span>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex">
+                    <div class="wechat">{{ item.address }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </van-action-sheet>
         <div class="module total">
           <div class="flex">
             <p>商品总额</p>
             <p>￥{{ totalPrice }}</p>
           </div>
-          <!--      <div class="flex">
+<!--               <div class="flex">
             <p>优惠券</p>
-            <p>-￥20</p>
+            <p>￥-20</p>
           </div> -->
           <div class="flex">
             <p>运费</p>
@@ -71,9 +92,10 @@
           <span class="size">￥</span>
           {{ totalPrice }}
         </p>
+        <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="dataList.is_pay == 1 && dataList.is_send == 0" @click="goHome">返回首页</van-button>
         <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="order_id == ''" @click="submitOrder">提交订单</van-button>
         <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="order_id != ''" @click="payFor">去支付</van-button>
-        <van-button round type="info" size="small" color="#FF9900" class="pay-btn"  v-if="dataList.is_send==1">查看物流</van-button>
+        <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="dataList.is_send == 1">查看物流</van-button>
       </div>
     </div>
   </div>
@@ -85,7 +107,13 @@ import { NavBar } from 'vant';
 import { Button } from 'vant';
 import { Toast } from 'vant';
 import wx from 'weixin-jsapi';
-
+import { GoodsAction, GoodsActionIcon, GoodsActionButton } from 'vant';
+import { Dialog } from 'vant';
+Vue.use(Dialog);
+Vue.use(Toast);
+Vue.use(GoodsAction);
+Vue.use(GoodsActionButton);
+Vue.use(GoodsActionIcon);
 Vue.use(Toast);
 Vue.use(Button);
 Vue.use(NavBar);
@@ -95,7 +123,8 @@ export default {
     return {
       dataList: '',
       totalPrice: '',
-      order_id: ''
+      order_id: '',
+      showAddr: false
     };
   },
   mounted() {
@@ -108,6 +137,13 @@ export default {
     console.log(dataList);
   },
   methods: {
+    showAddress() {
+      var that = this;
+      this.showAddr = true;
+    },
+    goHome() {
+      this.$router.replace({ name: 'tabbar' });
+    },
     onClickLeft() {
       this.$router.back();
     },
@@ -160,11 +196,11 @@ export default {
         message: '加载中...',
         forbidClick: true
       });
-      this.https.get('/order/detail', param, '&order_id='+that.order_id,).then(res => {
+      this.https.get('/order/detail', param, '&order_id=' + that.order_id).then(res => {
         console.log(res);
         Toast.clear();
         if (res.code == 0) {
-          that.$router.push({name:'payOrderDetail',params:{data:res.data}})
+          that.$router.push({ name: 'payOrderDetail', params: { data: res.data } });
         } else {
           Toast.fail(res.msg);
         }
@@ -216,7 +252,7 @@ export default {
         },
         function(res) {
           if (res.err_msg == 'get_brand_wcpay_request:ok') {
-            that.orderDetail()
+            that.orderDetail();
             // 使用以上方式判断前端返回,微信团队郑重提示：
             //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
           }

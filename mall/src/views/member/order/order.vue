@@ -63,6 +63,7 @@ export default {
     if(localStorage.getItem('activeName')){
       let name=localStorage.getItem('activeName');
       this.activeName = name;
+      localStorage.setItem('activeName','')
     }
   },
   methods: {

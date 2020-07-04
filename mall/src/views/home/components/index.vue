@@ -19,7 +19,7 @@
     <div class="vip" @click="goVip"><img width="100%" height="100%" src="../../../assets/ad1.png" alt="" /></div>
     <!-- 每日爆品 -->
     <div class="day-hot" v-for="(item, index) in dataList.tag_list" :key="index">
-      <h3 class="caption flex"><span>{{ item.name }}</span> <span @click="moreGoods(item.id)">更多商品</span></h3>
+      <h3 class="caption flex"><span>{{ item.name }}</span> <span @click="moreGoods(item.id)" class="brokerage">更多商品</span></h3>
       <div class="vip"><img width="100%" height="100%" :src="item.show_pic" alt="暂无" /></div>
       <div class="goods-list">
         <div class="goods-item" v-for="(goods, idx) in item.goods_list" :key="idx">
@@ -27,19 +27,19 @@
           <div class="goods-desc">
             <p class="goods-title" @click="getDetail(goods.id)">{{ goods.name }}</p>
             <div class="good-price flex">
-              <p class="old-price">￥{{ goods.original_price }}</p>
+              <p class="old-price">市场价￥{{ goods.original_price }}</p>
               <p class="brokerage">
                 <span class="good-icon"><img  width="100%" height="100%" src="../../../assets/money.png" alt="" /></span>
-                推广佣金￥{{ goods.virtual_sales }}
+                推广佣金￥{{ goods.share_price }}
               </p>
             </div>
             <div class="goods-share flex">
               <p class="new-price">
-                <span class="size">￥</span>
+                <span class="size">嗨购价￥</span>
                 {{ goods.price }}
               </p>
               <div class="btn-bot">
-                <button type="button" class="sm-btn hotCopy" data-clipboard-action="copy" :data-clipboard-text="goods.name" @click="copyLink('.hotCopy')">复制文字</button>
+                <button type="button" class="sm-btn hotCopy" data-clipboard-action="copy" :data-clipboard-text="goods.name" @click="copyLink('.hotCopy')">复制</button>
                 <button type="button" class="sm-btn" @click.stop="share(goods)">分享</button>
               </div>
             </div>
@@ -122,7 +122,7 @@ export default {
       if (e.id == 61) {
         this.$router.push({ name: 'group', params: { title: e.name, gid: e.id } });
       } else if (e.id == 64) {
-        this.$router.push({ name: 'group', params: { title: e.name, gid: e.id } });
+        this.$router.push({ name: 'couponList'});
       } else {
         this.$router.push({ name: 'hotList', params: { title: e.name, gid: e.id } });
       }

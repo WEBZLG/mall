@@ -13,10 +13,10 @@
       <div class="handle flex">
         <div class="price">
           <p class="new-price">
-            <span class="size">嗨购价￥</span>
+            <span class="size">￥</span>
             {{ detailData.price }}
           </p>
-          <p class="old-price">市场价￥{{ detailData.original_price }}</p>
+          <p class="old-price">￥{{ detailData.original_price }}</p>
         </div>
         <div class="btn-box">
           <div>
@@ -49,7 +49,7 @@
               <h3>{{ item.attr_group_name }}</h3>
               <div>
                 <div class="row" v-for="(attr, idx) in item.attr_list" :key="attr.attr_id">
-                  <input type="radio" :name="index" :id="attr.attr_id" value="" :checked="attr.attr_name == '默认' ? true : false" />
+                  <input type="radio" :name="index" :id="attr.attr_id" value="" :checked="idx == 0 ? true : false" />
                   <label :for="attr.attr_id" @click="choose(attr, index, item)">{{ attr.attr_name }}</label>
                 </div>
               </div>
@@ -141,25 +141,138 @@ export default {
       addressId: '',
       show: false,
       painting: {},
-      shareCode: ''
+      shareCode: '',
+      code:'',
+      userInfo: '',
+      invitationCode:''
     };
   },
   mounted() {
-    let id = this.$route.params.gid;
-    let tid = this.$route.params.tid;
-    localStorage.setItem('listTypeId', tid);
-    if (id == undefined) {
-      let id = localStorage.getItem('goodsId');
-      this.goodsId = id;
-      this.getData(id);
-      this.getAddressData();
-    } else {
-      this.goodsId = id;
-      this.getData(id);
-      this.getAddressData();
+    if (this.$root.token) {
+      this.getUserInfo();
+      this.getUserInfoVip();
+    }else{
+      this.getCode();
     }
+    // let id = this.$route.params.gid;
+
+    // if (id == undefined) {
+    //   let id = localStorage.getItem('goodsId');
+    //   this.goodsId = id;
+    //   this.getData(id);
+    //   this.getAddressData();
+    // } else {
+    //   this.goodsId = id;
+    //   this.getData(id);
+    //   this.getAddressData();
+    // }
   },
   methods: {
+    getCode() {
+      // 非静默授权，第一次有弹框
+      this.code = '';
+      var local = window.location.href; // 获取页面url
+      var appid = 'wx7ca5f43f16c9ece4';
+      this.code = this.getUrlCode().code; // 截取code
+      this.goodsId = this.getUrlCode().goods_id; // 截取id
+      this.invitationCode = this.getUrlCode().invitation_code; // 截取邀请code
+      if (this.code == null || this.code === '') {
+        // 如果没有code，则去请求
+        window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${encodeURIComponent(
+          local
+        )}&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`;
+      } else {
+        // 你自己的业务逻辑
+        this.login(this.code,this.invitationCode);
+      }
+    },
+    getUrlCode() {
+      // 截取url中的code方法
+      var url = location.search;
+      this.winUrl = url;
+      var theRequest = new Object();
+      if (url.indexOf('?') != -1) {
+        var str = url.substr(1);
+        var strs = str.split('&');
+        for (var i = 0; i < strs.length; i++) {
+          theRequest[strs[i].split('=')[0]] = strs[i].split('=')[1];
+        }
+      }
+      return theRequest;
+    },
+    login(code,invitationCode) {
+      var that = this;
+      let param = {
+        id: 1,
+        platform: 'wx',
+        token: ''
+      };
+      Toast.loading({
+        duration: 0,
+        message: '加载中...',
+        forbidClick: true
+      });
+      this.https.post('/passport/login', param, '&code=' + code+'&invitation_code='+invitationCode).then(res => {
+        console.log(res);
+        Toast.clear();
+        if (res.code == 0) {
+          console.log(res.data);
+          this.$root.token = res.data.access_token;
+          this.$root.posterUrl = 'https://www.shinecrystal.cn/api/share/goods-qrcode?store_id=1&_platform=wx&access_token=' + res.data.access_token + '&goods_id=';
+          console.log(this.$root.token);
+          this.getUserInfo();
+          this.getUserInfoVip();
+          this.getData(that.goodsId)
+        } else {
+          Toast.fail(res.message);
+        }
+      });
+    },
+    getUserInfo() {
+      var that = this;
+      let param = {
+        id: 1,
+        platform: 'wx',
+        token: this.$root.token
+      };
+      Toast.loading({
+        duration: 0,
+        message: '加载中...',
+        forbidClick: true
+      });
+      this.https.get('/user/member', param, '').then(res => {
+        console.log(res);
+        Toast.clear();
+        if (res.code == 0) {
+          that.userInfo = res.data.user_info;
+        } else {
+          Toast.fail(res.msg);
+        }
+      });
+    },
+    getUserInfoVip() {
+      var that = this;
+      let param = {
+        id: 1,
+        platform: 'wx',
+        token: this.$root.token
+      };
+      Toast.loading({
+        duration: 0,
+        message: '加载中...',
+        forbidClick: true
+      });
+      this.https.get('/user/index', param, '').then(res => {
+        console.log(res);
+        Toast.clear();
+        if (res.code == 0) {
+          that.userInfo = res.data.user_info;
+          that.$root.userInfo = res.data.user_info;
+        } else {
+          Toast.fail(res.msg);
+        }
+      });
+    },
     success(src) {
       // console.log(src);
       this.shareCode = src;
@@ -179,7 +292,7 @@ export default {
       this.$router.replace('/tabbar/cart');
     },
     onClickLeft() {
-      this.$router.back();
+      this.$router.replace({name:'tabbar'});
     },
 
     showSku() {
@@ -210,7 +323,7 @@ export default {
       this.attr[ind].attr_group_name = item.attr_group_name;
       this.attr[ind].attr_id = index.attr_id;
       this.attr[ind].attr_name = index.attr_name;
-      this.chooseText = '规格：' + this.attr[0].attr_name+this.attr[1].attr_name;
+      this.chooseText = '规格：' + this.attr[ind].attr_name;
     },
     // 复制
     copyLink(className) {
@@ -250,13 +363,12 @@ export default {
             };
             this.attr.push(obj);
           }
-          if(res.data.attr_group_list[0].attr_list[0].attr_name=="默认"){
-            this.attr[0].attr_group_id = res.data.attr_group_list[0].attr_group_id;
-            this.attr[0].attr_group_name = res.data.attr_group_list[0].attr_group_name;
-            this.attr[0].attr_id = res.data.attr_group_list[0].attr_list[0].attr_id;
-            this.attr[0].attr_name = res.data.attr_group_list[0].attr_list[0].attr_name;
-            this.chooseText = '规格：' + res.data.attr_group_list[0].attr_list[0].attr_name;
-          }
+          console.log(res.data);
+          this.attr[0].attr_group_id = res.data.attr_group_list[0].attr_group_id;
+          this.attr[0].attr_group_name = res.data.attr_group_list[0].attr_group_name;
+          this.attr[0].attr_id = res.data.attr_group_list[0].attr_list[0].attr_id;
+          this.attr[0].attr_name = res.data.attr_group_list[0].attr_list[0].attr_name;
+          this.chooseText = '规格：' + res.data.attr_group_list[0].attr_list[0].attr_name;
           const regex = new RegExp('<img', 'gi');
           that.detailData.detail = that.detailData.detail.replace(regex, `<img width='100%'`);
           this.painting = {
@@ -459,10 +571,6 @@ export default {
       var that = this;
       if (that.addressId == '') {
         Toast('请选择收货地址');
-        return false;
-      }
-      if(this.chooseText=='请选择规格'){
-        Toast('请选择规格');
         return false;
       }
       let param = {
