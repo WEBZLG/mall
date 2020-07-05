@@ -47,6 +47,7 @@ export default {
   },
   data() {
     return {
+      invitationCode:'',
       userInfo: '',
       currIndex: 0,
       active: 0,
@@ -86,10 +87,12 @@ export default {
   },
 
   mounted() {
-    console.log(this.$root.token);
+
     if (this.$root.token) {
       this.getUserInfo();
       this.getUserInfoVip();
+      this.invitationCode = this.getUrlCode().invitation_code; // 截取邀请码
+          console.log(this.invitationCode);
     }else{
       this.getCode();
     }
@@ -106,6 +109,7 @@ export default {
       var local = window.location.href; // 获取页面url
       var appid = 'wx7ca5f43f16c9ece4';
       this.code = this.getUrlCode().code; // 截取code
+      this.invitationCode = this.getUrlCode().invitation_code; // 截取邀请码
       if (this.code == null || this.code === '') {
         // 如果没有code，则去请求
         window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${encodeURIComponent(
@@ -113,7 +117,7 @@ export default {
         )}&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`;
       } else {
         // 你自己的业务逻辑
-        this.login(this.code);
+        this.login(this.code,this.invitationCode);
       }
     },
     getUrlCode() {
@@ -130,7 +134,7 @@ export default {
       }
       return theRequest;
     },
-    login(code) {
+    login(code,invitationCode) {
       var that = this;
       let param = {
         id: 1,
@@ -142,13 +146,13 @@ export default {
         message: '加载中...',
         forbidClick: true
       });
-      this.https.post('/passport/login', param, '&code=' + code).then(res => {
+      this.https.post('/passport/login', param, '&code=' + code+ '&invitation_code=' + invitationCode).then(res => {
         console.log(res);
         Toast.clear();
         if (res.code == 0) {
           console.log(res.data);
           this.$root.token = res.data.access_token;
-          this.$root.posterUrl = 'https://www.shinecrystal.cn/api/share/goods?store_id=1&_platform=wx&access_token=' + res.data.access_token + '&goods_id=';
+          this.$root.posterUrl = 'https://www.shinecrystal.cn/api/share/goods-qrcode?store_id=1&_platform=wx&access_token=' + res.data.access_token + '&goods_id=';
           console.log(this.$root.token);
           this.getUserInfo();
           this.getUserInfoVip();

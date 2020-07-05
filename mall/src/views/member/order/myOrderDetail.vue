@@ -71,8 +71,13 @@
           <span class="size">￥</span>
           {{ dataList.pay_price }}
         </p>
-        <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="dataList.is_pay== 0" @click="payFor">去支付</van-button>
-        <van-button round type="info" size="small" color="#FF9900" class="pay-btn"  v-if="dataList.is_send==1">查看物流</van-button>
+<!--        <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="dataList.is_pay== 0" @click="payFor">去支付</van-button>
+        <van-button round type="info" size="small" color="#FF9900" class="pay-btn"  v-if="dataList.is_send==1">查看物流</van-button> -->
+
+        <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="dataList.is_pay == 1 && dataList.is_send == 0" @click="goHome">返回首页</van-button>
+        <!-- <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="order_id == ''" @click="submitOrder">提交订单</van-button> -->
+        <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="order_id != ''" @click="payFor">去支付</van-button>
+        <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="dataList.is_send == 1" @click="express">查看物流</van-button>
       </div>
     </div>
   </div>
@@ -106,10 +111,17 @@ export default {
     // localStorage.setItem('goodsId', dataList.goods_info.goods_id);
     // console.log(dataList);
     var order_id = this.$route.params.id;
+    this.order_id = order_id;
     this.orderDetail(order_id)
     localStorage.setItem('activeName', 'b');
   },
   methods: {
+    express(){
+      this.$router.push({name:'express',params:{orderId:this.order_id}})
+    },
+    goHome() {
+      this.$router.replace({ path: '/' });
+    },
     onClickLeft() {
       this.$router.back();
     },
@@ -176,8 +188,6 @@ export default {
     // 支付
     payFor() {
       var that = this;
-                  that.orderDetail()
-                  return false;
       let param = {
         id: 1,
         platform: 'wx',

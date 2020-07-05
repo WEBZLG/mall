@@ -1,14 +1,8 @@
 <template>
   <div class="notice">
-    <van-nav-bar title="通知" left-arrow @click-left="onClickLeft" />
+    <van-nav-bar title="通知详情" left-arrow @click-left="onClickLeft" />
     <div class="list-box">
-      <div class="not-item" v-for="(item,index) in dataList" :key="index">
-        <p class="title">
-          <!-- <em>[公告]</em> -->
-          {{item.title}}
-        </p>
-        <!-- <p class="descript" v-html="item.content"></p> -->
-      </div>
+        <p class="content" v-html="content"></p>
     </div>
   </div>
 </template>
@@ -25,69 +19,30 @@ export default {
   name: 'notice',
   data() {
     return {
-      dataList: ''
+      content: ''
     };
   },
   mounted() {
-    this.getData();
+     let data = this.$route.params.data;
+     const regex = new RegExp('<img', 'gi');
+     data = data.replace(regex, `<img width='100%'`);
+     this.content = data;
   },
   methods: {
     onClickLeft() {
       this.$router.back();
-    },
-    getData() {
-      var that = this;
-      let param = {
-        id: 1,
-        platform: 'wx',
-        token: this.$root.token
-      };
-      Toast.loading({
-        duration: 0,
-        message: '加载中...',
-        forbidClick: true
-      });
-      this.https.get('/default/article-list', param, '&cat_id=2').then(res => {
-        console.log(res);
-        Toast.clear();
-        if (res.code == 0) {
-          that.dataList = res.data.list;
-        } else {
-          Toast.fail(res.message);
-        }
-      });
     }
   }
 };
 </script>
 
 <style lang="less" scoped>
-.notice {
+.list-box {
   position: absolute;
-  top: 0;
+  top: 92px;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #f8f8f8;
-  .not-item {
-    padding: 30px;
-    border-radius: 10px;
-    background-color: #ffffff;
-    margin: 30px;
-    line-height: 50px;
-    font-size: 28px;
-    .title {
-      font-weight: bold;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .descript {
-      color: #999999;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-  }
+  overflow: auto;
 }
 </style>

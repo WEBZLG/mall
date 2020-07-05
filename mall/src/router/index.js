@@ -19,6 +19,7 @@ const Address = () => import('@/views/mine/address/address.vue');
 const Add = () => import('@/views/mine/address/add.vue');
 const Edit = () => import('@/views/mine/address/edit.vue');
 const Collect = () => import('@/views/mine/collect/collect.vue');
+const BindPhone = () => import('@/views/mine/bindPhone/bind.vue');
 const Notice = () => import('@/views/home/notice/notice.vue');
 const NoticeDetail = () => import('@/views/home/notice/detail.vue');
 const CouponList = () => import('@/views/home/coupon/list.vue');
@@ -34,7 +35,9 @@ const DepositList = () => import('@/views/member/deposit/depositList.vue');
 const OrderDetail = () => import('@/views/member/order/orderDetail.vue');
 const PayOrderDetail = () => import('@/views/member/order/payOrderDetail.vue');
 const MyOrderDetail = () => import('@/views/member/order/myOrderDetail.vue');
+const Express = () => import('@/views/member/order/express.vue');
 const Vip = () => import('@/views/member/vip/vip.vue');
+const About = () => import('@/views/about/about.vue');
 // 解决多次点击重复路由报错
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
@@ -60,9 +63,24 @@ export default new Router({
       redirect: 'tabbar'
     },
     {
+      path: '/express',
+      name: 'express',
+      component: Express
+    },
+    {
+      path: '/bindPhone',
+      name: 'bindPhone',
+      component: BindPhone
+    },
+    {
       path: '/detail',
       name: 'detail',
       component: Detail
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: About
     },
     {
       path: '/shareDetail',

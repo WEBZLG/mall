@@ -95,7 +95,7 @@
         <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="dataList.is_pay == 1 && dataList.is_send == 0" @click="goHome">返回首页</van-button>
         <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="order_id == ''" @click="submitOrder">提交订单</van-button>
         <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="order_id != ''" @click="payFor">去支付</van-button>
-        <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="dataList.is_send == 1">查看物流</van-button>
+        <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="dataList.is_send == 1" @click="express">查看物流</van-button>
       </div>
     </div>
   </div>
@@ -103,12 +103,8 @@
 
 <script>
 import Vue from 'vue';
-import { NavBar } from 'vant';
-import { Button } from 'vant';
-import { Toast } from 'vant';
 import wx from 'weixin-jsapi';
-import { GoodsAction, GoodsActionIcon, GoodsActionButton } from 'vant';
-import { Dialog } from 'vant';
+import { GoodsAction, GoodsActionIcon, GoodsActionButton,NavBar,Button,Toast,Dialog } from 'vant';
 Vue.use(Dialog);
 Vue.use(Toast);
 Vue.use(GoodsAction);
@@ -137,12 +133,15 @@ export default {
     console.log(dataList);
   },
   methods: {
+    express(){
+      this.$router.push({name:'express',params:{orderId:this.order_id}})
+    },
     showAddress() {
       var that = this;
       this.showAddr = true;
     },
     goHome() {
-      this.$router.replace({ name: 'tabbar' });
+      this.$router.replace({ name: '/' });
     },
     onClickLeft() {
       this.$router.back();

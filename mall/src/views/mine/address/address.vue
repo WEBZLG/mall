@@ -157,7 +157,13 @@ export default {
   right: 0;
   bottom: 140px;
   background-color: #f8f8f8;
-
+  .mid-view{
+    position: absolute;
+        top: 96px;
+        left: 0;
+        right: 0;
+        bottom: 0px;
+  }
   .default {
     width: 60px;
     height: 28px;

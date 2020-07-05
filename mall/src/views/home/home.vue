@@ -66,7 +66,7 @@
       setTimeout(function(){
         that.getData();
 
-      },500)
+      },300)
         // this.getUserInfo();
     },
 

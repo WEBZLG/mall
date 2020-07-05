@@ -129,7 +129,12 @@ export default {
   bottom: 0;
   background-color: #f8f8f8;
   .mid-view {
-    margin: 30px 0;
+    position: absolute;
+    top: 120px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
     background-color: #ffffff;
     padding: 30px 0;
     .cart-item {

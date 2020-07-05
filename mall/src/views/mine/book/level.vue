@@ -9,17 +9,17 @@
             <p class="name">{{item.nickname}}</p>
             <div class="flex">
               <div class="vip-icon">
-                <img width="100%" height="100%"   src="../../../assets/visitor.png" alt="" />
-                <!--  <img width="100%" height="100%"   src="../../../assets/little_chief.png" alt="" />
-                    <img width="100%" height="100%"   src="../../../assets/large_chief.png" alt="">
-                    <img width="100%" height="100%"   src="../../../assets/member.png" alt=""> -->
+                <img width="100%" height="100%" v-if="item.level==0" src="../../../assets/visitor.png" alt="" />
+                <img width="100%" height="100%" v-if="item.level==1" src="../../../assets/little_chief.png" alt="" />
+                <!-- <img width="100%" height="100%"   src="../../../assets/large_chief.png" alt=""> -->
+                <img width="100%" height="100%" v-if="item.level==2" src="../../../assets/member.png" alt="">
               </div>
               <span class="type">{{item.level_name}}</span>
             </div>
           </div>
           <div class="flex">
-            <div class="wechat">微信号:请填写微信号</div>
-            <div class="active-icon"><img width="100%" height="100%"   src="../../../assets/copy2.png" alt="" /></div>
+            <div class="wechat">微信号:{{item.wechat_code}}</div>
+            <div class="active-icon Copy" data-clipboard-action="copy" :data-clipboard-text="item.wechat_code" @click="copyLink('.Copy')"><img width="100%" height="100%"   src="../../../assets/copy2.png" alt="" /></div>
           </div>
         </div>
       </div>
@@ -45,6 +45,16 @@ export default {
     console.log(childList)
   },
   methods: {
+    copyLink(className) {
+      let that = this;
+      let clipboard = new this.clipboard(className);
+      clipboard.on('success', function(e) {
+        Toast.success('复制成功');
+      });
+      clipboard.on('error', function() {
+        Toast.fail('复制失败');
+      });
+    },
     onClickLeft() {
       this.$router.back();
     }

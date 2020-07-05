@@ -135,6 +135,7 @@ export default {
       console.log(goods);
       this.goodsInfo = goods;
       this.shareUrl = this.$root.posterUrl + goods.id;
+      console.log(this.shareUrl)
       this.painting = {
         width: '630px',
         height: '806px',
@@ -202,13 +203,11 @@ export default {
             }
           },
           {
-            type: 'qrcode',
-            content: this.$root.posterUrl + goods.id,
+            type: 'image',
+            url: this.$root.posterUrl + goods.id,
             css: {
               bottom: '104px',
               right: '30px',
-              color: '#000',
-              background: '#fff',
               width: '82px',
               height: '82px',
               borderWidth: '10px',
