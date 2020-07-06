@@ -75,7 +75,7 @@
           if (res.code == 0) {
             that.dataList = res.data;
           } else {
-            Toast.fail(res.message);
+            Toast.fail(res.msg);
           }
         });
       }

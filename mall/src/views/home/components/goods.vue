@@ -20,7 +20,7 @@
               {{item.price}}
             </p>
             <div class="btn-bot">
-              <button type="button" class="sm-btn hotCopy" data-clipboard-action="copy" :data-clipboard-text="item.name" @click="copyLink('.hotCopy')">复制文字</button>
+              <button type="button" class="sm-btn hotCopy" data-clipboard-action="copy" :data-clipboard-text="item.name" @click="copyLink('.hotCopy')">复制</button>
               <button type="button" class="sm-btn" @click.stop="share(item)">分享</button>
             </div>
           </div>
@@ -225,7 +225,7 @@ export default {
           console.log(that.dataList)
           that.dataList = res.data.list;
         } else {
-          Toast.fail(res.message);
+          Toast.fail(res.msg);
         }
       });
     },

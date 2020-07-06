@@ -1,22 +1,29 @@
 <template>
-  <div class="recommend">
-    <van-nav-bar :title="title" left-arrow @click-left="onClickLeft" />
+  <div class="searchList">
+    <van-nav-bar title="商品搜索" left-arrow @click-left="onClickLeft" />
+    <div class="search-box">
+      <van-search v-model="value" shape="round" show-action placeholder="请输入搜索关键词">
+        <template #action>
+          <div @click="getData">搜索</div>
+        </template>
+      </van-search>
+    </div>
     <div class="flex content">
       <div class="recommend-item" v-for="item in dataList" :key="item.id" @click="getDetail(item.id)">
-        <div class="recommend-pic"><img width="100%" height="100%"   :src="item.pic_url" alt="" /></div>
+        <div class="recommend-pic"><img width="100%" height="100%" :src="item.pic_url" alt="" /></div>
         <div class="recommend-text">
-          <p class="title">{{item.name}}</p>
+          <p class="title">{{ item.name }}</p>
           <div class="flex">
-            <p class="old-price">￥{{item.original_price}}</p>
+            <p class="old-price">￥{{ item.original_price }}</p>
             <p class="new-price">
               <span class="size">￥</span>
-              {{item.price}}
+              {{ item.price }}
             </p>
           </div>
         </div>
       </div>
       <div class="no-data" v-if="dataList.length == 0">
-        <div class="no-icon"><img width="100%" height="100%"   src="../../../assets/nodata.png" alt="" /></div>
+        <div class="no-icon"><img width="100%" height="100%" src="../../assets/nodata.png" alt="" /></div>
         <p class="no-text">暂无数据</p>
       </div>
     </div>
@@ -25,45 +32,41 @@
 
 <script>
 import Vue from 'vue';
-import { Toast } from 'vant';
-import { NavBar } from 'vant';
+import { NavBar, Search, Toast } from 'vant';
+Vue.use(Search);
 Vue.use(NavBar);
 Vue.use(Toast);
 export default {
   name: 'goodsList',
   data() {
     return {
-      dataList:[],
-      tid:'',
-      title:''
+      dataList: [],
+      tid: '',
+      value: ''
     };
   },
   mounted() {
-    var id =  this.$route.params.gid;
-    var title =  this.$route.params.title;
-    
-    this.tid = id;
-    this.title = title;
-    console.log(id)
-    if(id==undefined){
-    let id = localStorage.getItem('listTypeId')
-    this.tid = id;
-    console.log(id)
-     this.getData(id);
-    }else{
-      this.getData(id);
+    let keyword = localStorage.getItem('keyword');
+    console.log(keyword)
+    if (keyword=='') {
+
+    } else {
+      this.value = keyword;
+      this.getData();
     }
   },
-  methods:{
+  methods: {
     onClickLeft() {
+      localStorage.setItem('keyword','');
       this.$router.back();
     },
     getDetail(e) {
-      this.$router.push({ name: 'detail',params: {gid: e,tid:this.tid}});
+      this.$router.push({ name: 'detail', params: { gid: e, tid: this.tid } });
     },
     // 获取列表
-    getData(id) {
+    getData() {
       var that = this;
+      localStorage.setItem('keyword',this.value);
       let param = {
         id: 1,
         platform: 'wx',
@@ -74,7 +77,7 @@ export default {
         message: '加载中...',
         forbidClick: true
       });
-      this.https.get('/default/goods-list', param, '&cat_id=' + id).then(res => {
+      this.https.get('/default/search', param, '&keyword=' + this.value).then(res => {
         console.log(res);
         Toast.clear();
         if (res.code == 0) {
@@ -83,19 +86,37 @@ export default {
           Toast.fail(res.msg);
         }
       });
-    },
+    }
   }
 };
 </script>
 
 <style lang="less">
-.recommend {
+.searchList {
   .content {
     padding-top: 30px;
     flex-wrap: wrap;
+    position: absolute;
+    top: 220px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+  }
+  .flex{
+    align-items: inherit;
+  }
+  .search-box {
+    padding: 30px;
   }
   .recommend-text {
     padding: 20px;
+  }
+  .van-search {
+    width: 100%;
+  }
+  .van-search__action:active {
+    background-color: #ffffff;
   }
   .recommend-item {
     flex: 0 0 48%;
@@ -103,6 +124,7 @@ export default {
     border-radius: 10px 10px 0px 0px;
     overflow: hidden;
     margin-bottom: 30px;
+    height: 514px;
   }
   .recommend-pic {
     height: 330px;

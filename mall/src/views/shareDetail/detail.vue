@@ -226,7 +226,7 @@
             this.getAddressData();
             this.getData(that.goodsId)
           } else {
-            Toast.fail(res.message);
+            Toast.fail(res.msg);
           }
         });
       },
@@ -505,7 +505,7 @@
             console.log(res);
             Toast.clear();
             if (res.code == 0) {} else {
-              Toast.fail(res.message);
+              Toast.fail(res.msg);
             }
           });
       },
@@ -622,7 +622,7 @@
               this.addressId = res.data.list[0].id;
             }
           } else {
-            Toast.fail(res.message);
+            Toast.fail(res.msg);
           }
         });
       }

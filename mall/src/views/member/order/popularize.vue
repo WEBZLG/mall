@@ -91,7 +91,7 @@ export default {
           that.dataList = res.data.list;
 
         } else {
-          Toast.fail(res.message);
+          Toast.fail(res.msg);
         }
       });
     },

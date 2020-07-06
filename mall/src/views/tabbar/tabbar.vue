@@ -157,7 +157,7 @@ export default {
           this.getUserInfo();
           this.getUserInfoVip();
         } else {
-          Toast.fail(res.message);
+          Toast.fail(res.msg);
         }
       });
     },

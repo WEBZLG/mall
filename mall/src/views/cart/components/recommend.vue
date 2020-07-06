@@ -2,14 +2,14 @@
   <div class="recommend">
     <van-divider :style="{ color: '#333333', borderColor: '#333333', padding: '0 16px' }">为你推荐</van-divider>
     <div class="flex content">
-      <div class="recommend-item" v-for="item in dataList" :key="item.id">
-        <div class="recommend-pic" @click="getDetail(item.goods_id)"><img width="100%" height="100%"   src="item.goods_pic" alt="" /></div>
+      <div class="recommend-item" v-for="item in dataList" :key="item.id"  @click="getDetail(item.id)">
+        <div class="recommend-pic"><img width="100%" height="100%" :src="item.pic_url" alt="" /></div>
         <div class="recommend-text">
-          <p class="title" @click="getDetail(item.goods_id)">{{item.goods_name}}</p>
+          <p class="title">{{item.name}}</p>
           <div>
-            <!-- <p class="old-price">￥699</p> -->
+            <p class="old-price">市场价￥{{item.original_price}}</p>
             <p class="new-price">
-              <span class="size">￥</span>
+              <span class="size">嗨购价￥</span>
               {{item.price}}
             </p>
           </div>
@@ -34,10 +34,12 @@ export default {
   data() {
     return {};
   },
-  // 详情
-  getDetail(id) {
-    this.$router.push({ name: 'detail',params:{gid:id}});
-  },
+  methods:{
+    // 详情
+    getDetail(id) {
+      this.$router.push({ name: 'detail',params:{gid:id}});
+    },
+  }
 };
 </script>
 

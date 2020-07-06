@@ -82,7 +82,7 @@
             }
              this.$router.back();
           } else {
-            Toast.fail(res.message);
+            Toast.fail(res.msg);
           }
         });
       },

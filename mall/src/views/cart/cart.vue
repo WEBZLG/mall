@@ -6,15 +6,11 @@
     </header>
     <div class="mid-view">
       <Checked v-if="goodsList.length > 0" ref="checked" :on-update="checkedData" :goodsList="goodsList" @getPrice="getPrice"></Checked>
-      <div class="no-data" v-if="goodsList.length == 0">
+     <div class="no-data" v-if="goodsList.length == 0">
         <div class="no-icon"><img width="100%" height="100%"   src="../../assets/nodata.png" alt="" /></div>
         <p class="no-text">暂无数据</p>
       </div>
       <Recommend :dataList="dataList"></Recommend>
-      <div class="no-data" v-if="dataList.length == 0">
-        <div class="no-icon"><img width="100%" height="100%"   src="../../assets/nodata.png" alt="" /></div>
-        <p class="no-text">暂无数据</p>
-      </div>
     </div>
     <div class="total-box flex" v-if="editeText == '编辑'">
       <div class="price">
@@ -107,10 +103,10 @@ export default {
         console.log(res);
         Toast.clear();
         if (res.code == 0) {
-          that.dataList = res.data.mch_list;
+          that.dataList = res.data.recommend_list;
           that.goodsList = res.data.list;
         } else {
-          Toast.fail(res.message);
+          Toast.fail(res.msg);
         }
       });
     },
@@ -135,7 +131,7 @@ export default {
         Toast.clear();
         if (res.code == 0) {
         } else {
-          Toast.fail(res.message);
+          Toast.fail(res.msg);
         }
       });
     },
@@ -168,7 +164,7 @@ export default {
                 that.totalPrice = 0;
                 that.getData();
               } else {
-                Toast.fail(res.message);
+                Toast.fail(res.msg);
               }
             });
           })
@@ -209,7 +205,7 @@ export default {
         if (res.code == 0) {
           that.addressId = res.data.list[0].id;
         } else {
-          Toast.fail(res.message);
+          Toast.fail(res.msg);
         }
       });
     }

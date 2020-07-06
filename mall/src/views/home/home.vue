@@ -2,8 +2,8 @@
   <div class="home" ref="wrapper">
     <div class="">
       <div class="search-box">
-        <div class="ipt-box">
-          <van-search v-model="value" shape="round" background="#ffffff" placeholder="臻悦尚品，搜你所爱" />
+        <div class="ipt-box" @click="searchPage">
+          <van-search v-model="value" shape="round" background="#ffffff" placeholder="臻悦尚品，搜你所爱"  disabled/>
         </div>
         <div class="message" @click="notice()"><img width="100%" height="100%" src="../../assets/message.png" alt="" /></div>
       </div>
@@ -19,20 +19,15 @@
   import axios from 'axios';
   import {
     Swipe,
-    SwipeItem
+    SwipeItem,
+    Lazyload,
+    Search,
+    Toast,
   } from 'vant';
-  import {
-    Lazyload
-  } from 'vant';
-  import {
-    Search
-  } from 'vant';
+
   import BScroll from 'better-scroll';
   import tab1 from '@/views/home/components/index.vue';
   import tab2 from '@/views/home/components/goods.vue';
-  import {
-    Toast
-  } from 'vant';
 
   Vue.use(Toast);
   Vue.use(Search);
@@ -71,6 +66,9 @@
     },
 
     methods: {
+      searchPage(){
+        this.$router.push({name:'search'})
+      },
       // ly-tab组件的绑定事件函数
       handleChange(item, index) {
         this.clientDetails = item.id;
@@ -109,7 +107,7 @@
               that.navList = that.navList.concat(obj)
             }
           } else {
-            Toast.fail(res.message);
+            Toast.fail(res.msg);
           }
         });
       },

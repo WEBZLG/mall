@@ -53,6 +53,8 @@
         <div class="block">
           <vue-canvas-poster :painting="painting" @success="success"></vue-canvas-poster>
           <div class="shareCode" @touchstart="gotouchstart" @touchmove="gotouchmove" @touchend="gotouchend"><img  crossorigin="anonymous" width="100%" :src="shareCode" alt="" /></div>
+          <p class="mark">长按图片分享和保存</p>
+          <div class="closeShare" @click="show = false"><img width="100%" src="../../../assets/close1.png" alt=""></div>
         </div>
       </div>
     </van-overlay>
@@ -107,7 +109,7 @@ export default {
     };
   },
   mounted() {
-    // this.getData();
+    console.log(this.$root.userInfo)
   },
   methods: {
     success(src) {
@@ -138,7 +140,7 @@ export default {
       console.log(this.shareUrl)
       this.painting = {
         width: '630px',
-        height: '806px',
+        height: '896px',
         background: '#ffffff',
         views: [
           {
@@ -148,27 +150,27 @@ export default {
               top: '0px',
               left: '0px',
               width: '630px',
-              height: '504px'
+              height: '630px'
             }
           },
           {
             type: 'text',
             text: goods.name,
             css: {
-              bottom: '245px',
+              bottom: '209px',
               left: '30px',
               right: '30px',
               width: '569px',
               maxLines: 2,
-              fontSize: '26px'
+              fontSize: '28px'
             }
           },
           {
             type: 'text',
-            text: '嗨购价￥' + goods.price,
+            text: goods.price,
             css: {
-              bottom: '142px',
-              left: '30px',
+              bottom: '126px',
+              left: '120px',
               width: '569px',
               maxLines: 1,
               fontSize: '48px',
@@ -178,9 +180,21 @@ export default {
           },
           {
             type: 'text',
+            text: '嗨购价￥',
+            css: {
+              bottom: '126px',
+              left: '30px',
+              width: '569px',
+              maxLines: 1,
+              fontSize: '20px',
+              color: '#F34E81'
+            }
+          },
+          {
+            type: 'text',
             text: '市场价￥' + goods.original_price,
             css: {
-              bottom: '103px',
+              bottom: '98px',
               left: '30px',
               width: '569px',
               maxLines: 1,
@@ -191,27 +205,38 @@ export default {
           },
           {
             type: 'text',
-            text: '请长按图片进行保存分享',
+            text: this.$root.userInfo.nickname+'  推荐您享受臻悦尚品嗨购优惠',
             css: {
-              bottom: '30px',
-              left: '30px',
+              bottom: '39px',
+              left: '100px',
               width: '569px',
               maxLines: 1,
-              textAlign: 'center',
-              fontSize: '24px',
-              color: '#F34E81'
+              textAlign: 'left',
+              fontSize: '22px',
+              color: '#333333'
             }
           },
           {
             type: 'image',
             url: this.$root.posterUrl + goods.id,
             css: {
-              bottom: '104px',
+              bottom: '94px',
               right: '30px',
               width: '82px',
               height: '82px',
               borderWidth: '10px',
               borderColor: '#fff'
+            }
+          },
+          {
+            type: 'image',
+            url: this.$root.userInfo.avatar_url,
+            css: {
+              bottom: '20px',
+              left: '30px',
+              width: '58px',
+              height: '58px',
+              borderRadius: '58px',
             }
           }
         ]
@@ -272,7 +297,7 @@ export default {
         if (res.code == 0) {
           that.dataList = res.data;
         } else {
-          Toast.fail(res.message);
+          Toast.fail(res.msg);
         }
       });
     },
@@ -294,7 +319,7 @@ export default {
         Toast.clear();
         if (res.code == 0) {
         } else {
-          Toast.fail(res.message);
+          Toast.fail(res.msg);
         }
       });
     },
@@ -314,10 +339,15 @@ export default {
 <style lang="less">
 .shareCode {
   width: 630px;
-  height: 806px;
+  height: 896px;
   margin: 20% auto 0;
 }
-
+.btn-bot{
+  width: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .van-swipe {
   height: 314px;
   border-radius: 10px;

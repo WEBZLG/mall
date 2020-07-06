@@ -76,7 +76,7 @@ export default {
         if (res.code == 0) {
           that.dataList = res.data.list;
         } else {
-          Toast.fail(res.message);
+          Toast.fail(res.msg);
         }
       });
     },

@@ -101,7 +101,7 @@ export default {
             that.onClickLeft();
           },1000)
         } else {
-          Toast.fail(res.message);
+          Toast.fail(res.msg);
         }
       });
     },
@@ -124,7 +124,7 @@ export default {
         if (res.code == 0) {
           Toast.success('设置成功');
         } else {
-          Toast.fail(res.message);
+          Toast.fail(res.msg);
         }
       });
     },

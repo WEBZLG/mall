@@ -1,14 +1,14 @@
 <template>
-  <div id="app"><router-view/></div>
+  <div id="app"><router-view /></div>
 </template>
 
 <script>
 export default {
   name: 'App',
-  computed:{
-    key(){
-      return this.$route.name ? this.$route.name+ +new Date() : this.$route+ +new Date();
-   }
+  computed: {
+    key() {
+      return this.$route.name ? this.$route.name + +new Date() : this.$route + +new Date();
+    }
   }
 };
 </script>
@@ -22,14 +22,14 @@ p {
   font-size: 24px;
 }
 
-#app{
+#app {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   overflow: auto;
-  background-color: #F8F8F8;
+  background-color: #f8f8f8;
 }
 .search-box {
   padding: 30px;
@@ -95,9 +95,10 @@ p {
   height: 40px;
   border-radius: 40px;
   font-size: 22px;
-  border: 2px solid #f34e81;
+  border: 1px solid #f34e81;
   color: #f34e81;
   outline: none;
+  padding: 0 16px;
   background-color: #ffffff;
 }
 .good-type {
@@ -115,7 +116,7 @@ p {
   overflow: hidden;
 }
 .orange-btn {
-  width: 193px;
+  padding: 0 30px;
   height: 60px;
   border: none;
   outline: none;
@@ -125,37 +126,43 @@ p {
   background: rgba(255, 153, 0, 1);
   border-radius: 30px;
 }
-.red-btn{
-  width: 193px;
+.red-btn {
+  padding: 0 30px;
   height: 60px;
-  border: 1px solid #F34E81;
+  border: 1px solid #f34e81;
   outline: none;
-  color: #F34E81;
+  color: #f34e81;
   font-size: 28px;
   font-weight: bold;
   border-radius: 30px;
   background-color: #ffffff;
 }
-.none{
+.none {
   display: none;
 }
-.van-nav-bar .van-icon{
+.van-nav-bar .van-icon {
   color: #000000 !important;
   font-weight: bold;
- }
- .no-data{
-   margin: 20% auto;
-   text-align: center;
-   font-size: 28px;
- }
- .no-icon{
-   height: 214px;
-   width: 458px;
-   margin:0 auto 30px;
- }
-/* .shareCode{
-   height: 222px;
-   width: 222px;
- } */
-
+}
+.no-data {
+  margin: 20% auto;
+  text-align: center;
+  font-size: 28px;
+}
+.no-icon {
+  height: 214px;
+  width: 458px;
+  margin: 0 auto 30px;
+}
+.mark {
+  padding: 30px;
+  color: #ffffff;
+  text-align: center;
+}
+.closeShare {
+  height: 80px;
+  width: 80px;
+  margin: 0 auto;
+  border-radius: 50%;
+}
 </style>

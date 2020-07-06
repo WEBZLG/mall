@@ -20,9 +20,9 @@
             </div>
             <div class="flex">
               <div class="wechat">
-                <van-field label="微信号:" value="" placeholder="请输入微信号" :readonly="isRead" />
+                <van-field label="微信号:" v-model="wechat"  :value="wechat" @blur.native.capture="outBlur" placeholder="请输入微信号" :readonly="isRead" />
               </div>
-              <div class="active-icon" @click="isRead=!isRead"><img width="100%" height="100%" src="../../../assets/edit2.png" alt="" /></div>
+              <div class="active-icon" ><img width="100%" height="100%" src="../../../assets/edit2.png" alt="" /></div>
             </div>
           </div>
         </div>
@@ -94,7 +94,7 @@
     Cell,
     CellGroup,
     Toast,
-    Field
+    Field,
   } from 'vant';
   Vue.use(Field);
   Vue.use(Toast);
@@ -109,13 +109,17 @@
         dataList: '',
         userInfo: '',
         parentInfo: '',
-        isRead: true
+        isRead: false,
+        wechat:''
       };
     },
     mounted() {
       this.getData();
     },
     methods: {
+      outBlur(){
+        this.bindWechat();
+      },
       copyLink(className) {
         let that = this;
         let clipboard = new this.clipboard(className);
@@ -151,10 +155,42 @@
             that.userInfo = res.data.user_info;
             that.parentInfo = res.data.parent_info;
           } else {
-            Toast.fail(res.message);
+            Toast.fail(res.msg);
           }
         });
-      }
+      },
+      bindWechat() {
+        var that = this;
+        if(this.wechat==''){
+          Toast.fail('请输入微信号');
+          return false;
+        }
+        let param = {
+          id: 1,
+          platform: 'wx',
+          token: this.$root.token
+        };
+        let params = {
+          wechat_code: this.wechat,
+        };
+        Toast.loading({
+          duration: 0,
+          message: '加载中...',
+          forbidClick: true
+        });
+        this.https.post('/user/update', param, '', params).then(res => {
+          console.log(res);
+          Toast.clear();
+          if (res.code == 0) {
+            Toast.success('保存成功');
+            setTimeout(function(){
+              that.getData();
+            },1000)
+          } else {
+            Toast.fail(res.msg);
+          }
+        });
+      },
     }
   };
 </script>
@@ -229,9 +265,9 @@
         padding: 0;
         font-size: 12px;
         color: #999999;
-        .van-cell__title{
-          width: auto;
-        }
+      }
+      span{
+        color: #ff0000;
       }
     }
 

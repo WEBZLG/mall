@@ -87,7 +87,7 @@ export default {
         if (res.code == 0) {
           that.dataList = res.data.list;
         } else {
-          Toast.fail(res.message);
+          Toast.fail(res.msg);
         }
       });
     },
@@ -115,7 +115,7 @@ export default {
               Toast.success('删除成功');
               that.getData();
             } else {
-              Toast.fail(res.message);
+              Toast.fail(res.msg);
             }
           });
         })
@@ -141,7 +141,7 @@ export default {
           Toast.success('设置成功');
           that.getData();
         } else {
-          Toast.fail(res.message);
+          Toast.fail(res.msg);
         }
       });
     }

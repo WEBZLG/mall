@@ -185,7 +185,7 @@
           if (res.code == 0) {
             that.ygDataList = res.data;
           } else {
-            Toast.fail(res.message);
+            Toast.fail(res.msg);
           }
         });
       },
@@ -208,7 +208,7 @@
           if (res.code == 0) {
             that.dzDataList = res.data;
           } else {
-            Toast.fail(res.message);
+            Toast.fail(res.msg);
           }
         });
       },
@@ -236,7 +236,7 @@
             that.dtz = res.data[4].count
             that.hxtz = res.data[2].count
           } else {
-            Toast.fail(res.message);
+            Toast.fail(res.msg);
           }
         });
       },

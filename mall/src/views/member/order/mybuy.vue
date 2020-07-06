@@ -267,7 +267,7 @@ export default {
 
   .goods-list {
     padding-top: 0;
-    position: fixed;
+    position: absolute;
     // top: 426px;
     top: 340px;
     left: 0;

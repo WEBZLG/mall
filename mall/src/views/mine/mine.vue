@@ -74,6 +74,8 @@
           <div class="qrcode" ref="qrCodeUrl"></div>
           <div class="shareCode" @touchstart="gotouchstart" @touchmove="gotouchmove" @touchend="gotouchend"><img
               crossorigin="anonymous" width="100%" :src="shareCode" alt="" /></div>
+              <p class="mark">长按图片分享和保存</p>
+              <div class="closeShare" @click="show = false"><img width="100%" src="../../assets/close1.png" alt=""></div>
         </div>
       </div>
   </van-overlay>
@@ -216,8 +218,8 @@
             var base64Text = canvas.toDataURL("image/png");
             console.log(base64Text)
             this.painting = {
-              width: '630px',
-              height: '1120px',
+              width: '560px',
+              height: '996px',
               background: '#ffffff',
               views: [{
                   type: 'image',
@@ -225,97 +227,62 @@
                   css: {
                     top: '0px',
                     left: '0px',
-                    width: '630px',
-                    height: '1120px'
+                    width: '560px',
+                    height: '786px'
                   }
                 },
-                {
-                    type: 'image',
-                    url:require('../../assets/cardbg.png'),
-                    css: {
-                      left: '40px',
-                      bottom: '42px',
-                      right:'40px',
-                      width: '552px',
-                      height: '367px'
-                    }
-                  },
                   {
                       type: 'image',
                       url:res.data.avatar,
                       css: {
-                        left: '100px',
-                        bottom: '269px',
-                        width: '80px',
-                        height: '80px',
-                        borderRadius:'40px'
+                        left: '30px',
+                        bottom: '30px',
+                        width: '100px',
+                        height: '100px',
+                        borderRadius:'50px'
                       }
                     },
                 {
                   type: 'text',
-                  text:'我的邀请码',
+                  text:'邀您一起加入臻悦尚品 分享优选好货',
                   css: {
-                    bottom: '188px',
-                    left: '101px',
-                    maxLines: 1,
-                    fontSize: '24px',
-                    color:'#333333'
-                  }
-                },
-                {
-                  type: 'text',
-                  text:res.data.invitation_code,
-                  css: {
-                    bottom: '130px',
-                    left: '101px',
-                    maxLines: 1,
-                    fontSize: '36px',
-                    color:'#333333'
+                    bottom: '41px',
+                    left: '150px',
+                    maxLines: 2,
+                    width:'204px',
+                    fontSize: '20px',
+                    color:'#999999'
                   }
                 },
                 {
                   type: 'text',
                   text: res.data.nickname,
                   css: {
-                    bottom: '292px',
-                    left: '137px',
+                    bottom: '99px',
+                    left: '149px',
                     maxLines: 1,
-                    fontSize: '28px',
-                    color: '#F34E81'
+                    fontSize: '24px',
+                    color: '#333333'
                   }
                 },
-                // {
-                //   type: 'text',
-                //   text: res.data.level_name,
-                //   css: {
-                //     bottom: '103px',
-                //     left: '30px',
-                //     width: '569px',
-                //     maxLines: 1,
-                //     textDecoration: 'line-through',
-                //     fontSize: '20px',
-                //     color: '#F34E81'
-                //   }
-                // },
                 {
                   type: 'text',
-                  text: '请长按图片进行保存分享',
+                  text: '臻悦尚品，新优选新风尚',
                   css: {
-                    bottom: '80px',
+                    bottom: '153px',
                     left: '30px',
                     width: '569px',
                     maxLines: 1,
-                    textAlign: 'center',
-                    fontSize: '24px',
-                    color: '#F34E81'
+                    fontSize: '28px',
+                    color:'rgba(243,78,129,1)',
                   }
                 },
                 {
                   type: 'image',
                   url: base64Text,
                   css: {
-                    bottom: '113px',
-                    right: '103px',
+                    bottom: '60px',
+                    right: '30px',
                     color: '#000',
                     background: '#fff',
                     width: '116px',
@@ -346,8 +313,8 @@
     background: #f8f8f8;
 
     .shareCode {
-      width: 630px;
-      height: 1120px;
+      width: 560px;
+      height: 996px;
       margin: 10% auto 0;
       position: relative;
     }

@@ -77,7 +77,7 @@
             that.categoriesDetailData = res.data.list[0].list
             // this.getList(res.data.list[0].id)
           }else{
-            Toast.fail(res.message);
+            Toast.fail(res.msg);
           }
         });
         // 1.3.初始化滚动视图

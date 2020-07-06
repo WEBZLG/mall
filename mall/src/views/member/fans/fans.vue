@@ -97,7 +97,7 @@ export default {
 	      that.tabList = res.data;
         that.dataList=res.data[0].list;
 	    } else {
-	      Toast.fail(res.message);
+	      Toast.fail(res.msg);
 	    }
 	  });
 	},
