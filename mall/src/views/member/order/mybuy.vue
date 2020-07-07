@@ -44,7 +44,7 @@
           </p>
         </div>
         <div class="total-price btn-box flex">
-          <p class="defaultOrder" @click="defaultOrder(item.order_id)">取消订单</p>
+          <p class="defaultOrder" @click="defaultOrder(item.order_id)" v-if="item.is_send == 0">取消订单</p>
           <van-button round type="info" size="small"  v-if="item.is_pay == 0" color="#FF9900" class="pay-btn" @click="payFor(item.order_id)">去支付</van-button>
         </div>
       </div>
@@ -267,7 +267,7 @@ export default {
 
   .goods-list {
     padding-top: 0;
-    position: absolute;
+    position: fixed;
     // top: 426px;
     top: 340px;
     left: 0;
