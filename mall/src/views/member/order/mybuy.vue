@@ -24,7 +24,9 @@
         <div class="flex status" @click="orderDetail(item.order_id)">
           <p class="time">推广时间:{{ item.addtime }}</p>
           <p class="new-price" v-if="item.is_pay == 0">待付款</p>
-          <p class="new-price" v-if="item.is_pay == 1">已付款</p>
+          <p class="new-price" v-if="item.is_pay == 1&&item.is_send==0">已付款</p>
+          <p class="new-price" v-if="item.is_pay == 1&&item.is_send==1&&item.is_confirm==0">已发货</p>
+          <p class="new-price" v-if="item.is_pay == 1&&item.is_confirm==1">已签收</p>
         </div>
         <div class="flex goods-child" v-for="(goods, idx) in item.goods_list" :key="idx">
           <div class="goods-pic"><img width="100%" height="100%" :src="goods.goods_pic" alt="暂无" /></div>
@@ -142,6 +144,7 @@
       },
 
       orderDetail(id) {
+          localStorage.setItem('order_id', id);
         if (this.activeTab == 0) {
           this.$router.push({
             name: 'myOrderDetail',

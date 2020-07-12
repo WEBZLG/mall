@@ -32,7 +32,7 @@
       <div class="descript">
         <p class="title">{{ detailData.name }}</p>
         <div class="flex ">
-          <p>推广次数：{{ detailData.share_num }}</p>
+          <!-- <p>推广次数：{{ detailData.share_num }}</p> -->
           <p>销量：{{ detailData.sales_volume }}</p>
         </div>
       </div>
@@ -84,7 +84,7 @@
     <van-goods-action>
       <van-goods-action-icon icon="star" text="收藏" v-if="detailData.is_favorite == 0" @click="addLike(detailData.id)" />
       <van-goods-action-icon icon="star" text="收藏" v-if="detailData.is_favorite == 1" color="#ff5000" @click="disLike(detailData.id)" />
-      <van-goods-action-icon icon="share" text="分享" color="#07c160" @click="share(detailData)" />
+      <!-- <van-goods-action-icon icon="share" text="分享" color="#07c160" @click="share(detailData)" /> -->
       <van-goods-action-icon icon="cart" text="购物车" @click="goCart" />
       <van-goods-action-button type="warning" text="加入购物车" @click="addCart(detailData.id)" />
       <van-goods-action-button type="danger" text="立即购买" @click="submitView(detailData.id)" />

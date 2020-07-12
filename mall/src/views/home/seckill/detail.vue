@@ -34,8 +34,8 @@
       <div class="descript">
         <p class="title">{{ detailData.name }}</p>
         <div class="flex ">
-          <p>推广次数：{{ detailData.share_num||'0' }}</p>
-          <p>销量：{{ detailData.sales_volume }}</p>
+          <!-- <p>推广次数：{{ detailData.share_num||'0' }}</p> -->
+          <!-- <p>销量：{{ detailData.sales_volume }}</p> -->
         </div>
       </div>
       <div class="parameter">
@@ -86,7 +86,7 @@
     <van-goods-action>
       <van-goods-action-icon icon="star" text="收藏" v-if="detailData.is_favorite == 0" @click="addLike(detailData.miaosha.miaosha_goods_id)" />
       <van-goods-action-icon icon="star" text="收藏" v-if="detailData.is_favorite == 1" color="#ff5000" @click="disLike(detailData.miaosha.miaosha_goods_id)" />
-      <van-goods-action-icon icon="share" text="分享" color="#07c160" @click="share(detailData)" />
+      <!-- <van-goods-action-icon icon="share" text="分享" color="#07c160" @click="share(detailData)" /> -->
       <van-goods-action-icon icon="cart" text="购物车" @click="goCart" />
       <van-goods-action-button type="warning" text="加入购物车" @click="addCart(detailData.miaosha.miaosha_goods_id)" />
       <van-goods-action-button type="danger" text="立即购买" @click="submitView(detailData.miaosha.miaosha_goods_id)" />

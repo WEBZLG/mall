@@ -176,8 +176,6 @@ export default {
     // 支付
     payFor() {
       var that = this;
-                  that.orderDetail()
-                  return false;
       let param = {
         id: 1,
         platform: 'wx',

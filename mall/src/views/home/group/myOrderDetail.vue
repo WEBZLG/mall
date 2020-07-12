@@ -12,14 +12,14 @@
           <span class="detail-icon"><img width="100%" height="100%"   src="../../../assets/dfk.png" alt="" /></span>
           <p class="status">{{dataList.status}}</p>
         </div> -->
-        <div class="order-status" v-if="order_id != ''">
+<!--        <div class="order-status" v-if="order_id != ''">
           <span class="detail-icon"><img width="100%" height="100%"   src="../../../assets/dfk.png" alt="" /></span>
           <p class="status">待付款</p>
         </div>
         <div class="order-status" v-if="dataList.is_confirm==1">
           <span class="detail-icon"><img width="100%" height="100%"   src="../../../assets/ywc.png" alt="" /></span>
           <p class="status">已完成</p>
-        </div>
+        </div> -->
 <!--        <div class="order-status">
           <span class="detail-icon"><img width="100%" height="100%"   src="../../../assets/wx.png" alt="" /></span>
           <p class="status">无效</p>
@@ -77,7 +77,7 @@
         <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="dataList.is_pay == 1 && dataList.is_send == 0" @click="goHome">返回首页</van-button>
         <!-- <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="order_id == ''" @click="submitOrder">提交订单</van-button> -->
         <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="order_id != ''" @click="payFor">去支付</van-button>
-        <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="dataList.is_send == 1" @click="express">查看物流</van-button>
+        <van-button round type="info" size="small" color="#FF9900" class="pay-btn" v-if="dataList.is_send == 1" @click="srccessOrder">查看物流</van-button>
       </div>
     </div>
   </div>
@@ -212,6 +212,32 @@ export default {
           } else {
             this.onBridgeReady(res.data);
           }
+        } else {
+          Toast.fail(res.msg);
+        }
+      });
+    },
+    // 订单详情
+    srccessOrder(order_id) {
+      var that = this;
+      let param = {
+        id: 1,
+        platform: 'wx',
+        token: this.$root.token
+      };
+
+      Toast.loading({
+        duration: 0,
+        message: '加载中...',
+        forbidClick: true
+      });
+      this.https.get('/group/order/detail', param, '&order_id='+order_id,).then(res => {
+        console.log(res);
+        Toast.clear();
+        if (res.code == 0) {
+              that.orderDetail(order_id)
+          // this.dataList = res.data;
+          // that.$router.push({name:'payOrderDetail',params:{data:res.data}})
         } else {
           Toast.fail(res.msg);
         }

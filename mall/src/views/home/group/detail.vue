@@ -32,8 +32,8 @@
       <div class="descript">
         <p class="title">{{ detailData.name }}</p>
         <div class="flex ">
-          <p>推广次数：{{ detailData.share_num }}</p>
-          <p>销量：{{ detailData.sales_volume }}</p>
+<!--          <p>推广次数：{{ detailData.share_num }}</p>
+          <p>销量：{{ detailData.sales_volume }}</p> -->
         </div>
       </div>
       <div class="parameter">
