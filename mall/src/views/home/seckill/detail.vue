@@ -2,10 +2,6 @@
   <div class="detail">
     <van-nav-bar title="商品详情" left-arrow @click-left="onClickLeft" />
     <div class="mid-view">
-      <!--      <div class="go-vip" @click="goVip">
-        成为会员再省20%
-        <span class="right-icon"><img width="100%" height="100%" src="../../assets/next_w.png" alt="" /></span>
-      </div> -->
       <!-- 轮播图 -->
       <van-swipe :autoplay="0">
         <van-swipe-item v-for="(image, index) in detailData.pic_list" :key="index"><img width="100%" height="100%" :src="image.pic_url" /></van-swipe-item>
@@ -13,29 +9,32 @@
       <div class="handle flex">
         <div class="price">
           <p class="new-price">
-            <span class="size">嗨购价￥</span>
+            <span class="size">￥</span>
             {{ detailData.price }}
           </p>
-          <p class="old-price">市场价￥{{ detailData.original_price }}</p>
+          <div class="flex sell-num">
+            <p class="old-price">￥{{ detailData.original_price }}</p>
+            <p v-if="detailData.miaosha">已抢{{detailData.miaosha.sell_num}}件</p>
+          </div>
         </div>
         <div class="btn-box">
           <div>
             <p class="brokerage">
-              <span class="good-icon"><img width="100%" height="100%" src="../../assets/money.png" alt="" /></span>
-              推广佣金￥{{ detailData.share_price }}
+              <span class="good-icon"><img width="100%" height="100%" src="../../../assets/money.png" alt="" /></span>
+              限时抢购
             </p>
           </div>
-          <div class="btn-bot">
+          <!--          <div class="btn-bot">
             <button type="button" class="sm-btn" data-clipboard-action="copy" :data-clipboard-text="detailData.name"
               @click="copyLink('.sm-btn')">复制</button>
             <button type="button" class="sm-btn" @click="share(detailData)">分享</button>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="descript">
         <p class="title">{{ detailData.name }}</p>
         <div class="flex ">
-          <p>推广次数：{{ detailData.share_num }}</p>
+          <p>推广次数：{{ detailData.share_num||'0' }}</p>
           <p>销量：{{ detailData.sales_volume }}</p>
         </div>
       </div>
@@ -79,18 +78,18 @@
           </div>
         </van-action-sheet>
       </div>
-      <div class="detail-pic"><img width="100%" height="100%" src="../../assets/spxq.png" alt="" /></div>
+      <div class="detail-pic"><img width="100%" height="100%" src="../../../assets/spxq.png" alt="" /></div>
       <div class="detail-pics">
         <div v-html="detailData.detail"></div>
       </div>
     </div>
     <van-goods-action>
-      <van-goods-action-icon icon="star" text="收藏" v-if="detailData.is_favorite == 0" @click="addLike(detailData.id)" />
-      <van-goods-action-icon icon="star" text="收藏" v-if="detailData.is_favorite == 1" color="#ff5000" @click="disLike(detailData.id)" />
+      <van-goods-action-icon icon="star" text="收藏" v-if="detailData.is_favorite == 0" @click="addLike(detailData.miaosha.miaosha_goods_id)" />
+      <van-goods-action-icon icon="star" text="收藏" v-if="detailData.is_favorite == 1" color="#ff5000" @click="disLike(detailData.miaosha.miaosha_goods_id)" />
       <van-goods-action-icon icon="share" text="分享" color="#07c160" @click="share(detailData)" />
       <van-goods-action-icon icon="cart" text="购物车" @click="goCart" />
-      <van-goods-action-button type="warning" text="加入购物车" @click="addCart(detailData.id)" />
-      <van-goods-action-button type="danger" text="立即购买" @click="submitView(detailData.id)" />
+      <van-goods-action-button type="warning" text="加入购物车" @click="addCart(detailData.miaosha.miaosha_goods_id)" />
+      <van-goods-action-button type="danger" text="立即购买" @click="submitView(detailData.miaosha.miaosha_goods_id)" />
     </van-goods-action>
     <van-overlay :show="show" @click="show = false">
       <div class="wrapper" @click.stop>
@@ -99,7 +98,7 @@
           <div class="shareCode" @touchstart="gotouchstart" @touchmove="gotouchmove" @touchend="gotouchend"><img width="100%"
               :src="shareCode" alt="" /></div>
           <p class="mark">长按图片分享和保存</p>
-          <div class="closeShare" @click="show = false"><img width="100%" src="../../assets/close1.png" alt=""></div>
+          <div class="closeShare" @click="show = false"><img width="100%" src="../../../assets/close1.png" alt=""></div>
         </div>
       </div>
     </van-overlay>
@@ -194,7 +193,7 @@
         this.$router.replace('/tabbar/cart');
       },
       onClickLeft() {
-        window.history.back()
+        this.$router.back();
       },
 
       showSku() {
@@ -253,7 +252,7 @@
           message: '加载中...',
           forbidClick: true
         });
-        this.https.get('/default/goods', param, '&id=' + this.goodsId).then(res => {
+        this.https.get('/miaosha/details', param, '&goods_id=' + this.goodsId + '&scene_type=0').then(res => {
           console.log(res);
           Toast.clear();
           if (res.code == 0) {
@@ -418,7 +417,7 @@
           message: '加载中...',
           forbidClick: true
         });
-        this.https.get('/share/goods', param, '&goods_id=' + this.detailData.id + '&share_user=' + this.$root.userInfo.id)
+        this.https.get('/share/goods', param, '&goods_id=' + this.detailData.miaosha.miaosha_goods_id + '&share_user=' + this.$root.userInfo.id)
           .then(res => {
             console.log(res);
             Toast.clear();
@@ -436,7 +435,7 @@
           token: this.$root.token
         };
         let params = {
-          goods_id: this.goodsId
+          goods_id: id
         };
         this.https.post('/user/favorite-add', param, '', params).then(res => {
           if (res.code == 0) {
@@ -455,7 +454,7 @@
           token: this.$root.token
         };
         let params = {
-          goods_id: this.goodsId
+          goods_id: id
         };
         this.https.post('/user/favorite-remove', param, '', params).then(res => {
           if (res.code == 0) {
@@ -478,7 +477,7 @@
           token: this.$root.token
         };
         let params = {
-          goods_id: that.goodsId,
+          goods_id: id,
           attr: JSON.stringify(that.attr),
           num: 1
         };
@@ -508,16 +507,16 @@
           token: this.$root.token
         };
         var attr = JSON.stringify({
-          goods_id: that.goodsId,
+          goods_id: id,
           attr: that.attr
         });
-        this.https.post('/order/submit-preview', param, '&goods_info=' + attr + '&address_id=' + that.addressId +
+        this.https.get('/miaosha/submit-preview', param, '&goods_info=' + attr + '&address_id=' + that.addressId +
           '&type=s').then(res => {
           if (res.code == 0) {
             console.log(res);
             this.showGoods = false;
             that.$router.push({
-              name: 'orderDetail',
+              name: 'seckillOrderDetail',
               params: {
                 data: res.data
               }
@@ -653,7 +652,7 @@
     height: 110px;
     padding: 0 30px;
     border-bottom: 1px solid #f8f8f8;
-    background: url(../../assets/xq_bg.png) no-repeat;
+    background: url(../../../assets/xq_bg.png) no-repeat;
     background-size: cover;
 
     .new-price {
@@ -663,6 +662,7 @@
 
     .old-price {
       color: #ffffff;
+      text-decoration: line-through;
     }
 
     .brokerage {
@@ -715,5 +715,10 @@
 
   .addrItem {
     padding: 15px 0;
+  }
+
+  .sell-num {
+    width: 260px;
+    color: #FFFFFF;
   }
 </style>

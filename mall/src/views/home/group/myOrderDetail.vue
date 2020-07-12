@@ -117,7 +117,7 @@ export default {
   },
   methods: {
     express(){
-      this.$router.push({name:'express',params:{orderId:this.order_id}})
+      this.$router.push({name:'groupExpress',params:{orderId:this.order_id}})
     },
     goHome() {
       this.$router.replace({ path: '/' });
@@ -149,7 +149,7 @@ export default {
         message: '加载中...',
         forbidClick: true
       });
-      this.https.post('/order/submit', param, '', params).then(res => {
+      this.https.post('/group/order/submit', param, '', params).then(res => {
         console.log(res);
         Toast.clear();
         if (res.code == 0) {
@@ -174,7 +174,7 @@ export default {
         message: '加载中...',
         forbidClick: true
       });
-      this.https.get('/order/detail', param, '&order_id='+order_id,).then(res => {
+      this.https.get('/group/order/detail', param, '&order_id='+order_id,).then(res => {
         console.log(res);
         Toast.clear();
         if (res.code == 0) {
@@ -198,7 +198,7 @@ export default {
         message: '加载中...',
         forbidClick: true
       });
-      this.https.get('/order/pay-data', param, '&pay_type=WECHAT_PAY' + '&order_id_list=[' + that.order_id + ']').then(res => {
+      this.https.get('/group/order/pay-data', param, '&pay_type=WECHAT_PAY' + '&order_id_list=[' + that.order_id + ']').then(res => {
         console.log(res);
         Toast.clear();
         if (res.code == 0) {

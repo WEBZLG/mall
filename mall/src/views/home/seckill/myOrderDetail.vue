@@ -94,7 +94,7 @@ Vue.use(Toast);
 Vue.use(Button);
 Vue.use(NavBar);
 export default {
-  name: 'orderDetail',
+  name: 'seckillDetail',
   data() {
     return {
       dataList: '',
@@ -117,7 +117,7 @@ export default {
   },
   methods: {
     express(){
-      this.$router.push({name:'express',params:{orderId:this.order_id}})
+      this.$router.push({name:'seckillExpress',params:{orderId:this.order_id}})
     },
     goHome() {
       this.$router.replace({ path: '/' });
@@ -149,7 +149,7 @@ export default {
         message: '加载中...',
         forbidClick: true
       });
-      this.https.post('/order/submit', param, '', params).then(res => {
+      this.https.post('/miaosha/submit', param, '', params).then(res => {
         console.log(res);
         Toast.clear();
         if (res.code == 0) {
@@ -174,7 +174,7 @@ export default {
         message: '加载中...',
         forbidClick: true
       });
-      this.https.get('/order/detail', param, '&order_id='+order_id,).then(res => {
+      this.https.get('/miaosha/details', param, '&order_id='+order_id,).then(res => {
         console.log(res);
         Toast.clear();
         if (res.code == 0) {
@@ -198,7 +198,7 @@ export default {
         message: '加载中...',
         forbidClick: true
       });
-      this.https.get('/order/pay-data', param, '&pay_type=WECHAT_PAY' + '&order_id_list=[' + that.order_id + ']').then(res => {
+      this.https.get('/miaosha/pay-data', param, '&pay_type=WECHAT_PAY' + '&order_id_list=[' + that.order_id + ']').then(res => {
         console.log(res);
         Toast.clear();
         if (res.code == 0) {

@@ -9,7 +9,7 @@
         <div class="goods-desc">
           <p class="goods-title" @click="getDetail(item.id)">{{item.name}}</p>
           <div class="good-price flex">
-            <p class="groupNum">￥{{item.group_num}}人已参团</p>
+            <p class="groupNum">销量：{{item.sell_num}}件</p>
             <p class="brokerage">
             </p>
           </div>
@@ -20,7 +20,7 @@
             </p>
             <div class="btn-bot">
               <p></p>
-              <button type="button" class="sm-btn"  @click.stop="getDetail(item.id)">立即拼团</button>
+              <button type="button" class="sm-btn"  @click.stop="getDetail(item.id)">立即购买</button>
             </div>
           </div>
         </div>
@@ -50,7 +50,7 @@
       return {
         dataList: '',
         tid: '',
-        title: '拼团活动',
+        title: '限时爆款',
       };
     },
     mounted() {
@@ -76,7 +76,7 @@
       // 详情
       getDetail(id) {
         this.$router.push({
-          name: 'groupDetail',
+          name: 'limitDetail',
           params: {
             gid: id
           }
@@ -95,7 +95,7 @@
           message: '加载中...',
           forbidClick: true
         });
-        this.https.post('/group/index/good-list', param, '' ).then(res => {
+        this.https.post('/xianshi/goods-list', param, '&time=12').then(res => {
           console.log(res);
           Toast.clear();
           if (res.code == 0) {

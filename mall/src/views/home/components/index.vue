@@ -64,9 +64,7 @@
 <script>
 var timeOutEvent = 0; //定时器
 import Vue from 'vue';
-import { Lazyload } from 'vant';
-import { Toast } from 'vant';
-import { Overlay } from 'vant';
+import { Lazyload,Toast,Overlay } from 'vant';
 Vue.use(Toast);
 Vue.use(Lazyload);
 Vue.use(Overlay);
@@ -125,14 +123,20 @@ export default {
         this.$router.push({ name: 'group', params: { title: e.name, gid: e.id } });
       } else if (e.id == 64) {
         this.$router.push({ name: 'couponList'});
-      } else {
+      } else if(e.id == 62) {
+        this.$router.push({ name: 'seckill', params: { title: e.name, gid: e.id } });
+      }else if(e.id == 63) {
+        this.$router.push({ name: 'limit', params: { title: e.name, gid: e.id } });
+      }else if(e.id == 65) {
+        this.$router.push({ name: 'newUser', params: { title: e.name, gid: e.id } });
+      }else{
         this.$router.push({ name: 'hotList', params: { title: e.name, gid: e.id } });
       }
     },
     moreGoods(id){
       this.$router.push({ name: 'goodsList', params: { gid:id } })
     },
-    // 分项
+    // 分享
     share(goods) {
       console.log(goods);
       this.goodsInfo = goods;
@@ -155,7 +159,7 @@ export default {
           },
           {
             type: 'text',
-            text: goods.name,
+            text: '[臻悦尚品]'+goods.name,
             css: {
               bottom: '209px',
               left: '30px',

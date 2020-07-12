@@ -2,34 +2,31 @@
   <div class="detail">
     <van-nav-bar title="商品详情" left-arrow @click-left="onClickLeft" />
     <div class="mid-view">
-      <!--      <div class="go-vip" @click="goVip">
-        成为会员再省20%
-        <span class="right-icon"><img width="100%" height="100%" src="../../assets/next_w.png" alt="" /></span>
-      </div> -->
       <!-- 轮播图 -->
       <van-swipe :autoplay="0">
-        <van-swipe-item v-for="(image, index) in detailData.pic_list" :key="index"><img width="100%" height="100%" :src="image.pic_url" /></van-swipe-item>
+        <van-swipe-item v-for="(image, index) in detailData.pic_list" :key="index"><img width="100%" height="100%" :src="image" /></van-swipe-item>
       </van-swipe>
       <div class="handle flex">
         <div class="price">
           <p class="new-price">
-            <span class="size">嗨购价￥</span>
-            {{ detailData.price }}
+            <!-- <span class="size">嗨购价￥</span> -->
+            ￥{{ detailData.price }}
           </p>
-          <p class="old-price">市场价￥{{ detailData.original_price }}</p>
+          <!-- <p class="old-price">市场价￥{{ detailData.original_price }}</p> -->
         </div>
         <div class="btn-box">
-          <div>
+         <div>
             <p class="brokerage">
-              <span class="good-icon"><img width="100%" height="100%" src="../../assets/money.png" alt="" /></span>
-              推广佣金￥{{ detailData.share_price }}
+              <!-- <span class="good-icon"><img width="100%" height="100%" src="../../../assets/money.png" alt="" /></span> -->
+              <!-- 推广佣金￥{{ detailData.share_price }} -->
+              {{detailData.group_num}}人参团
             </p>
           </div>
-          <div class="btn-bot">
+<!--          <div class="btn-bot">
             <button type="button" class="sm-btn" data-clipboard-action="copy" :data-clipboard-text="detailData.name"
               @click="copyLink('.sm-btn')">复制</button>
             <button type="button" class="sm-btn" @click="share(detailData)">分享</button>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="descript">
@@ -46,7 +43,7 @@
         </van-cell-group>
         <van-action-sheet v-model="showGoods">
           <div class="content">
-            <div class="chooseItem" v-for="(item, index) in detailData.attr_group_list" :key="item.attr_group_id">
+            <div class="chooseItem" v-for="(item, index) in dataList.attr_group_list" :key="item.attr_group_id">
               <h3>{{ item.attr_group_name }}</h3>
               <div>
                 <div class="row" v-for="(attr, idx) in item.attr_list" :key="attr.attr_id">
@@ -79,7 +76,7 @@
           </div>
         </van-action-sheet>
       </div>
-      <div class="detail-pic"><img width="100%" height="100%" src="../../assets/spxq.png" alt="" /></div>
+      <div class="detail-pic"><img width="100%" height="100%" src="../../../assets/spxq.png" alt="" /></div>
       <div class="detail-pics">
         <div v-html="detailData.detail"></div>
       </div>
@@ -99,7 +96,7 @@
           <div class="shareCode" @touchstart="gotouchstart" @touchmove="gotouchmove" @touchend="gotouchend"><img width="100%"
               :src="shareCode" alt="" /></div>
           <p class="mark">长按图片分享和保存</p>
-          <div class="closeShare" @click="show = false"><img width="100%" src="../../assets/close1.png" alt=""></div>
+          <div class="closeShare" @click="show = false"><img width="100%" src="../../../assets/close1.png" alt=""></div>
         </div>
       </div>
     </van-overlay>
@@ -141,6 +138,7 @@
     name: 'detail',
     data() {
       return {
+        dataList:'',
         detailData: '',
         showGoods: false,
         showAddr: false,
@@ -194,7 +192,7 @@
         this.$router.replace('/tabbar/cart');
       },
       onClickLeft() {
-        window.history.back()
+        this.$router.back();
       },
 
       showSku() {
@@ -253,12 +251,13 @@
           message: '加载中...',
           forbidClick: true
         });
-        this.https.get('/default/goods', param, '&id=' + this.goodsId).then(res => {
+        this.https.get('/xianshi/good-details', param, '&gid=' + this.goodsId).then(res => {
           console.log(res);
           Toast.clear();
           if (res.code == 0) {
-            that.detailData = res.data;
-            for (var i = 0; i < this.detailData.attr_group_list.length; i++) {
+            that.detailData = res.data.info;
+            that.dataList = res.data;
+            for (var i = 0; i < res.data.attr_group_list.length; i++) {
               let obj = {
                 attr_group_id: '',
                 attr_group_name: '',
@@ -511,13 +510,13 @@
           goods_id: that.goodsId,
           attr: that.attr
         });
-        this.https.post('/order/submit-preview', param, '&goods_info=' + attr + '&address_id=' + that.addressId +
+        this.https.post('/group/order/submit-preview', param, '&goods_info=' + attr + '&address_id=' + that.addressId +
           '&type=s').then(res => {
           if (res.code == 0) {
             console.log(res);
             this.showGoods = false;
             that.$router.push({
-              name: 'orderDetail',
+              name: 'groupOrderDetail',
               params: {
                 data: res.data
               }
@@ -653,7 +652,7 @@
     height: 110px;
     padding: 0 30px;
     border-bottom: 1px solid #f8f8f8;
-    background: url(../../assets/xq_bg.png) no-repeat;
+    background: url(../../../assets/xq_bg.png) no-repeat;
     background-size: cover;
 
     .new-price {
