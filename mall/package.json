@@ -24,7 +24,7 @@
     "postcss-viewport-units": "^0.1.6",
     "postcss-write-svg": "^3.0.1",
     "qrcodejs2": "0.0.2",
-    "qs": "^6.9.4",
+    "qs": "^6.9.7",
     "vant": "^2.8.2",
     "vue": "^2.5.2",
     "vue-canvas-poster": "^1.1.1",
